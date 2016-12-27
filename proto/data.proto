@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+message Mesh {
+    string name = 1;
+
+    message Vertex {
+        float x = 1;
+        float y = 2;
+        float z = 3;
+        float i = 4;
+        float j = 5;
+        float k = 7;
+        float u = 8;
+        float v = 9;
+    }
+    repeated Vertex vertex = 2;
+
+    message Face {
+        uint32 a = 1;
+        uint32 b = 2;
+        uint32 c = 3;
+    }
+    repeated Face face = 3;
+}
+
+message Shader {
+    string type = 1;
+    string name = 2;
+    string source = 3;
+}
+
+message Data {
+    repeated Mesh mesh = 1;
+    repeated Shader shader = 2;
+}

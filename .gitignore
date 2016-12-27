@@ -1,0 +1,4 @@
+bin/
+lib/
+include/SDL2
+.DS_Store
