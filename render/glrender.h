@@ -26,7 +26,7 @@ class GLRender : public IRender {
     struct Shader {
         GLuint vert_id;
         GLuint frag_id;
-        GLuint program_id;
+        GLuint shader_id;
         Shader();
         Shader(const Shader& s) = delete;
         void ClearUniforms();
@@ -55,7 +55,7 @@ class GLRender : public IRender {
 
     ILog& log_;
     Camera camera_;
-    std::unordered_map<std::string, Shader> programs_;
+    std::unordered_map<std::string, Shader> shaders_;
     std::unordered_map<std::string, Mesh> meshes_;
     bool assets_loaded_;
 
@@ -79,11 +79,11 @@ private:
     bool CompileShader(const std::string& source,
                        ShaderType type,
                        GLuint* out);
-    bool CreateProgram(GLuint vert_shader,
-                       GLuint frag_shader,
-                       GLuint* out_program);
-    bool LinkProgram(GLuint program_id);
-    void ProcessUniforms(Shader& program);
+    bool CreateShader(GLuint vert_id,
+                      GLuint frag_id,
+                      GLuint* out_id);
+    bool LinkShader(GLuint shader_id);
+    void ProcessUniforms(Shader& shader);
 };
 
 #endif

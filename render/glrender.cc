@@ -71,16 +71,16 @@ void GLRender::UnloadData() {
         glDeleteVertexArrays(1, &m.second.vao);
     }
 
-    for (auto& p : programs_) {
+    for (auto& p : shaders_) {
         glUseProgram(0);
 
         p.second.ClearUniforms();
         glDeleteShader(p.second.vert_id);
         glDeleteShader(p.second.frag_id);
-        glDeleteShader(p.second.program_id);
+        glDeleteShader(p.second.shader_id);
     }
 
-    programs_.clear();
+    shaders_.clear();
     meshes_.clear();
     assets_loaded_ = false;
 }
@@ -154,20 +154,22 @@ void GLRender::DrawModel(const IModel& model) {
         return;
     }
 
-    auto program_result = programs_.find(model.shader_name());
-    if (program_result == programs_.end()) {
+    auto shader_result = shaders_.find(model.shader_name());
+    if (shader_result == shaders_.end()) {
         std::stringstream message;
-        message << "Could not find program, \"" << model.shader_name();
+        message << "Could not find shader, \"" << model.shader_name();
         message << ",\" to render mesh";
         log_.Error(message.str());
         return;
     }
-    glUseProgram(program_result->second.program_id);
+    glUseProgram(shader_result->second.shader_id);
 
     auto& model_info = mesh_result->second;
     glBindBuffer(GL_ARRAY_BUFFER, model_info.position_buffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model_info.index_buffer);
     glBindVertexArray(model_info.vao);
+
+    auto& shader = shader_result->second;
 }
 
 //
@@ -192,7 +194,7 @@ GLRender::Mesh::Mesh()
 GLRender::Shader::Shader()
     : vert_id { 0 },
       frag_id { 0 },
-      program_id { 0 }
+      shader_id { 0 }
 {
     uniforms_.clear();
 }
@@ -394,27 +396,27 @@ bool GLRender::ImportShaders(const Data& data) {
             continue;
         }
 
-        GLuint program_id;
-        if (!CreateProgram(vert_id, frag_id, &program_id)) {
-            log_.Error("Could not create shader program");
+        GLuint shader_id;
+        if (!CreateShader(vert_id, frag_id, &shader_id)) {
+            log_.Error("Could not create shader shader");
             glDeleteShader(vert_id);
             glDeleteShader(frag_id);
             continue;
         }
 
-        auto program_result = programs_.find(shader.first);
-        if (program_result != programs_.end()) {
+        auto shader_result = shaders_.find(shader.first);
+        if (shader_result != shaders_.end()) {
             glUseProgram(0);
 
-            glDeleteShader(program_result->second.vert_id);
-            glDeleteShader(program_result->second.frag_id);
-            glDeleteProgram(program_result->second.program_id);
+            glDeleteShader(shader_result->second.vert_id);
+            glDeleteShader(shader_result->second.frag_id);
+            glDeleteProgram(shader_result->second.shader_id);
         }
-        programs_[shader.first].vert_id = vert_id;
-        programs_[shader.first].frag_id = frag_id;
-        programs_[shader.first].program_id = program_id;
+        shaders_[shader.first].vert_id = vert_id;
+        shaders_[shader.first].frag_id = frag_id;
+        shaders_[shader.first].shader_id = shader_id;
 
-        ProcessUniforms(programs_[shader.first]);
+        ProcessUniforms(shaders_[shader.first]);
     }
 
     return true;
@@ -466,58 +468,58 @@ bool GLRender::CompileShader(const std::string& source,
     return true;
 }
 
-bool GLRender::CreateProgram(GLuint vert_id,
-                             GLuint frag_id,
-                             GLuint* out_id) {
-    GLuint program = glCreateProgram();
-    ErrorCheck("Create program");
-    if (!program) {
-        log_.Error("Could not create shader program");
+bool GLRender::CreateShader(GLuint vert_id,
+                            GLuint frag_id,
+                            GLuint* out_id) {
+    GLuint shader = glCreateProgram();
+    ErrorCheck("Create shader");
+    if (!shader) {
+        log_.Error("Could not create shader");
         return false;
     }
 
-    glAttachShader(program, vert_id); ErrorCheck("Attach vertex shader");
-    glAttachShader(program, frag_id); ErrorCheck("Attach fragment shader");
+    glAttachShader(shader, vert_id); ErrorCheck("Attach vertex shader");
+    glAttachShader(shader, frag_id); ErrorCheck("Attach fragment shader");
 
-    glBindAttribLocation(program, ATTRIB_LOC_POSITION, "in_position");
+    glBindAttribLocation(shader, ATTRIB_LOC_POSITION, "in_position");
     ErrorCheck("Bind in_position attrib location");
 
-    glBindAttribLocation(program, ATTRIB_LOC_NORMAL, "in_normal");
+    glBindAttribLocation(shader, ATTRIB_LOC_NORMAL, "in_normal");
     ErrorCheck("Bind in_normal attrib location");
 
-    if (!LinkProgram(program)) {
-        log_.Error("Could not link shader program");
-        glDetachShader(program, vert_id);
-        glDetachShader(program, frag_id);
-        glDeleteProgram(program);
+    if (!LinkShader(shader)) {
+        log_.Error("Could not link shader shader");
+        glDetachShader(shader, vert_id);
+        glDetachShader(shader, frag_id);
+        glDeleteProgram(shader);
         return false;
     }
 
-    *out_id = program;
-    DEBUG(log_.Message("Successfully compiled program"));
+    *out_id = shader;
+    DEBUG(log_.Message("Successfully compiled shader"));
     return true;
 }
 
-bool GLRender::LinkProgram(GLuint program_id) {
-    glLinkProgram(program_id);
-    ErrorCheck("Link program");
+bool GLRender::LinkShader(GLuint shader_id) {
+    glLinkProgram(shader_id);
+    ErrorCheck("Link shader");
 
     GLint success = 0;
-    glGetProgramiv(program_id, GL_LINK_STATUS, &success);
+    glGetProgramiv(shader_id, GL_LINK_STATUS, &success);
     if (success != GL_TRUE) {
         DEBUG({
             std::string error_message;
             GLint length = 0;
-            glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &length);
+            glGetProgramiv(shader_id, GL_INFO_LOG_LENGTH, &length);
             error_message.reserve(length);
-            glGetProgramInfoLog(program_id,
+            glGetProgramInfoLog(shader_id,
                                 length,
                                 &length,
                                 &error_message[0]);
-            log_.Error("Shader program");
+            log_.Error("Shader shader");
             log_.Error(error_message.c_str());
         })
-        log_.Error("Could not link program");
+        log_.Error("Could not link shader");
         return false;
     }
     return true;
@@ -525,17 +527,17 @@ bool GLRender::LinkProgram(GLuint program_id) {
 
 // The goal is to parse the shaders individually and pull out the uniforms
 // names from them, but for right now they will be hardcoded
-void GLRender::ProcessUniforms(Shader& program) {
-    auto projection_location = glGetUniformLocation(program.program_id,
+void GLRender::ProcessUniforms(Shader& shader) {
+    auto projection_location = glGetUniformLocation(shader.shader_id,
                                                     "projection");
     ErrorCheck("Get projection location");
     if (projection_location != -1) {
-        program.SetUniformLocation("projection", projection_location);
+        shader.SetUniformLocation("projection", projection_location);
     }
 
-    auto modelview_location = glGetUniformLocation(program.program_id,
+    auto modelview_location = glGetUniformLocation(shader.shader_id,
                                                    "modelview");
     if (modelview_location != -1) {
-        program.SetUniformLocation("modelview", modelview_location);
+        shader.SetUniformLocation("modelview", modelview_location);
     }
 }
