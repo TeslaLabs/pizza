@@ -6,6 +6,8 @@
 #include <string>
 #include <debug.h>
 #include <gl/gl_headers.h>
+#include "../math/math.h"
+#include "../math/vec3.h"
 #include "../proto/data.pb.h"
 
 //
@@ -25,6 +27,10 @@ GLRender::GLRender(ILog& log)
       assets_loaded_ { false }
 {
     glClearColor(0.5f, 0.0f, 0.0f, 1.0f);
+    glEnable(GL_DEPTH_TEST); ErrorCheck("enable depth testing");
+    glEnable(GL_CULL_FACE); ErrorCheck("Enable cull face");
+    glFrontFace(GL_CCW); ErrorCheck("set front face");
+    glCullFace(GL_BACK); ErrorCheck("set to cull back faces");
 }
 
 GLRender::~GLRender() {
@@ -32,7 +38,7 @@ GLRender::~GLRender() {
 }
 
 void GLRender::Update() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     ErrorCheck("glclear");
 }
 
@@ -52,6 +58,7 @@ void GLRender::LoadData(const std::string& filepath) {
         log_.Error("Could not import meshes");
         return;
     }
+
     if (!ImportShaders(data)) {
         log_.Error("Could not import shaders");
         return;
@@ -61,23 +68,22 @@ void GLRender::LoadData(const std::string& filepath) {
 void GLRender::UnloadData() {
     if (!assets_loaded_) return;
 
-    for (auto& m : meshes_) {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    glUseProgram(0);
 
+    for (auto& m : meshes_) {
         glDeleteBuffers(1, &m.second.position_buffer);
         glDeleteBuffers(1, &m.second.index_buffer);
         glDeleteVertexArrays(1, &m.second.vao);
     }
 
-    for (auto& p : shaders_) {
-        glUseProgram(0);
-
-        p.second.ClearUniforms();
-        glDeleteShader(p.second.vert_id);
-        glDeleteShader(p.second.frag_id);
-        glDeleteShader(p.second.shader_id);
+    for (auto& s : shaders_) {
+        s.second.ClearUniforms();
+        glDeleteShader(s.second.vert_id);
+        glDeleteShader(s.second.frag_id);
+        glDeleteShader(s.second.shader_id);
     }
 
     shaders_.clear();
@@ -85,67 +91,40 @@ void GLRender::UnloadData() {
     assets_loaded_ = false;
 }
 
-// void GLRender::SetUniformMatrices(const std::string& program,
-//                                   const std::string& uniform,
-//                                   int n_matrices,
-//                                   Matrix* matrices) {
-//     auto program_result = programs_.find(program);
-//     if (program_result == programs_.end()) {
-//         std::stringstream message;
-//         message << "Could not find program, \"" << program;
-//         message << ",\" to set uniform, \"" << uniform << "\"";
-//         log_.Error(message.str());
-//         return;
-//     }
+void GLRender::PrintData() {
+    log_.Error("Printing data");
+    for (auto& s : shaders_) {
+        log_.Message(s.first);
+        std::stringstream message;
+        message << s.second.vert_id << std::endl;
+        message << s.second.frag_id << std::endl;
+        message << s.second.shader_id;
+        log_.Message(message.str());
+    }
+}
 
-//     constexpr unsigned int MAX_MATRICES = 64;
-//     float data[MAX_MATRICES * 16];
-//     for (auto i = 0; i < MAX_MATRICES && i < n_matrices; ++i) {
-//         data[(i * 16) + 0] = matrices[i][0];
-//         data[(i * 16) + 1] = matrices[i][1];
-//         data[(i * 16) + 2] = matrices[i][2];
-//         data[(i * 16) + 3] = matrices[i][3];
-//         data[(i * 16) + 4] = matrices[i][4];
-//         data[(i * 16) + 5] = matrices[i][5];
-//         data[(i * 16) + 6] = matrices[i][6];
-//         data[(i * 16) + 7] = matrices[i][7];
-//         data[(i * 16) + 8] = matrices[i][8];
-//         data[(i * 16) + 9] = matrices[i][9];
-//         data[(i * 16) + 10] = matrices[i][10];
-//         data[(i * 16) + 11] = matrices[i][11];
-//         data[(i * 16) + 12] = matrices[i][12];
-//         data[(i * 16) + 13] = matrices[i][13];
-//         data[(i * 16) + 14] = matrices[i][14];
-//         data[(i * 16) + 15] = matrices[i][15];
-//     }
+void GLRender::SetBackgroundColor(float r, float g, float b, float a) {
+    glClearColor(r, g, b, a);
+}
 
-//     auto set_function = [matrices, n_matrices, data] (GLint uniform_location) {
-//         glUniformMatrix4fv(uniform_location,
-//                            n_matrices,
-//                            GL_FALSE,
-//                            data);
-//     };
-//     if (!program_result->second.SetUniformValue(uniform, set_function)) {
-//         std::stringstream message;
-//         message << "Could not set uniform, \"" << uniform << "\"";
-//         log_.Error(message.str());
-//         return;
-//     }
-// }
+void GLRender::SetCameraProjection(const Matrix& projection) {
+    camera_.projection = projection;
+}
 
-void GLRender::CameraPosition(const Vec3& position) {
+void GLRender::SetCameraPosition(const Vec3& position) {
     camera_.position = position;
 }
 
-void GLRender::CameraDirection(const Vec3& direction) {
-    camera_.direction = direction;
+void GLRender::SetCameraDirection(const Vec3& direction) {
+    camera_.direction = Vec3::Normalize(direction);
 }
 
 void GLRender::CameraLookat(const Vec3& location) {
-    camera_.direction = camera_.position - location;
+    camera_.direction = Vec3::Normalize(camera_.position - location);
 }
 
 void GLRender::DrawModel(const IModel& model) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     auto mesh_result = meshes_.find(model.name());
     if (mesh_result == meshes_.end()) {
         std::stringstream message;
@@ -158,18 +137,54 @@ void GLRender::DrawModel(const IModel& model) {
     if (shader_result == shaders_.end()) {
         std::stringstream message;
         message << "Could not find shader, \"" << model.shader_name();
-        message << ",\" to render mesh";
+        message << "\" to render mesh";
         log_.Error(message.str());
         return;
     }
     glUseProgram(shader_result->second.shader_id);
 
-    auto& model_info = mesh_result->second;
-    glBindBuffer(GL_ARRAY_BUFFER, model_info.position_buffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model_info.index_buffer);
-    glBindVertexArray(model_info.vao);
+    auto& mesh_info = mesh_result->second;
+    // glBindBuffer(GL_ARRAY_BUFFER, mesh_info.position_buffer);
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_info.index_buffer);
+    // glBindVertexArray(mesh_info.vao);
 
     auto& shader = shader_result->second;
+    shader.SetUniformValue("projection",
+                           [this](GLint location) {
+                            glUniformMatrix4fv(location,
+                                               1,
+                                               GL_FALSE,
+                                               this->camera_.projection.data());
+                            this->ErrorCheck("projection matrix");
+                           });
+    Matrix view = Matrix::Identity();
+    // TODO: Rotations
+    view = view * Matrix::Translate(camera_.position.i(),
+                                    camera_.position.j(),
+                                    camera_.position.k());
+    auto model_translate = Matrix::Translate(model.position().i(),
+                                             model.position().j(),
+                                             model.position().k());
+    auto model_rotate = Matrix::RotateX(model.rotation().i()) *
+                        Matrix::RotateZ(model.rotation().k()) *
+                        Matrix::RotateY(model.rotation().j());
+    auto model_matrix = model_translate * model_rotate;
+    auto modelview = model_matrix * view;
+    shader.SetUniformValue("modelview",
+                           [&modelview, this](GLint location) {
+                            glUniformMatrix4fv(location,
+                                               1,
+                                               GL_FALSE,
+                                               modelview.data());
+                            this->ErrorCheck("modelview matrix");
+                           });
+    glPointSize(100.0f);
+    glDrawArrays(GL_POINTS, 0, 1);
+    // glDrawElements(GL_TRIANGLES,
+    //                mesh_info.n_faces,
+    //                GL_UNSIGNED_INT,
+    //                NULL);
+    ErrorCheck("draw elements");
 }
 
 //
@@ -217,6 +232,14 @@ bool GLRender::Shader::SetUniformValue(const std::string& uniform,
     return true;
 }
 
+GLRender::Camera::Camera()
+    : projection {
+        Matrix::Projection(ToRadians(90), 4.0 / 3.0, 1.0, 100000.0)
+      },
+      position { Vec3 { 0, 0, 0 } },
+      direction { Vec3 { 0, 0, -1 } }
+{}
+
 void GLRender::ErrorCheck(const std::string& message) {
 DEBUG(
         GLenum err;
@@ -249,77 +272,153 @@ DEBUG(
         })
 }
 
+void GLRender::AddPrimitive() {
+    GLuint position_buffer, index_buffer;
+}
+
 bool GLRender::ImportMeshes(const Data& data) {
+    AddPrimitive();
     for (auto i = 0; i < data.mesh_size(); ++i) {
         auto mesh = data.mesh(i);
 
-        GLuint position_buffer;
-        glGenBuffers(1, &position_buffer);
-        ErrorCheck("Gen position buffer");
+        auto mesh_result = meshes_.find(mesh.name());
+        if (mesh_result != meshes_.end()) {
+            log_.Error(mesh.name() + " already exists! Skipping...");
+            continue;
+        }
+
+        GLuint position_buffer, index_buffer;
+        glGenBuffers(1, &position_buffer); ErrorCheck("Gen position buffer");
+        glGenBuffers(1, &index_buffer); ErrorCheck("Gen index buffer");
 
         glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
-        ErrorCheck("Bind position buffer");
+        ErrorCheck("Bind array buffer");
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
+        ErrorCheck("Bind element buffer");
 
-        auto positions = new float[mesh.vertex_size() * 8];
-        for (auto j = 0; j < mesh.vertex_size(); j += 8) {
-            positions[j + 0] = mesh.vertex(j).x();
-            positions[j + 1] = mesh.vertex(j).y();
-            positions[j + 2] = mesh.vertex(j).z();
-            positions[j + 3] = mesh.vertex(j).i();
-            positions[j + 4] = mesh.vertex(j).j();
-            positions[j + 5] = mesh.vertex(j).k();
-            positions[j + 6] = mesh.vertex(j).u();
-            positions[j + 7] = mesh.vertex(j).v();
+        auto n_positions = 8 * mesh.vertex_size();
+        auto positions = new float[n_positions];
+        auto n_faces = 3 * mesh.face_size();
+        auto faces = new unsigned int[n_faces];
+
+        for (auto j = 0; j < mesh.vertex_size(); ++j) {
+            positions[(j * 8) + 0] = mesh.vertex(j).x();
+            positions[(j * 8) + 1] = mesh.vertex(j).y();
+            positions[(j * 8) + 2] = mesh.vertex(j).z();
+            positions[(j * 8) + 3] = mesh.vertex(j).i();
+            positions[(j * 8) + 4] = mesh.vertex(j).j();
+            positions[(j * 8) + 5] = mesh.vertex(j).k();
+            positions[(j * 8) + 6] = mesh.vertex(j).u();
+            positions[(j * 8) + 7] = mesh.vertex(j).v();
         }
+
+        for (auto j = 0; j < mesh.face_size(); ++j) {
+            faces[(j * 3) + 0] = mesh.face(j).a();
+            faces[(j * 3) + 1] = mesh.face(j).b();
+            faces[(j * 3) + 2] = mesh.face(j).c();
+        }
+
         glBufferData(GL_ARRAY_BUFFER,
-                     sizeof(float) * 8 * mesh.vertex_size(),
+                     sizeof(float) * n_positions,
                      positions,
                      GL_STATIC_DRAW);
-        ErrorCheck("Position buffer data");
-        delete[] positions;
-
-        GLuint index_buffer;
-        glGenBuffers(1, &index_buffer);
-        ErrorCheck("Gen index buffer");
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
-        ErrorCheck("Bind index buffer");
-
-        auto indices = new unsigned int[mesh.face_size() * 3];
-        for (auto j = 0; j < mesh.face_size(); j += 3) {
-            indices[j + 0] = mesh.face(j).a();
-            indices[j + 1] = mesh.face(j).b();
-            indices[j + 2] = mesh.face(j).c();
-        }
+        ErrorCheck("Array buffer data");
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     sizeof(unsigned int) * 3 * mesh.face_size(),
-                     indices,
+                     sizeof(unsigned int) * n_faces,
+                     faces,
                      GL_STATIC_DRAW);
-        delete[] indices;
+        ErrorCheck("Element buffer data");
 
         auto vao = GenerateVertexArrayObject();
 
-        auto mesh_result = meshes_.find(mesh.name());
-        if (mesh_result != meshes_.end()) {
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-
-            glDeleteBuffers(1, &mesh_result->second.position_buffer);
-            glDeleteBuffers(1, &mesh_result->second.index_buffer);
-            glDeleteVertexArrays(1, &mesh_result->second.vao);
-        }
         meshes_[mesh.name()].position_buffer = position_buffer;
         meshes_[mesh.name()].index_buffer = index_buffer;
         meshes_[mesh.name()].vao = vao;
-        meshes_[mesh.name()].n_faces = mesh.face_size() * 3;
+        meshes_[mesh.name()].n_faces = n_faces;
+
+        delete[] positions;
+        delete[] faces;
+
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     return true;
 }
 
+// bool GLRender::ImportMeshes(const Data& data) {
+//     for (auto i = 0; i < data.mesh_size(); ++i) {
+//         auto mesh = data.mesh(i);
+
+//         GLuint position_buffer;
+//         glGenBuffers(1, &position_buffer);
+//         ErrorCheck("Gen position buffer");
+
+//         glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
+//         ErrorCheck("Bind position buffer");
+
+//         auto positions = new float[mesh.vertex_size() * 8];
+//         for (auto j = 0; j < mesh.vertex_size(); ++j) {
+//             positions[(j * 8) + 0] = mesh.vertex(j).x();
+//             positions[(j * 8) + 1] = mesh.vertex(j).y();
+//             positions[(j * 8) + 2] = mesh.vertex(j).z();
+//             positions[(j * 8) + 3] = mesh.vertex(j).i();
+//             positions[(j * 8) + 4] = mesh.vertex(j).j();
+//             positions[(j * 8) + 5] = mesh.vertex(j).k();
+//             positions[(j * 8) + 6] = mesh.vertex(j).u();
+//             positions[(j * 8) + 7] = mesh.vertex(j).v();
+//         }
+//         glBufferData(GL_ARRAY_BUFFER,
+//                      sizeof(float) * 8 * mesh.vertex_size(),
+//                      positions,
+//                      GL_STATIC_DRAW);
+//         ErrorCheck("Position buffer data");
+//         delete[] positions;
+
+//         GLuint index_buffer;
+//         glGenBuffers(1, &index_buffer);
+//         ErrorCheck("Gen index buffer");
+
+//         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
+//         ErrorCheck("Bind index buffer");
+
+//         auto indices = new unsigned int[mesh.face_size() * 3];
+//         for (auto j = 0; j < mesh.face_size(); ++j) {
+//             indices[(j * 3) + 0] = mesh.face(j).a();
+//             indices[(j * 3) + 1] = mesh.face(j).b();
+//             indices[(j * 3) + 2] = mesh.face(j).c();
+//         }
+//         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+//                      sizeof(unsigned int) * 3 * mesh.face_size(),
+//                      indices,
+//                      GL_STATIC_DRAW);
+//         delete[] indices;
+
+//         auto vao = GenerateVertexArrayObject();
+
+//         auto mesh_result = meshes_.find(mesh.name());
+//         if (mesh_result != meshes_.end()) {
+//             glBindBuffer(GL_ARRAY_BUFFER, 0);
+//             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//             glBindVertexArray(0);
+
+//             glDeleteBuffers(1, &mesh_result->second.position_buffer);
+//             glDeleteBuffers(1, &mesh_result->second.index_buffer);
+//             glDeleteVertexArrays(1, &mesh_result->second.vao);
+//         }
+//         meshes_[mesh.name()].position_buffer = position_buffer;
+//         meshes_[mesh.name()].index_buffer = index_buffer;
+//         meshes_[mesh.name()].vao = vao;
+//         meshes_[mesh.name()].n_faces = mesh.face_size() * 3;
+//     }
+
+//     return true;
+// }
+
 GLuint GLRender::GenerateVertexArrayObject() {
     GLuint vao;
+
     glGenVertexArrays(1, &vao); ErrorCheck("Gen vertex array");
     glBindVertexArray(vao); ErrorCheck("Bind vertex array");
 
@@ -351,6 +450,7 @@ GLuint GLRender::GenerateVertexArrayObject() {
                           sizeof(float) * 8,
                           (GLvoid*) (sizeof(float) * 6));
     ErrorCheck("Vertex attrib opinter normal");
+
     return vao;
 }
 
@@ -361,6 +461,7 @@ bool GLRender::ImportShaders(const Data& data) {
     };
 
     std::unordered_map<std::string, ShaderData> shaders;
+
     for (auto i = 0; i < data.shader_size(); ++i) {
         if (data.shader(i).type() == "fragment") {
             auto name = data.shader(i).name();
@@ -376,13 +477,19 @@ bool GLRender::ImportShaders(const Data& data) {
 
     for (auto& shader : shaders) {
         DEBUG(log_.Message("Processing " + shader.first));
+        auto shader_result = shaders_.find(shader.first);
+        if (shader_result != shaders_.end()) {
+            log_.Error(shader.first + " already exists! Skipping...");
+            continue;
+        }
+
         if (shader.second.vert_source == "" ||
             shader.second.frag_source == "") {
-            std::stringstream err_msg;
-            err_msg << "Do not have both vertex and fragment shaders for "
-                    << "shader, \"" << shader.first << "\"" << std::endl;
-                    log_.Error(err_msg.str());
-            continue;
+            std::stringstream error_message;
+            error_message << "Do not have both vertex and ";
+            error_message << "fragment shaders for shader, \"";
+            error_message << shader.first << "\"";
+            log_.Error(error_message.str());
         }
 
         GLuint vert_id, frag_id;
@@ -398,20 +505,12 @@ bool GLRender::ImportShaders(const Data& data) {
 
         GLuint shader_id;
         if (!CreateShader(vert_id, frag_id, &shader_id)) {
-            log_.Error("Could not create shader shader");
+            log_.Error("Could not create shader");
             glDeleteShader(vert_id);
             glDeleteShader(frag_id);
             continue;
         }
 
-        auto shader_result = shaders_.find(shader.first);
-        if (shader_result != shaders_.end()) {
-            glUseProgram(0);
-
-            glDeleteShader(shader_result->second.vert_id);
-            glDeleteShader(shader_result->second.frag_id);
-            glDeleteProgram(shader_result->second.shader_id);
-        }
         shaders_[shader.first].vert_id = vert_id;
         shaders_[shader.first].frag_id = frag_id;
         shaders_[shader.first].shader_id = shader_id;
@@ -446,18 +545,21 @@ bool GLRender::CompileShader(const std::string& source,
     glCompileShader(shader);
     ErrorCheck("Compile shader");
 
-    GLint success { 0 };
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (success != GL_TRUE) {
-        DEBUG({
+    DEBUG({
+        GLint log_size;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_size);
+        if (log_size) {
             std::string error_log;
-            GLint log_size;
-            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_size);
             error_log.reserve(log_size);
             glGetShaderInfoLog(shader, log_size, &log_size, &error_log[0]);
             log_.Error(type_str);
             log_.Error(error_log);
-        })
+        }
+    })
+
+    GLint success { GL_FALSE };
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+    if (success != GL_TRUE) {
         glDeleteShader(shader);
         return false;
     }
@@ -487,6 +589,9 @@ bool GLRender::CreateShader(GLuint vert_id,
     glBindAttribLocation(shader, ATTRIB_LOC_NORMAL, "in_normal");
     ErrorCheck("Bind in_normal attrib location");
 
+    glBindAttribLocation(shader, ATTRIB_LOC_UV, "in_uv");
+    ErrorCheck("Bind in_uv attrib location");
+
     if (!LinkShader(shader)) {
         log_.Error("Could not link shader shader");
         glDetachShader(shader, vert_id);
@@ -504,21 +609,24 @@ bool GLRender::LinkShader(GLuint shader_id) {
     glLinkProgram(shader_id);
     ErrorCheck("Link shader");
 
+    DEBUG({
+        GLint log_size;
+        glGetProgramiv(shader_id, GL_INFO_LOG_LENGTH, &log_size);
+        if (log_size) {
+            std::string error_message;
+            error_message.reserve(log_size);
+            glGetProgramInfoLog(shader_id,
+                                log_size,
+                                &log_size,
+                                &error_message[0]);
+            log_.Error("Shader linking");
+            log_.Error(error_message.c_str());
+        }
+    })
+
     GLint success = 0;
     glGetProgramiv(shader_id, GL_LINK_STATUS, &success);
     if (success != GL_TRUE) {
-        DEBUG({
-            std::string error_message;
-            GLint length = 0;
-            glGetProgramiv(shader_id, GL_INFO_LOG_LENGTH, &length);
-            error_message.reserve(length);
-            glGetProgramInfoLog(shader_id,
-                                length,
-                                &length,
-                                &error_message[0]);
-            log_.Error("Shader shader");
-            log_.Error(error_message.c_str());
-        })
         log_.Error("Could not link shader");
         return false;
     }

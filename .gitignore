@@ -1,4 +1,5 @@
 bin/
 lib/
+example/
 include/SDL2
 .DS_Store

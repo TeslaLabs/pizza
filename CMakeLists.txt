@@ -36,21 +36,26 @@ set(PIZZA_SOURCES
 
     "window/sdlwindow.cc"
     )
+add_library(engine ${PIZZA_SOURCES})
+target_link_libraries(engine protobuf)
 
 set(MCOMP_SOURCES
     "mcomp/main.cc"
     "mcomp/mcomp.cc"
     )
-
-add_library(engine ${PIZZA_SOURCES})
-target_link_libraries(engine protobuf)
-
 add_executable(mcomp ${MCOMP_SOURCES})
 target_link_libraries(mcomp engine)
+
+set(EXAMPLE_SOURCES
+    "example/main.cc"
+    )
+add_executable(example ${EXAMPLE_SOURCES})
 
 if (APPLE)
     set_target_properties(engine PROPERTIES LINK_FLAGS
         "-F {$CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
     set_target_properties(mcomp PROPERTIES LINK_FLAGS
+        "-F ${CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
+    set_target_properties(example PROPERTIES LINK_FLAGS
         "-F ${CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
 endif()

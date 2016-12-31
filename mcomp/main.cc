@@ -1,12 +1,13 @@
 #include <cstdio>
 #include <sstream>
 #include <unordered_map>
+#include <gl/gl_headers.h>
 #include "mcomp.h"
 #include "../engine/engine.h"
 #include "../event/sdlevent.h"
 #include "../log/termlog.h"
+#include "../math/math.h"
 #include "../math/matrix.h"
-#include "../math/vec3.h"
 #include "../math/vec4.h"
 #include "../render/glrender.h"
 #include "../window/sdlwindow.h"

@@ -9,6 +9,7 @@
 #include "irender.h"
 #include "../log/ilog.h"
 #include "../math/matrix.h"
+#include "../math/vec3.h"
 #include "../proto/data.pb.h"
 
 class GLRender : public IRender {
@@ -40,8 +41,10 @@ class GLRender : public IRender {
     };
 
     struct Camera {
+        Matrix projection;
         Vec3 position;
         Vec3 direction;
+        Camera();
     };
 
     struct Mesh {
@@ -59,20 +62,26 @@ class GLRender : public IRender {
     std::unordered_map<std::string, Mesh> meshes_;
     bool assets_loaded_;
 
-
 public:
     GLRender(ILog&);
     virtual ~GLRender() override;
     virtual void Update() override;
     virtual void LoadData(const std::string& filepath) override;
     virtual void UnloadData() override;
-    virtual void CameraPosition(const Vec3& position) override;
-    virtual void CameraDirection(const Vec3& location) override;
+    virtual void PrintData() override;
+    virtual void SetBackgroundColor(float r,
+                                    float g,
+                                    float b,
+                                    float a) override;
+    virtual void SetCameraProjection(const Matrix& projection) override;
+    virtual void SetCameraPosition(const Vec3& position) override;
+    virtual void SetCameraDirection(const Vec3& location) override;
     virtual void CameraLookat(const Vec3& location) override;
     virtual void DrawModel(const IModel& model) override;
 
 private:
     void ErrorCheck(const std::string& message);
+    void AddPrimitive();
     bool ImportMeshes(const Data& data);
     GLuint GenerateVertexArrayObject();
     bool ImportShaders(const Data& data);

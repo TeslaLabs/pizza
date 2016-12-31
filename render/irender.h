@@ -11,8 +11,11 @@ public:
     virtual void Update() = 0;
     virtual void LoadData(const std::string& filepath) = 0;
     virtual void UnloadData() = 0;
-    virtual void CameraPosition(const Vec3& position) = 0;
-    virtual void CameraDirection(const Vec3& location) = 0;
+    virtual void PrintData() = 0;
+    virtual void SetBackgroundColor(float r, float g, float b, float a) = 0;
+    virtual void SetCameraProjection(const Matrix& projection) = 0;
+    virtual void SetCameraPosition(const Vec3& position) = 0;
+    virtual void SetCameraDirection(const Vec3& location) = 0;
     virtual void CameraLookat(const Vec3& location) = 0;
     virtual void DrawModel(const IModel& model) = 0;
 };

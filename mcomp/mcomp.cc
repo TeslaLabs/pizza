@@ -1,5 +1,6 @@
 #include "mcomp.h"
 #include <cstdio>
+#include <sstream>
 #include "../event/ievent.h"
 #include "../math/math.h"
 #include "../render/irender.h"
@@ -15,20 +16,18 @@ Mcomp::Mcomp(IEvent& event,
       render_ { render }
 {
     event_.Set("Backspace_down", [this] { this->event_.Call("quit"); });
-    event_.Set("L_down", [this] { this->render_.LoadData("r"); });
-    event_.Set("U_down", [this] { this->render_.UnloadData(); });
+    event_.Set("P_down", [this] { this->render_.PrintData(); });
 
-    render_.CameraPosition({ 0, 0, 1 });
-    render_.CameraDirection({ 0, 0, -1 });
-
-    auto m = Matrix::Identity();
-    m.Translate(0, 0, -1);
-    models_.push_back(Model { "Cube", "default" });
+    render_.LoadData("r");
+    models_.push_back(Model { "Cube", "basic" });
 
     window_.Show();
 }
 
 void Mcomp::Update() {
+    for (auto& model : models_) {
+        render_.DrawModel(model);
+    }
     render_.Update();
     window_.Update();
 }

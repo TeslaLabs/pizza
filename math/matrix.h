@@ -19,19 +19,19 @@ public:
     float* data();
     float Get(int row, int col) const;
     void Set(int row, int col, float value);
+    void Print() const;
     const float& operator[](int index) const;
     float& operator[](int index);
     Matrix operator*(const Matrix& m) const;
     Matrix operator*(float value) const;
     Vec4 operator*(const Vec4& v) const;
-    void Translate(float x, float y, float z);
-    void Translate(const Vec3& v);
-    void Scale(float x, float y, float z);
-    void Scale(const Vec3& v);
-    void Rotate(float x, float y, float z);
-    void Rotate(const Vec3& v);
     static Matrix Identity();
     static Matrix Projection(float fovy, float aspect, float near, float far);
+    static Matrix Translate(float x, float y, float z);
+    static Matrix RotateX(float x);
+    static Matrix RotateY(float y);
+    static Matrix RotateZ(float z);
+    static Matrix Scale(float x, float y, float z);
 };
 
 #endif

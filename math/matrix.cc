@@ -1,9 +1,11 @@
 #include "matrix.h"
 #include <cmath>
-#include <cstring>
 #include "math.h"
 #include "vec3.h"
 #include "vec4.h"
+
+#include <cstdio>
+#include <string>
 
 Matrix::Matrix() {
     for (auto i = 0; i < 16; ++i) data_[i] = 0;
@@ -78,6 +80,20 @@ void Matrix::Set(int row, int col, float value) {
     data_[(4 * col) + row] = value;
 }
 
+void Matrix::Print() const {
+    std::string format;
+    format = "%.1f %.1f %.1f %.1f\n";
+    format += "%.1f %.1f %.1f %.1f\n";
+    format += "%.1f %.1f %.1f %.1f\n";
+    format += "%.1f %.1f %.1f %.1f\n";
+    std::printf(format.c_str(),
+                Get(0, 0), Get(0, 1), Get(0, 2), Get(0, 3),
+                Get(1, 0), Get(1, 1), Get(1, 2), Get(1, 3),
+                Get(2, 0), Get(2, 1), Get(2, 2), Get(2, 3),
+                Get(3, 0), Get(3, 1), Get(3, 2), Get(3, 3));
+    std::puts("");
+}
+
 const float& Matrix::operator[](int index) const {
     return data_[index];
 }
@@ -126,31 +142,6 @@ Vec4 Matrix::operator*(const Vec4& v) const {
     return { i, j, k, w };
 }
 
-void Matrix::Translate(float x, float y, float z) {
-    auto translate = Matrix::Identity();
-    translate.Set(0, 3, x);
-    translate.Set(1, 3, y);
-    translate.Set(2, 3, z);
-    Matrix original { *this };
-}
-
-void Matrix::Translate(const Vec3& v) {
-    return Translate(v.i(), v.j(), v.k());
-}
-
-void Matrix::Rotate(float x, float y, float z) {
-
-}
-
-void Matrix::Rotate(const Vec3& v) {
-}
-
-void Matrix::Scale(float x, float y, float z) {
-}
-
-void Matrix::Scale(const Vec3& v) {
-}
-
 Matrix Matrix::Identity() {
     return Matrix {
         1, 0, 0, 0,
@@ -168,5 +159,54 @@ Matrix Matrix::Projection(float fovy, float aspect, float near, float far) {
     out.Set(2, 2, (far + near) / (near - far));
     out.Set(2, 3, (2 * far * near) / (near - far));
     out.Set(3, 2, -1);
+    return out;
+}
+
+Matrix Matrix::Translate(float x, float y, float z) {
+    auto out = Identity();
+    out.Set(0, 3, x);
+    out.Set(1, 3, y);
+    out.Set(2, 3, z);
+    return out;
+}
+
+Matrix Matrix::RotateX(float x) {
+    auto x_rot = Identity();
+    auto x_sin = static_cast<float>(std::sin(x));
+    auto x_cos = static_cast<float>(std::cos(x));
+    x_rot.Set(1, 1, x_cos);
+    x_rot.Set(1, 2, -x_sin);
+    x_rot.Set(2, 1, x_sin);
+    x_rot.Set(2, 2, x_cos);
+    return x_rot;
+}
+
+Matrix Matrix::RotateY(float y) {
+    auto y_rot = Identity();
+    auto y_sin = static_cast<float>(std::sin(y));
+    auto y_cos = static_cast<float>(std::cos(y));
+    y_rot.Set(0, 0, y_cos);
+    y_rot.Set(0, 2, y_sin);
+    y_rot.Set(2, 0, -y_sin);
+    y_rot.Set(2, 2, y_cos);
+    return y_rot;
+}
+
+Matrix Matrix::RotateZ(float z) {
+    auto z_rot = Identity();
+    auto z_sin = static_cast<float>(std::sin(z));
+    auto z_cos = static_cast<float>(std::cos(z));
+    z_rot.Set(0, 0, z_cos);
+    z_rot.Set(0, 1, -z_sin);
+    z_rot.Set(1, 0, z_sin);
+    z_rot.Set(1, 1, z_cos);
+    return z_rot;
+}
+
+Matrix Matrix::Scale(float x, float y, float z) {
+    auto out = Identity();
+    out.Set(0, 0, x);
+    out.Set(1, 1, y);
+    out.Set(2, 2, z);
     return out;
 }

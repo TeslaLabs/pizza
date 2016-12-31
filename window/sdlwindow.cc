@@ -18,21 +18,21 @@ SDLWindow::SDLWindow(ILog& log)
 {
     if (!INITIALIZED) {
         if (SDL_Init(SDL_INIT_VIDEO)) {
-            std::stringstream err_msg;
-            err_msg << "Could not initialize: " << SDL_GetError() << std::endl;
-            log_.Error(err_msg.str().c_str());
+            std::stringstream error_message;
+            error_message << "Could not initialize: " << SDL_GetError();
+            log_.Error(error_message.str().c_str());
         }
         INITIALIZED = true;
 
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-        if (SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3)) {
+        if (SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2)) {
             log_.Error("Error setting OpenGL major version");
         }
-        if (SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2)) {
+        if (SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1)) {
             log_.Error("Error setting OpenGL minor version");
         }
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-                            SDL_GL_CONTEXT_PROFILE_CORE);
+        // SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
+        //                     SDL_GL_CONTEXT_PROFILE_CORE);
         window_handle_ = SDL_CreateWindow(title_.c_str(),
                                           SDL_WINDOWPOS_UNDEFINED,
                                           SDL_WINDOWPOS_UNDEFINED,
@@ -44,6 +44,10 @@ SDLWindow::SDLWindow(ILog& log)
         }
 
         glcontext_ = SDL_GL_CreateContext(window_handle_);
+
+        if (glcontext_ == nullptr) {
+            log_.Error("Could not create OpenGL context");
+        }
     }
 }
 
