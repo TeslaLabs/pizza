@@ -2,5 +2,7 @@ bin/
 lib/
 example/
 include/SDL2
-proto/*.pb.*
+proto/**
+!proto/data.proto
+!proto/Makefile
 .DS_Store
