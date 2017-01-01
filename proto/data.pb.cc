@@ -16,53 +16,31 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
+class Mesh_VertexDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<Mesh_Vertex> {};
+Mesh_VertexDefaultTypeInternal _Mesh_Vertex_default_instance_;
+class Mesh_FaceDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<Mesh_Face> {};
+Mesh_FaceDefaultTypeInternal _Mesh_Face_default_instance_;
+class MeshDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<Mesh> {};
+MeshDefaultTypeInternal _Mesh_default_instance_;
+class ShaderDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<Shader> {};
+ShaderDefaultTypeInternal _Shader_default_instance_;
+class DataDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<Data> {};
+DataDefaultTypeInternal _Data_default_instance_;
 
 namespace {
 
-const ::google::protobuf::Descriptor* Mesh_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Mesh_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Mesh_Vertex_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Mesh_Vertex_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Mesh_Face_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Mesh_Face_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Shader_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Shader_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Data_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Data_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[5];
 
 }  // namespace
 
 
-void protobuf_AssignDesc_data_2eproto() GOOGLE_ATTRIBUTE_COLD;
-void protobuf_AssignDesc_data_2eproto() {
-  protobuf_AddDesc_data_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "data.proto");
-  GOOGLE_CHECK(file != NULL);
-  Mesh_descriptor_ = file->message_type(0);
-  static const int Mesh_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, vertex_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, face_),
-  };
-  Mesh_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      Mesh_descriptor_,
-      Mesh::internal_default_instance(),
-      Mesh_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(Mesh),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, _internal_metadata_));
-  Mesh_Vertex_descriptor_ = Mesh_descriptor_->nested_type(0);
-  static const int Mesh_Vertex_offsets_[8] = {
+const ::google::protobuf::uint32* protobuf_Offsets_data_2eproto() GOOGLE_ATTRIBUTE_COLD;
+const ::google::protobuf::uint32* protobuf_Offsets_data_2eproto() {
+  static const ::google::protobuf::uint32 offsets[] = {
+    ~0u,  // no _has_bits_
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Vertex, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Vertex, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Vertex, y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Vertex, z_),
@@ -71,140 +49,119 @@ void protobuf_AssignDesc_data_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Vertex, k_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Vertex, u_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Vertex, v_),
-  };
-  Mesh_Vertex_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      Mesh_Vertex_descriptor_,
-      Mesh_Vertex::internal_default_instance(),
-      Mesh_Vertex_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(Mesh_Vertex),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Vertex, _internal_metadata_));
-  Mesh_Face_descriptor_ = Mesh_descriptor_->nested_type(1);
-  static const int Mesh_Face_offsets_[3] = {
+    ~0u,  // no _has_bits_
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Face, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Face, a_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Face, b_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Face, c_),
-  };
-  Mesh_Face_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      Mesh_Face_descriptor_,
-      Mesh_Face::internal_default_instance(),
-      Mesh_Face_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(Mesh_Face),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh_Face, _internal_metadata_));
-  Shader_descriptor_ = file->message_type(1);
-  static const int Shader_offsets_[3] = {
+    ~0u,  // no _has_bits_
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, vertex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, face_),
+    ~0u,  // no _has_bits_
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Shader, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Shader, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Shader, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Shader, source_),
-  };
-  Shader_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      Shader_descriptor_,
-      Shader::internal_default_instance(),
-      Shader_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(Shader),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Shader, _internal_metadata_));
-  Data_descriptor_ = file->message_type(2);
-  static const int Data_offsets_[2] = {
+    ~0u,  // no _has_bits_
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Data, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Data, mesh_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Data, shader_),
   };
-  Data_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      Data_descriptor_,
-      Data::internal_default_instance(),
-      Data_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(Data),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Data, _internal_metadata_));
+  return offsets;
 }
+
+static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+  { 0, -1, sizeof(Mesh_Vertex)},
+  { 12, -1, sizeof(Mesh_Face)},
+  { 19, -1, sizeof(Mesh)},
+  { 26, -1, sizeof(Shader)},
+  { 33, -1, sizeof(Data)},
+};
+
+static const ::google::protobuf::internal::DefaultInstanceData file_default_instances[] = {
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_Mesh_Vertex_default_instance_), NULL},
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_Mesh_Face_default_instance_), NULL},
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_Mesh_default_instance_), NULL},
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_Shader_default_instance_), NULL},
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_Data_default_instance_), NULL},
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
+void protobuf_AssignDescriptors() {
+  protobuf_AddDesc_data_2eproto();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "data.proto", schemas, file_default_instances, protobuf_Offsets_data_2eproto(), factory,
+      file_level_metadata, NULL, NULL);
+}
+
 void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_data_2eproto);
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
 }
 
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      Mesh_descriptor_, Mesh::internal_default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      Mesh_Vertex_descriptor_, Mesh_Vertex::internal_default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      Mesh_Face_descriptor_, Mesh_Face::internal_default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      Shader_descriptor_, Shader::internal_default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      Data_descriptor_, Data::internal_default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 5);
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_data_2eproto() {
-  Mesh_default_instance_.Shutdown();
-  delete Mesh_reflection_;
-  Mesh_Vertex_default_instance_.Shutdown();
-  delete Mesh_Vertex_reflection_;
-  Mesh_Face_default_instance_.Shutdown();
-  delete Mesh_Face_reflection_;
-  Shader_default_instance_.Shutdown();
-  delete Shader_reflection_;
-  Data_default_instance_.Shutdown();
-  delete Data_reflection_;
+  _Mesh_Vertex_default_instance_.Shutdown();
+  delete file_level_metadata[0].reflection;
+  _Mesh_Face_default_instance_.Shutdown();
+  delete file_level_metadata[1].reflection;
+  _Mesh_default_instance_.Shutdown();
+  delete file_level_metadata[2].reflection;
+  _Shader_default_instance_.Shutdown();
+  delete file_level_metadata[3].reflection;
+  _Data_default_instance_.Shutdown();
+  delete file_level_metadata[4].reflection;
 }
 
 void protobuf_InitDefaults_data_2eproto_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::google::protobuf::internal::GetEmptyString();
-  Mesh_default_instance_.DefaultConstruct();
-  Mesh_Vertex_default_instance_.DefaultConstruct();
-  Mesh_Face_default_instance_.DefaultConstruct();
-  ::google::protobuf::internal::GetEmptyString();
-  Shader_default_instance_.DefaultConstruct();
-  Data_default_instance_.DefaultConstruct();
-  Mesh_default_instance_.get_mutable()->InitAsDefaultInstance();
-  Mesh_Vertex_default_instance_.get_mutable()->InitAsDefaultInstance();
-  Mesh_Face_default_instance_.get_mutable()->InitAsDefaultInstance();
-  Shader_default_instance_.get_mutable()->InitAsDefaultInstance();
-  Data_default_instance_.get_mutable()->InitAsDefaultInstance();
+  ::google::protobuf::internal::InitProtobufDefaults();
+  _Mesh_Vertex_default_instance_.DefaultConstruct();
+  _Mesh_Face_default_instance_.DefaultConstruct();
+  _Mesh_default_instance_.DefaultConstruct();
+  _Shader_default_instance_.DefaultConstruct();
+  _Data_default_instance_.DefaultConstruct();
 }
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_data_2eproto_once_);
 void protobuf_InitDefaults_data_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_InitDefaults_data_2eproto_once_,
-                 &protobuf_InitDefaults_data_2eproto_impl);
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_InitDefaults_data_2eproto_impl);
 }
 void protobuf_AddDesc_data_2eproto_impl() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
   protobuf_InitDefaults_data_2eproto();
+  static const char descriptor[] = {
+      "\n\ndata.proto\"\327\001\n\004Mesh\022\014\n\004name\030\001 \001(\t\022\034\n\006v"
+      "ertex\030\002 \003(\0132\014.Mesh.Vertex\022\030\n\004face\030\003 \003(\0132"
+      "\n.Mesh.Face\032`\n\006Vertex\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 "
+      "\001(\002\022\t\n\001z\030\003 \001(\002\022\t\n\001i\030\004 \001(\002\022\t\n\001j\030\005 \001(\002\022\t\n\001"
+      "k\030\007 \001(\002\022\t\n\001u\030\010 \001(\002\022\t\n\001v\030\t \001(\002\032\'\n\004Face\022\t\n"
+      "\001a\030\001 \001(\r\022\t\n\001b\030\002 \001(\r\022\t\n\001c\030\003 \001(\r\"4\n\006Shader"
+      "\022\014\n\004type\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\016\n\006source\030\003"
+      " \001(\t\"4\n\004Data\022\023\n\004mesh\030\001 \003(\0132\005.Mesh\022\027\n\006sha"
+      "der\030\002 \003(\0132\007.Shaderb\006proto3"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\ndata.proto\"\327\001\n\004Mesh\022\014\n\004name\030\001 \001(\t\022\034\n\006v"
-    "ertex\030\002 \003(\0132\014.Mesh.Vertex\022\030\n\004face\030\003 \003(\0132"
-    "\n.Mesh.Face\032`\n\006Vertex\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 "
-    "\001(\002\022\t\n\001z\030\003 \001(\002\022\t\n\001i\030\004 \001(\002\022\t\n\001j\030\005 \001(\002\022\t\n\001"
-    "k\030\007 \001(\002\022\t\n\001u\030\010 \001(\002\022\t\n\001v\030\t \001(\002\032\'\n\004Face\022\t\n"
-    "\001a\030\001 \001(\r\022\t\n\001b\030\002 \001(\r\022\t\n\001c\030\003 \001(\r\"4\n\006Shader"
-    "\022\014\n\004type\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\016\n\006source\030\003"
-    " \001(\t\"4\n\004Data\022\023\n\004mesh\030\001 \003(\0132\005.Mesh\022\027\n\006sha"
-    "der\030\002 \003(\0132\007.Shaderb\006proto3", 346);
+      descriptor, 346);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "data.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_data_2eproto);
@@ -222,16 +179,6 @@ struct StaticDescriptorInitializer_data_2eproto {
   }
 } static_descriptor_initializer_data_2eproto_;
 
-namespace {
-
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD GOOGLE_ATTRIBUTE_NORETURN;
-static void MergeFromFail(int line) {
-  ::google::protobuf::internal::MergeFromFail(__FILE__, line);
-}
-
-}  // namespace
-
-
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -247,19 +194,20 @@ const int Mesh_Vertex::kVFieldNumber;
 
 Mesh_Vertex::Mesh_Vertex()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_data_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_data_2eproto();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:Mesh.Vertex)
 }
-
-void Mesh_Vertex::InitAsDefaultInstance() {
-}
-
 Mesh_Vertex::Mesh_Vertex(const Mesh_Vertex& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&x_, &from.x_,
+    reinterpret_cast<char*>(&v_) -
+    reinterpret_cast<char*>(&x_) + sizeof(v_));
   // @@protoc_insertion_point(copy_constructor:Mesh.Vertex)
 }
 
@@ -284,15 +232,13 @@ void Mesh_Vertex::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* Mesh_Vertex::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Mesh_Vertex_descriptor_;
+  return file_level_metadata[0].descriptor;
 }
 
 const Mesh_Vertex& Mesh_Vertex::default_instance() {
   protobuf_InitDefaults_data_2eproto();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<Mesh_Vertex> Mesh_Vertex_default_instance_;
 
 Mesh_Vertex* Mesh_Vertex::New(::google::protobuf::Arena* arena) const {
   Mesh_Vertex* n = new Mesh_Vertex;
@@ -304,27 +250,8 @@ Mesh_Vertex* Mesh_Vertex::New(::google::protobuf::Arena* arena) const {
 
 void Mesh_Vertex::Clear() {
 // @@protoc_insertion_point(message_clear_start:Mesh.Vertex)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(Mesh_Vertex, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<Mesh_Vertex*>(16)->f)
-#endif
-
-#define ZR_(first, last) do {\
-  ::memset(&(first), 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(x_, v_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
+  ::memset(&x_, 0, reinterpret_cast<char*>(&v_) -
+    reinterpret_cast<char*>(&x_) + sizeof(v_));
 }
 
 bool Mesh_Vertex::MergePartialFromCodedStream(
@@ -333,13 +260,13 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Mesh.Vertex)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional float x = 1;
+      // float x = 1;
       case 1: {
-        if (tag == 13) {
+        if (tag == 13u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -347,14 +274,12 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(21)) goto parse_y;
         break;
       }
 
-      // optional float y = 2;
+      // float y = 2;
       case 2: {
-        if (tag == 21) {
-         parse_y:
+        if (tag == 21u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -362,14 +287,12 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(29)) goto parse_z;
         break;
       }
 
-      // optional float z = 3;
+      // float z = 3;
       case 3: {
-        if (tag == 29) {
-         parse_z:
+        if (tag == 29u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -377,14 +300,12 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(37)) goto parse_i;
         break;
       }
 
-      // optional float i = 4;
+      // float i = 4;
       case 4: {
-        if (tag == 37) {
-         parse_i:
+        if (tag == 37u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -392,14 +313,12 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(45)) goto parse_j;
         break;
       }
 
-      // optional float j = 5;
+      // float j = 5;
       case 5: {
-        if (tag == 45) {
-         parse_j:
+        if (tag == 45u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -407,14 +326,12 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(61)) goto parse_k;
         break;
       }
 
-      // optional float k = 7;
+      // float k = 7;
       case 7: {
-        if (tag == 61) {
-         parse_k:
+        if (tag == 61u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -422,14 +339,12 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(69)) goto parse_u;
         break;
       }
 
-      // optional float u = 8;
+      // float u = 8;
       case 8: {
-        if (tag == 69) {
-         parse_u:
+        if (tag == 69u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -437,14 +352,12 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(77)) goto parse_v;
         break;
       }
 
-      // optional float v = 9;
+      // float v = 9;
       case 9: {
-        if (tag == 77) {
-         parse_v:
+        if (tag == 77u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -452,7 +365,6 @@ bool Mesh_Vertex::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
@@ -480,42 +392,42 @@ failure:
 void Mesh_Vertex::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Mesh.Vertex)
-  // optional float x = 1;
+  // float x = 1;
   if (this->x() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(1, this->x(), output);
   }
 
-  // optional float y = 2;
+  // float y = 2;
   if (this->y() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->y(), output);
   }
 
-  // optional float z = 3;
+  // float z = 3;
   if (this->z() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->z(), output);
   }
 
-  // optional float i = 4;
+  // float i = 4;
   if (this->i() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->i(), output);
   }
 
-  // optional float j = 5;
+  // float j = 5;
   if (this->j() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(5, this->j(), output);
   }
 
-  // optional float k = 7;
+  // float k = 7;
   if (this->k() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(7, this->k(), output);
   }
 
-  // optional float u = 8;
+  // float u = 8;
   if (this->u() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(8, this->u(), output);
   }
 
-  // optional float v = 9;
+  // float v = 9;
   if (this->v() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(9, this->v(), output);
   }
@@ -527,42 +439,42 @@ void Mesh_Vertex::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:Mesh.Vertex)
-  // optional float x = 1;
+  // float x = 1;
   if (this->x() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(1, this->x(), target);
   }
 
-  // optional float y = 2;
+  // float y = 2;
   if (this->y() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->y(), target);
   }
 
-  // optional float z = 3;
+  // float z = 3;
   if (this->z() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->z(), target);
   }
 
-  // optional float i = 4;
+  // float i = 4;
   if (this->i() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->i(), target);
   }
 
-  // optional float j = 5;
+  // float j = 5;
   if (this->j() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->j(), target);
   }
 
-  // optional float k = 7;
+  // float k = 7;
   if (this->k() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(7, this->k(), target);
   }
 
-  // optional float u = 8;
+  // float u = 8;
   if (this->u() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->u(), target);
   }
 
-  // optional float v = 9;
+  // float v = 9;
   if (this->v() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->v(), target);
   }
@@ -575,42 +487,42 @@ size_t Mesh_Vertex::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:Mesh.Vertex)
   size_t total_size = 0;
 
-  // optional float x = 1;
+  // float x = 1;
   if (this->x() != 0) {
     total_size += 1 + 4;
   }
 
-  // optional float y = 2;
+  // float y = 2;
   if (this->y() != 0) {
     total_size += 1 + 4;
   }
 
-  // optional float z = 3;
+  // float z = 3;
   if (this->z() != 0) {
     total_size += 1 + 4;
   }
 
-  // optional float i = 4;
+  // float i = 4;
   if (this->i() != 0) {
     total_size += 1 + 4;
   }
 
-  // optional float j = 5;
+  // float j = 5;
   if (this->j() != 0) {
     total_size += 1 + 4;
   }
 
-  // optional float k = 7;
+  // float k = 7;
   if (this->k() != 0) {
     total_size += 1 + 4;
   }
 
-  // optional float u = 8;
+  // float u = 8;
   if (this->u() != 0) {
     total_size += 1 + 4;
   }
 
-  // optional float v = 9;
+  // float v = 9;
   if (this->v() != 0) {
     total_size += 1 + 4;
   }
@@ -624,7 +536,7 @@ size_t Mesh_Vertex::ByteSizeLong() const {
 
 void Mesh_Vertex::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:Mesh.Vertex)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const Mesh_Vertex* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const Mesh_Vertex>(
           &from);
@@ -633,21 +545,14 @@ void Mesh_Vertex::MergeFrom(const ::google::protobuf::Message& from) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:Mesh.Vertex)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void Mesh_Vertex::MergeFrom(const Mesh_Vertex& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:Mesh.Vertex)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
-
-void Mesh_Vertex::UnsafeMergeFrom(const Mesh_Vertex& from) {
-  GOOGLE_DCHECK(&from != this);
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from.x() != 0) {
     set_x(from.x());
   }
@@ -685,11 +590,10 @@ void Mesh_Vertex::CopyFrom(const Mesh_Vertex& from) {
 // @@protoc_insertion_point(class_specific_copy_from_start:Mesh.Vertex)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool Mesh_Vertex::IsInitialized() const {
-
   return true;
 }
 
@@ -706,20 +610,132 @@ void Mesh_Vertex::InternalSwap(Mesh_Vertex* other) {
   std::swap(k_, other->k_);
   std::swap(u_, other->u_);
   std::swap(v_, other->v_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Mesh_Vertex::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Mesh_Vertex_descriptor_;
-  metadata.reflection = Mesh_Vertex_reflection_;
-  return metadata;
+  return file_level_metadata[0];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// Mesh_Vertex
 
-// -------------------------------------------------------------------
+// float x = 1;
+void Mesh_Vertex::clear_x() {
+  x_ = 0;
+}
+float Mesh_Vertex::x() const {
+  // @@protoc_insertion_point(field_get:Mesh.Vertex.x)
+  return x_;
+}
+void Mesh_Vertex::set_x(float value) {
+  
+  x_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Vertex.x)
+}
+
+// float y = 2;
+void Mesh_Vertex::clear_y() {
+  y_ = 0;
+}
+float Mesh_Vertex::y() const {
+  // @@protoc_insertion_point(field_get:Mesh.Vertex.y)
+  return y_;
+}
+void Mesh_Vertex::set_y(float value) {
+  
+  y_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Vertex.y)
+}
+
+// float z = 3;
+void Mesh_Vertex::clear_z() {
+  z_ = 0;
+}
+float Mesh_Vertex::z() const {
+  // @@protoc_insertion_point(field_get:Mesh.Vertex.z)
+  return z_;
+}
+void Mesh_Vertex::set_z(float value) {
+  
+  z_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Vertex.z)
+}
+
+// float i = 4;
+void Mesh_Vertex::clear_i() {
+  i_ = 0;
+}
+float Mesh_Vertex::i() const {
+  // @@protoc_insertion_point(field_get:Mesh.Vertex.i)
+  return i_;
+}
+void Mesh_Vertex::set_i(float value) {
+  
+  i_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Vertex.i)
+}
+
+// float j = 5;
+void Mesh_Vertex::clear_j() {
+  j_ = 0;
+}
+float Mesh_Vertex::j() const {
+  // @@protoc_insertion_point(field_get:Mesh.Vertex.j)
+  return j_;
+}
+void Mesh_Vertex::set_j(float value) {
+  
+  j_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Vertex.j)
+}
+
+// float k = 7;
+void Mesh_Vertex::clear_k() {
+  k_ = 0;
+}
+float Mesh_Vertex::k() const {
+  // @@protoc_insertion_point(field_get:Mesh.Vertex.k)
+  return k_;
+}
+void Mesh_Vertex::set_k(float value) {
+  
+  k_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Vertex.k)
+}
+
+// float u = 8;
+void Mesh_Vertex::clear_u() {
+  u_ = 0;
+}
+float Mesh_Vertex::u() const {
+  // @@protoc_insertion_point(field_get:Mesh.Vertex.u)
+  return u_;
+}
+void Mesh_Vertex::set_u(float value) {
+  
+  u_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Vertex.u)
+}
+
+// float v = 9;
+void Mesh_Vertex::clear_v() {
+  v_ = 0;
+}
+float Mesh_Vertex::v() const {
+  // @@protoc_insertion_point(field_get:Mesh.Vertex.v)
+  return v_;
+}
+void Mesh_Vertex::set_v(float value) {
+  
+  v_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Vertex.v)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Mesh_Face::kAFieldNumber;
@@ -729,19 +745,20 @@ const int Mesh_Face::kCFieldNumber;
 
 Mesh_Face::Mesh_Face()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_data_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_data_2eproto();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:Mesh.Face)
 }
-
-void Mesh_Face::InitAsDefaultInstance() {
-}
-
 Mesh_Face::Mesh_Face(const Mesh_Face& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&a_, &from.a_,
+    reinterpret_cast<char*>(&c_) -
+    reinterpret_cast<char*>(&a_) + sizeof(c_));
   // @@protoc_insertion_point(copy_constructor:Mesh.Face)
 }
 
@@ -766,15 +783,13 @@ void Mesh_Face::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* Mesh_Face::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Mesh_Face_descriptor_;
+  return file_level_metadata[1].descriptor;
 }
 
 const Mesh_Face& Mesh_Face::default_instance() {
   protobuf_InitDefaults_data_2eproto();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<Mesh_Face> Mesh_Face_default_instance_;
 
 Mesh_Face* Mesh_Face::New(::google::protobuf::Arena* arena) const {
   Mesh_Face* n = new Mesh_Face;
@@ -786,27 +801,8 @@ Mesh_Face* Mesh_Face::New(::google::protobuf::Arena* arena) const {
 
 void Mesh_Face::Clear() {
 // @@protoc_insertion_point(message_clear_start:Mesh.Face)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(Mesh_Face, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<Mesh_Face*>(16)->f)
-#endif
-
-#define ZR_(first, last) do {\
-  ::memset(&(first), 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(a_, c_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
+  ::memset(&a_, 0, reinterpret_cast<char*>(&c_) -
+    reinterpret_cast<char*>(&a_) + sizeof(c_));
 }
 
 bool Mesh_Face::MergePartialFromCodedStream(
@@ -815,13 +811,13 @@ bool Mesh_Face::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Mesh.Face)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 a = 1;
+      // uint32 a = 1;
       case 1: {
-        if (tag == 8) {
+        if (tag == 8u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -829,14 +825,12 @@ bool Mesh_Face::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_b;
         break;
       }
 
-      // optional uint32 b = 2;
+      // uint32 b = 2;
       case 2: {
-        if (tag == 16) {
-         parse_b:
+        if (tag == 16u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -844,14 +838,12 @@ bool Mesh_Face::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_c;
         break;
       }
 
-      // optional uint32 c = 3;
+      // uint32 c = 3;
       case 3: {
-        if (tag == 24) {
-         parse_c:
+        if (tag == 24u) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -859,7 +851,6 @@ bool Mesh_Face::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
@@ -887,17 +878,17 @@ failure:
 void Mesh_Face::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Mesh.Face)
-  // optional uint32 a = 1;
+  // uint32 a = 1;
   if (this->a() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->a(), output);
   }
 
-  // optional uint32 b = 2;
+  // uint32 b = 2;
   if (this->b() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->b(), output);
   }
 
-  // optional uint32 c = 3;
+  // uint32 c = 3;
   if (this->c() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->c(), output);
   }
@@ -909,17 +900,17 @@ void Mesh_Face::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:Mesh.Face)
-  // optional uint32 a = 1;
+  // uint32 a = 1;
   if (this->a() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->a(), target);
   }
 
-  // optional uint32 b = 2;
+  // uint32 b = 2;
   if (this->b() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->b(), target);
   }
 
-  // optional uint32 c = 3;
+  // uint32 c = 3;
   if (this->c() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->c(), target);
   }
@@ -932,21 +923,21 @@ size_t Mesh_Face::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:Mesh.Face)
   size_t total_size = 0;
 
-  // optional uint32 a = 1;
+  // uint32 a = 1;
   if (this->a() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->a());
   }
 
-  // optional uint32 b = 2;
+  // uint32 b = 2;
   if (this->b() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->b());
   }
 
-  // optional uint32 c = 3;
+  // uint32 c = 3;
   if (this->c() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -962,7 +953,7 @@ size_t Mesh_Face::ByteSizeLong() const {
 
 void Mesh_Face::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:Mesh.Face)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const Mesh_Face* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const Mesh_Face>(
           &from);
@@ -971,21 +962,14 @@ void Mesh_Face::MergeFrom(const ::google::protobuf::Message& from) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:Mesh.Face)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void Mesh_Face::MergeFrom(const Mesh_Face& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:Mesh.Face)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
-
-void Mesh_Face::UnsafeMergeFrom(const Mesh_Face& from) {
-  GOOGLE_DCHECK(&from != this);
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from.a() != 0) {
     set_a(from.a());
   }
@@ -1008,11 +992,10 @@ void Mesh_Face::CopyFrom(const Mesh_Face& from) {
 // @@protoc_insertion_point(class_specific_copy_from_start:Mesh.Face)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool Mesh_Face::IsInitialized() const {
-
   return true;
 }
 
@@ -1024,20 +1007,62 @@ void Mesh_Face::InternalSwap(Mesh_Face* other) {
   std::swap(a_, other->a_);
   std::swap(b_, other->b_);
   std::swap(c_, other->c_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Mesh_Face::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Mesh_Face_descriptor_;
-  metadata.reflection = Mesh_Face_reflection_;
-  return metadata;
+  return file_level_metadata[1];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// Mesh_Face
 
-// -------------------------------------------------------------------
+// uint32 a = 1;
+void Mesh_Face::clear_a() {
+  a_ = 0u;
+}
+::google::protobuf::uint32 Mesh_Face::a() const {
+  // @@protoc_insertion_point(field_get:Mesh.Face.a)
+  return a_;
+}
+void Mesh_Face::set_a(::google::protobuf::uint32 value) {
+  
+  a_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Face.a)
+}
+
+// uint32 b = 2;
+void Mesh_Face::clear_b() {
+  b_ = 0u;
+}
+::google::protobuf::uint32 Mesh_Face::b() const {
+  // @@protoc_insertion_point(field_get:Mesh.Face.b)
+  return b_;
+}
+void Mesh_Face::set_b(::google::protobuf::uint32 value) {
+  
+  b_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Face.b)
+}
+
+// uint32 c = 3;
+void Mesh_Face::clear_c() {
+  c_ = 0u;
+}
+::google::protobuf::uint32 Mesh_Face::c() const {
+  // @@protoc_insertion_point(field_get:Mesh.Face.c)
+  return c_;
+}
+void Mesh_Face::set_c(::google::protobuf::uint32 value) {
+  
+  c_ = value;
+  // @@protoc_insertion_point(field_set:Mesh.Face.c)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Mesh::kNameFieldNumber;
@@ -1047,19 +1072,23 @@ const int Mesh::kFaceFieldNumber;
 
 Mesh::Mesh()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_data_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_data_2eproto();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:Mesh)
 }
-
-void Mesh::InitAsDefaultInstance() {
-}
-
 Mesh::Mesh(const Mesh& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      vertex_(from.vertex_),
+      face_(from.face_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.name().size() > 0) {
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
   // @@protoc_insertion_point(copy_constructor:Mesh)
 }
 
@@ -1084,15 +1113,13 @@ void Mesh::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* Mesh::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Mesh_descriptor_;
+  return file_level_metadata[2].descriptor;
 }
 
 const Mesh& Mesh::default_instance() {
   protobuf_InitDefaults_data_2eproto();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<Mesh> Mesh_default_instance_;
 
 Mesh* Mesh::New(::google::protobuf::Arena* arena) const {
   Mesh* n = new Mesh;
@@ -1104,9 +1131,9 @@ Mesh* Mesh::New(::google::protobuf::Arena* arena) const {
 
 void Mesh::Clear() {
 // @@protoc_insertion_point(message_clear_start:Mesh)
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   vertex_.Clear();
   face_.Clear();
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool Mesh::MergePartialFromCodedStream(
@@ -1115,13 +1142,13 @@ bool Mesh::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Mesh)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string name = 1;
+      // string name = 1;
       case 1: {
-        if (tag == 10) {
+        if (tag == 10u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -1131,40 +1158,32 @@ bool Mesh::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_vertex;
         break;
       }
 
       // repeated .Mesh.Vertex vertex = 2;
       case 2: {
-        if (tag == 18) {
-         parse_vertex:
+        if (tag == 18u) {
           DO_(input->IncrementRecursionDepth());
-         parse_loop_vertex:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_vertex()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_loop_vertex;
-        if (input->ExpectTag(26)) goto parse_loop_face;
         input->UnsafeDecrementRecursionDepth();
         break;
       }
 
       // repeated .Mesh.Face face = 3;
       case 3: {
-        if (tag == 26) {
+        if (tag == 26u) {
           DO_(input->IncrementRecursionDepth());
-         parse_loop_face:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_face()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_loop_face;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
@@ -1192,7 +1211,7 @@ failure:
 void Mesh::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Mesh)
-  // optional string name = 1;
+  // string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
@@ -1221,7 +1240,7 @@ void Mesh::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:Mesh)
-  // optional string name = 1;
+  // string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
@@ -1254,13 +1273,6 @@ size_t Mesh::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:Mesh)
   size_t total_size = 0;
 
-  // optional string name = 1;
-  if (this->name().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->name());
-  }
-
   // repeated .Mesh.Vertex vertex = 2;
   {
     unsigned int count = this->vertex_size();
@@ -1283,6 +1295,13 @@ size_t Mesh::ByteSizeLong() const {
     }
   }
 
+  // string name = 1;
+  if (this->name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -1292,7 +1311,7 @@ size_t Mesh::ByteSizeLong() const {
 
 void Mesh::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:Mesh)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const Mesh* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const Mesh>(
           &from);
@@ -1301,21 +1320,14 @@ void Mesh::MergeFrom(const ::google::protobuf::Message& from) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:Mesh)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void Mesh::MergeFrom(const Mesh& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:Mesh)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
-
-void Mesh::UnsafeMergeFrom(const Mesh& from) {
-  GOOGLE_DCHECK(&from != this);
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   vertex_.MergeFrom(from.vertex_);
   face_.MergeFrom(from.face_);
   if (from.name().size() > 0) {
@@ -1335,11 +1347,10 @@ void Mesh::CopyFrom(const Mesh& from) {
 // @@protoc_insertion_point(class_specific_copy_from_start:Mesh)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool Mesh::IsInitialized() const {
-
   return true;
 }
 
@@ -1348,205 +1359,41 @@ void Mesh::Swap(Mesh* other) {
   InternalSwap(other);
 }
 void Mesh::InternalSwap(Mesh* other) {
-  name_.Swap(&other->name_);
   vertex_.UnsafeArenaSwap(&other->vertex_);
   face_.UnsafeArenaSwap(&other->face_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
+  name_.Swap(&other->name_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Mesh::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Mesh_descriptor_;
-  metadata.reflection = Mesh_reflection_;
-  return metadata;
+  return file_level_metadata[2];
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// Mesh_Vertex
-
-// optional float x = 1;
-void Mesh_Vertex::clear_x() {
-  x_ = 0;
-}
-float Mesh_Vertex::x() const {
-  // @@protoc_insertion_point(field_get:Mesh.Vertex.x)
-  return x_;
-}
-void Mesh_Vertex::set_x(float value) {
-  
-  x_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Vertex.x)
-}
-
-// optional float y = 2;
-void Mesh_Vertex::clear_y() {
-  y_ = 0;
-}
-float Mesh_Vertex::y() const {
-  // @@protoc_insertion_point(field_get:Mesh.Vertex.y)
-  return y_;
-}
-void Mesh_Vertex::set_y(float value) {
-  
-  y_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Vertex.y)
-}
-
-// optional float z = 3;
-void Mesh_Vertex::clear_z() {
-  z_ = 0;
-}
-float Mesh_Vertex::z() const {
-  // @@protoc_insertion_point(field_get:Mesh.Vertex.z)
-  return z_;
-}
-void Mesh_Vertex::set_z(float value) {
-  
-  z_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Vertex.z)
-}
-
-// optional float i = 4;
-void Mesh_Vertex::clear_i() {
-  i_ = 0;
-}
-float Mesh_Vertex::i() const {
-  // @@protoc_insertion_point(field_get:Mesh.Vertex.i)
-  return i_;
-}
-void Mesh_Vertex::set_i(float value) {
-  
-  i_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Vertex.i)
-}
-
-// optional float j = 5;
-void Mesh_Vertex::clear_j() {
-  j_ = 0;
-}
-float Mesh_Vertex::j() const {
-  // @@protoc_insertion_point(field_get:Mesh.Vertex.j)
-  return j_;
-}
-void Mesh_Vertex::set_j(float value) {
-  
-  j_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Vertex.j)
-}
-
-// optional float k = 7;
-void Mesh_Vertex::clear_k() {
-  k_ = 0;
-}
-float Mesh_Vertex::k() const {
-  // @@protoc_insertion_point(field_get:Mesh.Vertex.k)
-  return k_;
-}
-void Mesh_Vertex::set_k(float value) {
-  
-  k_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Vertex.k)
-}
-
-// optional float u = 8;
-void Mesh_Vertex::clear_u() {
-  u_ = 0;
-}
-float Mesh_Vertex::u() const {
-  // @@protoc_insertion_point(field_get:Mesh.Vertex.u)
-  return u_;
-}
-void Mesh_Vertex::set_u(float value) {
-  
-  u_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Vertex.u)
-}
-
-// optional float v = 9;
-void Mesh_Vertex::clear_v() {
-  v_ = 0;
-}
-float Mesh_Vertex::v() const {
-  // @@protoc_insertion_point(field_get:Mesh.Vertex.v)
-  return v_;
-}
-void Mesh_Vertex::set_v(float value) {
-  
-  v_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Vertex.v)
-}
-
-inline const Mesh_Vertex* Mesh_Vertex::internal_default_instance() {
-  return &Mesh_Vertex_default_instance_.get();
-}
-// -------------------------------------------------------------------
-
-// Mesh_Face
-
-// optional uint32 a = 1;
-void Mesh_Face::clear_a() {
-  a_ = 0u;
-}
-::google::protobuf::uint32 Mesh_Face::a() const {
-  // @@protoc_insertion_point(field_get:Mesh.Face.a)
-  return a_;
-}
-void Mesh_Face::set_a(::google::protobuf::uint32 value) {
-  
-  a_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Face.a)
-}
-
-// optional uint32 b = 2;
-void Mesh_Face::clear_b() {
-  b_ = 0u;
-}
-::google::protobuf::uint32 Mesh_Face::b() const {
-  // @@protoc_insertion_point(field_get:Mesh.Face.b)
-  return b_;
-}
-void Mesh_Face::set_b(::google::protobuf::uint32 value) {
-  
-  b_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Face.b)
-}
-
-// optional uint32 c = 3;
-void Mesh_Face::clear_c() {
-  c_ = 0u;
-}
-::google::protobuf::uint32 Mesh_Face::c() const {
-  // @@protoc_insertion_point(field_get:Mesh.Face.c)
-  return c_;
-}
-void Mesh_Face::set_c(::google::protobuf::uint32 value) {
-  
-  c_ = value;
-  // @@protoc_insertion_point(field_set:Mesh.Face.c)
-}
-
-inline const Mesh_Face* Mesh_Face::internal_default_instance() {
-  return &Mesh_Face_default_instance_.get();
-}
-// -------------------------------------------------------------------
-
 // Mesh
 
-// optional string name = 1;
+// string name = 1;
 void Mesh::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 const ::std::string& Mesh::name() const {
   // @@protoc_insertion_point(field_get:Mesh.name)
-  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return name_.GetNoArena();
 }
 void Mesh::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:Mesh.name)
 }
+#if LANG_CXX11
+void Mesh::set_name(::std::string&& value) {
+  
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Mesh.name)
+}
+#endif
 void Mesh::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
@@ -1638,9 +1485,6 @@ Mesh::face() const {
   return face_;
 }
 
-inline const Mesh* Mesh::internal_default_instance() {
-  return &Mesh_default_instance_.get();
-}
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
@@ -1653,19 +1497,29 @@ const int Shader::kSourceFieldNumber;
 
 Shader::Shader()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_data_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_data_2eproto();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:Shader)
 }
-
-void Shader::InitAsDefaultInstance() {
-}
-
 Shader::Shader(const Shader& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  type_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.type().size() > 0) {
+    type_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.type_);
+  }
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.name().size() > 0) {
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  source_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.source().size() > 0) {
+    source_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.source_);
+  }
   // @@protoc_insertion_point(copy_constructor:Shader)
 }
 
@@ -1694,15 +1548,13 @@ void Shader::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* Shader::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Shader_descriptor_;
+  return file_level_metadata[3].descriptor;
 }
 
 const Shader& Shader::default_instance() {
   protobuf_InitDefaults_data_2eproto();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<Shader> Shader_default_instance_;
 
 Shader* Shader::New(::google::protobuf::Arena* arena) const {
   Shader* n = new Shader;
@@ -1725,13 +1577,13 @@ bool Shader::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Shader)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string type = 1;
+      // string type = 1;
       case 1: {
-        if (tag == 10) {
+        if (tag == 10u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_type()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -1741,14 +1593,12 @@ bool Shader::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_name;
         break;
       }
 
-      // optional string name = 2;
+      // string name = 2;
       case 2: {
-        if (tag == 18) {
-         parse_name:
+        if (tag == 18u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -1758,14 +1608,12 @@ bool Shader::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_source;
         break;
       }
 
-      // optional string source = 3;
+      // string source = 3;
       case 3: {
-        if (tag == 26) {
-         parse_source:
+        if (tag == 26u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_source()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -1775,7 +1623,6 @@ bool Shader::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
@@ -1803,7 +1650,7 @@ failure:
 void Shader::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Shader)
-  // optional string type = 1;
+  // string type = 1;
   if (this->type().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->type().data(), this->type().length(),
@@ -1813,7 +1660,7 @@ void Shader::SerializeWithCachedSizes(
       1, this->type(), output);
   }
 
-  // optional string name = 2;
+  // string name = 2;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
@@ -1823,7 +1670,7 @@ void Shader::SerializeWithCachedSizes(
       2, this->name(), output);
   }
 
-  // optional string source = 3;
+  // string source = 3;
   if (this->source().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->source().data(), this->source().length(),
@@ -1840,7 +1687,7 @@ void Shader::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:Shader)
-  // optional string type = 1;
+  // string type = 1;
   if (this->type().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->type().data(), this->type().length(),
@@ -1851,7 +1698,7 @@ void Shader::SerializeWithCachedSizes(
         1, this->type(), target);
   }
 
-  // optional string name = 2;
+  // string name = 2;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
@@ -1862,7 +1709,7 @@ void Shader::SerializeWithCachedSizes(
         2, this->name(), target);
   }
 
-  // optional string source = 3;
+  // string source = 3;
   if (this->source().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->source().data(), this->source().length(),
@@ -1881,21 +1728,21 @@ size_t Shader::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:Shader)
   size_t total_size = 0;
 
-  // optional string type = 1;
+  // string type = 1;
   if (this->type().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->type());
   }
 
-  // optional string name = 2;
+  // string name = 2;
   if (this->name().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->name());
   }
 
-  // optional string source = 3;
+  // string source = 3;
   if (this->source().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -1911,7 +1758,7 @@ size_t Shader::ByteSizeLong() const {
 
 void Shader::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:Shader)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const Shader* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const Shader>(
           &from);
@@ -1920,21 +1767,14 @@ void Shader::MergeFrom(const ::google::protobuf::Message& from) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:Shader)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void Shader::MergeFrom(const Shader& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:Shader)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
-
-void Shader::UnsafeMergeFrom(const Shader& from) {
-  GOOGLE_DCHECK(&from != this);
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from.type().size() > 0) {
 
     type_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.type_);
@@ -1960,11 +1800,10 @@ void Shader::CopyFrom(const Shader& from) {
 // @@protoc_insertion_point(class_specific_copy_from_start:Shader)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool Shader::IsInitialized() const {
-
   return true;
 }
 
@@ -1976,34 +1815,38 @@ void Shader::InternalSwap(Shader* other) {
   type_.Swap(&other->type_);
   name_.Swap(&other->name_);
   source_.Swap(&other->source_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Shader::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Shader_descriptor_;
-  metadata.reflection = Shader_reflection_;
-  return metadata;
+  return file_level_metadata[3];
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // Shader
 
-// optional string type = 1;
+// string type = 1;
 void Shader::clear_type() {
   type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 const ::std::string& Shader::type() const {
   // @@protoc_insertion_point(field_get:Shader.type)
-  return type_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return type_.GetNoArena();
 }
 void Shader::set_type(const ::std::string& value) {
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:Shader.type)
 }
+#if LANG_CXX11
+void Shader::set_type(::std::string&& value) {
+  
+  type_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Shader.type)
+}
+#endif
 void Shader::set_type(const char* value) {
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
@@ -2035,19 +1878,27 @@ void Shader::set_allocated_type(::std::string* type) {
   // @@protoc_insertion_point(field_set_allocated:Shader.type)
 }
 
-// optional string name = 2;
+// string name = 2;
 void Shader::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 const ::std::string& Shader::name() const {
   // @@protoc_insertion_point(field_get:Shader.name)
-  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return name_.GetNoArena();
 }
 void Shader::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:Shader.name)
 }
+#if LANG_CXX11
+void Shader::set_name(::std::string&& value) {
+  
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Shader.name)
+}
+#endif
 void Shader::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
@@ -2079,19 +1930,27 @@ void Shader::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Shader.name)
 }
 
-// optional string source = 3;
+// string source = 3;
 void Shader::clear_source() {
   source_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 const ::std::string& Shader::source() const {
   // @@protoc_insertion_point(field_get:Shader.source)
-  return source_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return source_.GetNoArena();
 }
 void Shader::set_source(const ::std::string& value) {
   
   source_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:Shader.source)
 }
+#if LANG_CXX11
+void Shader::set_source(::std::string&& value) {
+  
+  source_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Shader.source)
+}
+#endif
 void Shader::set_source(const char* value) {
   
   source_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
@@ -2123,9 +1982,6 @@ void Shader::set_allocated_source(::std::string* source) {
   // @@protoc_insertion_point(field_set_allocated:Shader.source)
 }
 
-inline const Shader* Shader::internal_default_instance() {
-  return &Shader_default_instance_.get();
-}
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
@@ -2137,19 +1993,19 @@ const int Data::kShaderFieldNumber;
 
 Data::Data()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_data_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_data_2eproto();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:Data)
 }
-
-void Data::InitAsDefaultInstance() {
-}
-
 Data::Data(const Data& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      mesh_(from.mesh_),
+      shader_(from.shader_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:Data)
 }
 
@@ -2172,15 +2028,13 @@ void Data::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* Data::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Data_descriptor_;
+  return file_level_metadata[4].descriptor;
 }
 
 const Data& Data::default_instance() {
   protobuf_InitDefaults_data_2eproto();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<Data> Data_default_instance_;
 
 Data* Data::New(::google::protobuf::Arena* arena) const {
   Data* n = new Data;
@@ -2202,39 +2056,33 @@ bool Data::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Data)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated .Mesh mesh = 1;
       case 1: {
-        if (tag == 10) {
+        if (tag == 10u) {
           DO_(input->IncrementRecursionDepth());
-         parse_loop_mesh:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_mesh()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_loop_mesh;
-        if (input->ExpectTag(18)) goto parse_loop_shader;
         input->UnsafeDecrementRecursionDepth();
         break;
       }
 
       // repeated .Shader shader = 2;
       case 2: {
-        if (tag == 18) {
+        if (tag == 18u) {
           DO_(input->IncrementRecursionDepth());
-         parse_loop_shader:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_shader()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_loop_shader;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
@@ -2334,7 +2182,7 @@ size_t Data::ByteSizeLong() const {
 
 void Data::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:Data)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const Data* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const Data>(
           &from);
@@ -2343,21 +2191,14 @@ void Data::MergeFrom(const ::google::protobuf::Message& from) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:Data)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void Data::MergeFrom(const Data& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:Data)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
-
-void Data::UnsafeMergeFrom(const Data& from) {
-  GOOGLE_DCHECK(&from != this);
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   mesh_.MergeFrom(from.mesh_);
   shader_.MergeFrom(from.shader_);
 }
@@ -2373,11 +2214,10 @@ void Data::CopyFrom(const Data& from) {
 // @@protoc_insertion_point(class_specific_copy_from_start:Data)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool Data::IsInitialized() const {
-
   return true;
 }
 
@@ -2388,16 +2228,12 @@ void Data::Swap(Data* other) {
 void Data::InternalSwap(Data* other) {
   mesh_.UnsafeArenaSwap(&other->mesh_);
   shader_.UnsafeArenaSwap(&other->shader_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Data::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Data_descriptor_;
-  metadata.reflection = Data_reflection_;
-  return metadata;
+  return file_level_metadata[4];
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2463,9 +2299,6 @@ Data::shader() const {
   return shader_;
 }
 
-inline const Data* Data::internal_default_instance() {
-  return &Data_default_instance_.get();
-}
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)

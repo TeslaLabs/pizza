@@ -19,6 +19,16 @@ int main(int argc, char **argv)
     SDLWindow window { log };
     window.set_title("mcomp");
 
+#ifdef __linux__
+    GLenum err = glewInit();
+    if (err != GLEW_OK) {
+        log.Error("Could not initialize glew");
+    }
+
+    if (!GLEW_ARB_vertex_array_object) log.Error("ARB_vertex_array_object unsupported");
+    if (!GLEW_ARB_framebuffer_object) log.Error("ARB_framebuffer_object unsupported");
+#endif
+
     SDLEvent event { log };
 
     GLRender render { log };

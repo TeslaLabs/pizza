@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <string>
+#include <gl/gl_headers.h>
 #include <SDL2/SDL.h>
 #include "../log/ilog.h"
 

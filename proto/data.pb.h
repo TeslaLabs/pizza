@@ -24,22 +24,29 @@
 #include <google/protobuf/generated_message_util.h>
 #include <google/protobuf/metadata.h>
 #include <google/protobuf/message.h>
-#include <google/protobuf/repeated_field.h>
-#include <google/protobuf/extension_set.h>
+#include <google/protobuf/repeated_field.h>  // IWYU pragma: export
+#include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
+class Data;
+class DataDefaultTypeInternal;
+extern DataDefaultTypeInternal _Data_default_instance_;
+class Mesh;
+class MeshDefaultTypeInternal;
+extern MeshDefaultTypeInternal _Mesh_default_instance_;
+class Mesh_Face;
+class Mesh_FaceDefaultTypeInternal;
+extern Mesh_FaceDefaultTypeInternal _Mesh_Face_default_instance_;
+class Mesh_Vertex;
+class Mesh_VertexDefaultTypeInternal;
+extern Mesh_VertexDefaultTypeInternal _Mesh_Vertex_default_instance_;
+class Shader;
+class ShaderDefaultTypeInternal;
+extern ShaderDefaultTypeInternal _Shader_default_instance_;
 
 // Internal implementation detail -- do not call these.
 void protobuf_AddDesc_data_2eproto();
 void protobuf_InitDefaults_data_2eproto();
-void protobuf_AssignDesc_data_2eproto();
-void protobuf_ShutdownFile_data_2eproto();
-
-class Data;
-class Mesh;
-class Mesh_Face;
-class Mesh_Vertex;
-class Shader;
 
 // ===================================================================
 
@@ -58,97 +65,100 @@ class Mesh_Vertex : public ::google::protobuf::Message /* @@protoc_insertion_poi
   static const ::google::protobuf::Descriptor* descriptor();
   static const Mesh_Vertex& default_instance();
 
-  static const Mesh_Vertex* internal_default_instance();
+  static inline const Mesh_Vertex* internal_default_instance() {
+    return reinterpret_cast<const Mesh_Vertex*>(
+               &_Mesh_Vertex_default_instance_);
+  }
 
   void Swap(Mesh_Vertex* other);
 
   // implements Message ----------------------------------------------
 
-  inline Mesh_Vertex* New() const { return New(NULL); }
+  inline Mesh_Vertex* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  Mesh_Vertex* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  Mesh_Vertex* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void CopyFrom(const Mesh_Vertex& from);
   void MergeFrom(const Mesh_Vertex& from);
-  void Clear();
-  bool IsInitialized() const;
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
 
-  size_t ByteSizeLong() const;
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
   ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output)
+      const PROTOBUF_FINAL {
     return InternalSerializeWithCachedSizesToArray(false, output);
   }
-  int GetCachedSize() const { return _cached_size_; }
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
   private:
   void SharedCtor();
   void SharedDtor();
-  void SetCachedSize(int size) const;
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
   void InternalSwap(Mesh_Vertex* other);
-  void UnsafeMergeFrom(const Mesh_Vertex& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
+    return NULL;
   }
   inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
+    return NULL;
   }
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
 
   // nested types ----------------------------------------------------
 
   // accessors -------------------------------------------------------
 
-  // optional float x = 1;
+  // float x = 1;
   void clear_x();
   static const int kXFieldNumber = 1;
   float x() const;
   void set_x(float value);
 
-  // optional float y = 2;
+  // float y = 2;
   void clear_y();
   static const int kYFieldNumber = 2;
   float y() const;
   void set_y(float value);
 
-  // optional float z = 3;
+  // float z = 3;
   void clear_z();
   static const int kZFieldNumber = 3;
   float z() const;
   void set_z(float value);
 
-  // optional float i = 4;
+  // float i = 4;
   void clear_i();
   static const int kIFieldNumber = 4;
   float i() const;
   void set_i(float value);
 
-  // optional float j = 5;
+  // float j = 5;
   void clear_j();
   static const int kJFieldNumber = 5;
   float j() const;
   void set_j(float value);
 
-  // optional float k = 7;
+  // float k = 7;
   void clear_k();
   static const int kKFieldNumber = 7;
   float k() const;
   void set_k(float value);
 
-  // optional float u = 8;
+  // float u = 8;
   void clear_u();
   static const int kUFieldNumber = 8;
   float u() const;
   void set_u(float value);
 
-  // optional float v = 9;
+  // float v = 9;
   void clear_v();
   static const int kVFieldNumber = 9;
   float v() const;
@@ -169,13 +179,10 @@ class Mesh_Vertex : public ::google::protobuf::Message /* @@protoc_insertion_poi
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_data_2eproto_impl();
   friend void  protobuf_AddDesc_data_2eproto_impl();
-  friend void protobuf_AssignDesc_data_2eproto();
+  friend const ::google::protobuf::uint32* protobuf_Offsets_data_2eproto();
   friend void protobuf_ShutdownFile_data_2eproto();
 
-  void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<Mesh_Vertex> Mesh_Vertex_default_instance_;
-
 // -------------------------------------------------------------------
 
 class Mesh_Face : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Mesh.Face) */ {
@@ -193,67 +200,70 @@ class Mesh_Face : public ::google::protobuf::Message /* @@protoc_insertion_point
   static const ::google::protobuf::Descriptor* descriptor();
   static const Mesh_Face& default_instance();
 
-  static const Mesh_Face* internal_default_instance();
+  static inline const Mesh_Face* internal_default_instance() {
+    return reinterpret_cast<const Mesh_Face*>(
+               &_Mesh_Face_default_instance_);
+  }
 
   void Swap(Mesh_Face* other);
 
   // implements Message ----------------------------------------------
 
-  inline Mesh_Face* New() const { return New(NULL); }
+  inline Mesh_Face* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  Mesh_Face* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  Mesh_Face* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void CopyFrom(const Mesh_Face& from);
   void MergeFrom(const Mesh_Face& from);
-  void Clear();
-  bool IsInitialized() const;
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
 
-  size_t ByteSizeLong() const;
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
   ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output)
+      const PROTOBUF_FINAL {
     return InternalSerializeWithCachedSizesToArray(false, output);
   }
-  int GetCachedSize() const { return _cached_size_; }
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
   private:
   void SharedCtor();
   void SharedDtor();
-  void SetCachedSize(int size) const;
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
   void InternalSwap(Mesh_Face* other);
-  void UnsafeMergeFrom(const Mesh_Face& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
+    return NULL;
   }
   inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
+    return NULL;
   }
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
 
   // nested types ----------------------------------------------------
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 a = 1;
+  // uint32 a = 1;
   void clear_a();
   static const int kAFieldNumber = 1;
   ::google::protobuf::uint32 a() const;
   void set_a(::google::protobuf::uint32 value);
 
-  // optional uint32 b = 2;
+  // uint32 b = 2;
   void clear_b();
   static const int kBFieldNumber = 2;
   ::google::protobuf::uint32 b() const;
   void set_b(::google::protobuf::uint32 value);
 
-  // optional uint32 c = 3;
+  // uint32 c = 3;
   void clear_c();
   static const int kCFieldNumber = 3;
   ::google::protobuf::uint32 c() const;
@@ -269,13 +279,10 @@ class Mesh_Face : public ::google::protobuf::Message /* @@protoc_insertion_point
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_data_2eproto_impl();
   friend void  protobuf_AddDesc_data_2eproto_impl();
-  friend void protobuf_AssignDesc_data_2eproto();
+  friend const ::google::protobuf::uint32* protobuf_Offsets_data_2eproto();
   friend void protobuf_ShutdownFile_data_2eproto();
 
-  void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<Mesh_Face> Mesh_Face_default_instance_;
-
 // -------------------------------------------------------------------
 
 class Mesh : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Mesh) */ {
@@ -293,49 +300,52 @@ class Mesh : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   static const ::google::protobuf::Descriptor* descriptor();
   static const Mesh& default_instance();
 
-  static const Mesh* internal_default_instance();
+  static inline const Mesh* internal_default_instance() {
+    return reinterpret_cast<const Mesh*>(
+               &_Mesh_default_instance_);
+  }
 
   void Swap(Mesh* other);
 
   // implements Message ----------------------------------------------
 
-  inline Mesh* New() const { return New(NULL); }
+  inline Mesh* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  Mesh* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  Mesh* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void CopyFrom(const Mesh& from);
   void MergeFrom(const Mesh& from);
-  void Clear();
-  bool IsInitialized() const;
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
 
-  size_t ByteSizeLong() const;
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
   ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output)
+      const PROTOBUF_FINAL {
     return InternalSerializeWithCachedSizesToArray(false, output);
   }
-  int GetCachedSize() const { return _cached_size_; }
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
   private:
   void SharedCtor();
   void SharedDtor();
-  void SetCachedSize(int size) const;
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
   void InternalSwap(Mesh* other);
-  void UnsafeMergeFrom(const Mesh& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
+    return NULL;
   }
   inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
+    return NULL;
   }
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
 
   // nested types ----------------------------------------------------
 
@@ -344,11 +354,14 @@ class Mesh : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
+  // string name = 1;
   void clear_name();
   static const int kNameFieldNumber = 1;
   const ::std::string& name() const;
   void set_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(::std::string&& value);
+  #endif
   void set_name(const char* value);
   void set_name(const char* value, size_t size);
   ::std::string* mutable_name();
@@ -389,13 +402,10 @@ class Mesh : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_data_2eproto_impl();
   friend void  protobuf_AddDesc_data_2eproto_impl();
-  friend void protobuf_AssignDesc_data_2eproto();
+  friend const ::google::protobuf::uint32* protobuf_Offsets_data_2eproto();
   friend void protobuf_ShutdownFile_data_2eproto();
 
-  void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<Mesh> Mesh_default_instance_;
-
 // -------------------------------------------------------------------
 
 class Shader : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Shader) */ {
@@ -413,81 +423,93 @@ class Shader : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   static const ::google::protobuf::Descriptor* descriptor();
   static const Shader& default_instance();
 
-  static const Shader* internal_default_instance();
+  static inline const Shader* internal_default_instance() {
+    return reinterpret_cast<const Shader*>(
+               &_Shader_default_instance_);
+  }
 
   void Swap(Shader* other);
 
   // implements Message ----------------------------------------------
 
-  inline Shader* New() const { return New(NULL); }
+  inline Shader* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  Shader* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  Shader* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void CopyFrom(const Shader& from);
   void MergeFrom(const Shader& from);
-  void Clear();
-  bool IsInitialized() const;
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
 
-  size_t ByteSizeLong() const;
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
   ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output)
+      const PROTOBUF_FINAL {
     return InternalSerializeWithCachedSizesToArray(false, output);
   }
-  int GetCachedSize() const { return _cached_size_; }
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
   private:
   void SharedCtor();
   void SharedDtor();
-  void SetCachedSize(int size) const;
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
   void InternalSwap(Shader* other);
-  void UnsafeMergeFrom(const Shader& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
+    return NULL;
   }
   inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
+    return NULL;
   }
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
 
   // nested types ----------------------------------------------------
 
   // accessors -------------------------------------------------------
 
-  // optional string type = 1;
+  // string type = 1;
   void clear_type();
   static const int kTypeFieldNumber = 1;
   const ::std::string& type() const;
   void set_type(const ::std::string& value);
+  #if LANG_CXX11
+  void set_type(::std::string&& value);
+  #endif
   void set_type(const char* value);
   void set_type(const char* value, size_t size);
   ::std::string* mutable_type();
   ::std::string* release_type();
   void set_allocated_type(::std::string* type);
 
-  // optional string name = 2;
+  // string name = 2;
   void clear_name();
   static const int kNameFieldNumber = 2;
   const ::std::string& name() const;
   void set_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(::std::string&& value);
+  #endif
   void set_name(const char* value);
   void set_name(const char* value, size_t size);
   ::std::string* mutable_name();
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // optional string source = 3;
+  // string source = 3;
   void clear_source();
   static const int kSourceFieldNumber = 3;
   const ::std::string& source() const;
   void set_source(const ::std::string& value);
+  #if LANG_CXX11
+  void set_source(::std::string&& value);
+  #endif
   void set_source(const char* value);
   void set_source(const char* value, size_t size);
   ::std::string* mutable_source();
@@ -504,13 +526,10 @@ class Shader : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_data_2eproto_impl();
   friend void  protobuf_AddDesc_data_2eproto_impl();
-  friend void protobuf_AssignDesc_data_2eproto();
+  friend const ::google::protobuf::uint32* protobuf_Offsets_data_2eproto();
   friend void protobuf_ShutdownFile_data_2eproto();
 
-  void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<Shader> Shader_default_instance_;
-
 // -------------------------------------------------------------------
 
 class Data : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Data) */ {
@@ -528,49 +547,52 @@ class Data : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   static const ::google::protobuf::Descriptor* descriptor();
   static const Data& default_instance();
 
-  static const Data* internal_default_instance();
+  static inline const Data* internal_default_instance() {
+    return reinterpret_cast<const Data*>(
+               &_Data_default_instance_);
+  }
 
   void Swap(Data* other);
 
   // implements Message ----------------------------------------------
 
-  inline Data* New() const { return New(NULL); }
+  inline Data* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  Data* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  Data* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void CopyFrom(const Data& from);
   void MergeFrom(const Data& from);
-  void Clear();
-  bool IsInitialized() const;
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
 
-  size_t ByteSizeLong() const;
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
   ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output)
+      const PROTOBUF_FINAL {
     return InternalSerializeWithCachedSizesToArray(false, output);
   }
-  int GetCachedSize() const { return _cached_size_; }
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
   private:
   void SharedCtor();
   void SharedDtor();
-  void SetCachedSize(int size) const;
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
   void InternalSwap(Data* other);
-  void UnsafeMergeFrom(const Data& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
+    return NULL;
   }
   inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
+    return NULL;
   }
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
 
   // nested types ----------------------------------------------------
 
@@ -609,13 +631,10 @@ class Data : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_data_2eproto_impl();
   friend void  protobuf_AddDesc_data_2eproto_impl();
-  friend void protobuf_AssignDesc_data_2eproto();
+  friend const ::google::protobuf::uint32* protobuf_Offsets_data_2eproto();
   friend void protobuf_ShutdownFile_data_2eproto();
 
-  void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<Data> Data_default_instance_;
-
 // ===================================================================
 
 
@@ -624,7 +643,7 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<Data> Data_default_in
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
 // Mesh_Vertex
 
-// optional float x = 1;
+// float x = 1;
 inline void Mesh_Vertex::clear_x() {
   x_ = 0;
 }
@@ -638,7 +657,7 @@ inline void Mesh_Vertex::set_x(float value) {
   // @@protoc_insertion_point(field_set:Mesh.Vertex.x)
 }
 
-// optional float y = 2;
+// float y = 2;
 inline void Mesh_Vertex::clear_y() {
   y_ = 0;
 }
@@ -652,7 +671,7 @@ inline void Mesh_Vertex::set_y(float value) {
   // @@protoc_insertion_point(field_set:Mesh.Vertex.y)
 }
 
-// optional float z = 3;
+// float z = 3;
 inline void Mesh_Vertex::clear_z() {
   z_ = 0;
 }
@@ -666,7 +685,7 @@ inline void Mesh_Vertex::set_z(float value) {
   // @@protoc_insertion_point(field_set:Mesh.Vertex.z)
 }
 
-// optional float i = 4;
+// float i = 4;
 inline void Mesh_Vertex::clear_i() {
   i_ = 0;
 }
@@ -680,7 +699,7 @@ inline void Mesh_Vertex::set_i(float value) {
   // @@protoc_insertion_point(field_set:Mesh.Vertex.i)
 }
 
-// optional float j = 5;
+// float j = 5;
 inline void Mesh_Vertex::clear_j() {
   j_ = 0;
 }
@@ -694,7 +713,7 @@ inline void Mesh_Vertex::set_j(float value) {
   // @@protoc_insertion_point(field_set:Mesh.Vertex.j)
 }
 
-// optional float k = 7;
+// float k = 7;
 inline void Mesh_Vertex::clear_k() {
   k_ = 0;
 }
@@ -708,7 +727,7 @@ inline void Mesh_Vertex::set_k(float value) {
   // @@protoc_insertion_point(field_set:Mesh.Vertex.k)
 }
 
-// optional float u = 8;
+// float u = 8;
 inline void Mesh_Vertex::clear_u() {
   u_ = 0;
 }
@@ -722,7 +741,7 @@ inline void Mesh_Vertex::set_u(float value) {
   // @@protoc_insertion_point(field_set:Mesh.Vertex.u)
 }
 
-// optional float v = 9;
+// float v = 9;
 inline void Mesh_Vertex::clear_v() {
   v_ = 0;
 }
@@ -736,14 +755,11 @@ inline void Mesh_Vertex::set_v(float value) {
   // @@protoc_insertion_point(field_set:Mesh.Vertex.v)
 }
 
-inline const Mesh_Vertex* Mesh_Vertex::internal_default_instance() {
-  return &Mesh_Vertex_default_instance_.get();
-}
 // -------------------------------------------------------------------
 
 // Mesh_Face
 
-// optional uint32 a = 1;
+// uint32 a = 1;
 inline void Mesh_Face::clear_a() {
   a_ = 0u;
 }
@@ -757,7 +773,7 @@ inline void Mesh_Face::set_a(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:Mesh.Face.a)
 }
 
-// optional uint32 b = 2;
+// uint32 b = 2;
 inline void Mesh_Face::clear_b() {
   b_ = 0u;
 }
@@ -771,7 +787,7 @@ inline void Mesh_Face::set_b(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:Mesh.Face.b)
 }
 
-// optional uint32 c = 3;
+// uint32 c = 3;
 inline void Mesh_Face::clear_c() {
   c_ = 0u;
 }
@@ -785,26 +801,31 @@ inline void Mesh_Face::set_c(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:Mesh.Face.c)
 }
 
-inline const Mesh_Face* Mesh_Face::internal_default_instance() {
-  return &Mesh_Face_default_instance_.get();
-}
 // -------------------------------------------------------------------
 
 // Mesh
 
-// optional string name = 1;
+// string name = 1;
 inline void Mesh::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& Mesh::name() const {
   // @@protoc_insertion_point(field_get:Mesh.name)
-  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return name_.GetNoArena();
 }
 inline void Mesh::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:Mesh.name)
 }
+#if LANG_CXX11
+inline void Mesh::set_name(::std::string&& value) {
+  
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Mesh.name)
+}
+#endif
 inline void Mesh::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
@@ -896,26 +917,31 @@ Mesh::face() const {
   return face_;
 }
 
-inline const Mesh* Mesh::internal_default_instance() {
-  return &Mesh_default_instance_.get();
-}
 // -------------------------------------------------------------------
 
 // Shader
 
-// optional string type = 1;
+// string type = 1;
 inline void Shader::clear_type() {
   type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& Shader::type() const {
   // @@protoc_insertion_point(field_get:Shader.type)
-  return type_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return type_.GetNoArena();
 }
 inline void Shader::set_type(const ::std::string& value) {
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:Shader.type)
 }
+#if LANG_CXX11
+inline void Shader::set_type(::std::string&& value) {
+  
+  type_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Shader.type)
+}
+#endif
 inline void Shader::set_type(const char* value) {
   
   type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
@@ -947,19 +973,27 @@ inline void Shader::set_allocated_type(::std::string* type) {
   // @@protoc_insertion_point(field_set_allocated:Shader.type)
 }
 
-// optional string name = 2;
+// string name = 2;
 inline void Shader::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& Shader::name() const {
   // @@protoc_insertion_point(field_get:Shader.name)
-  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return name_.GetNoArena();
 }
 inline void Shader::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:Shader.name)
 }
+#if LANG_CXX11
+inline void Shader::set_name(::std::string&& value) {
+  
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Shader.name)
+}
+#endif
 inline void Shader::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
@@ -991,19 +1025,27 @@ inline void Shader::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Shader.name)
 }
 
-// optional string source = 3;
+// string source = 3;
 inline void Shader::clear_source() {
   source_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& Shader::source() const {
   // @@protoc_insertion_point(field_get:Shader.source)
-  return source_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return source_.GetNoArena();
 }
 inline void Shader::set_source(const ::std::string& value) {
   
   source_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:Shader.source)
 }
+#if LANG_CXX11
+inline void Shader::set_source(::std::string&& value) {
+  
+  source_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Shader.source)
+}
+#endif
 inline void Shader::set_source(const char* value) {
   
   source_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
@@ -1035,9 +1077,6 @@ inline void Shader::set_allocated_source(::std::string* source) {
   // @@protoc_insertion_point(field_set_allocated:Shader.source)
 }
 
-inline const Shader* Shader::internal_default_instance() {
-  return &Shader_default_instance_.get();
-}
 // -------------------------------------------------------------------
 
 // Data
@@ -1102,9 +1141,6 @@ Data::shader() const {
   return shader_;
 }
 
-inline const Data* Data::internal_default_instance() {
-  return &Data_default_instance_.get();
-}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
 // -------------------------------------------------------------------
 
@@ -1116,6 +1152,7 @@ inline const Data* Data::internal_default_instance() {
 
 
 // @@protoc_insertion_point(namespace_scope)
+
 
 // @@protoc_insertion_point(global_scope)
 

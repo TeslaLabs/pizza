@@ -25,9 +25,9 @@ Mcomp::Mcomp(IEvent& event,
 }
 
 void Mcomp::Update() {
-    for (auto& model : models_) {
-        render_.DrawModel(model);
-    }
+    // for (auto& model : models_) {
+    //     render_.DrawModel(model);
+    // }
     render_.Update();
     window_.Update();
 }

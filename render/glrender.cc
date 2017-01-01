@@ -124,7 +124,7 @@ void GLRender::CameraLookat(const Vec3& location) {
 }
 
 void GLRender::DrawModel(const IModel& model) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); return;
     auto mesh_result = meshes_.find(model.name());
     if (mesh_result == meshes_.end()) {
         std::stringstream message;
@@ -287,9 +287,16 @@ bool GLRender::ImportMeshes(const Data& data) {
             continue;
         }
 
-        GLuint position_buffer, index_buffer;
-        glGenBuffers(1, &position_buffer); ErrorCheck("Gen position buffer");
-        glGenBuffers(1, &index_buffer); ErrorCheck("Gen index buffer");
+        auto buffers = new GLuint[2];
+        // GLuint position_buffer = 0, index_buffer = 0;
+        // glGenBuffers(1, &position_buffer);
+        // ErrorCheck("Gen position buffer");
+        // glGenBuffers(1, &index_buffer);
+        // ErrorCheck("Gen index buffer");
+        glGenBuffers(2, buffers);
+        ErrorCheck("Gen buffer");
+        auto position_buffer = buffers[0];
+        auto index_buffer = buffers[1];
 
         glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
         ErrorCheck("Bind array buffer");
@@ -346,75 +353,6 @@ bool GLRender::ImportMeshes(const Data& data) {
 
     return true;
 }
-
-// bool GLRender::ImportMeshes(const Data& data) {
-//     for (auto i = 0; i < data.mesh_size(); ++i) {
-//         auto mesh = data.mesh(i);
-
-//         GLuint position_buffer;
-//         glGenBuffers(1, &position_buffer);
-//         ErrorCheck("Gen position buffer");
-
-//         glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
-//         ErrorCheck("Bind position buffer");
-
-//         auto positions = new float[mesh.vertex_size() * 8];
-//         for (auto j = 0; j < mesh.vertex_size(); ++j) {
-//             positions[(j * 8) + 0] = mesh.vertex(j).x();
-//             positions[(j * 8) + 1] = mesh.vertex(j).y();
-//             positions[(j * 8) + 2] = mesh.vertex(j).z();
-//             positions[(j * 8) + 3] = mesh.vertex(j).i();
-//             positions[(j * 8) + 4] = mesh.vertex(j).j();
-//             positions[(j * 8) + 5] = mesh.vertex(j).k();
-//             positions[(j * 8) + 6] = mesh.vertex(j).u();
-//             positions[(j * 8) + 7] = mesh.vertex(j).v();
-//         }
-//         glBufferData(GL_ARRAY_BUFFER,
-//                      sizeof(float) * 8 * mesh.vertex_size(),
-//                      positions,
-//                      GL_STATIC_DRAW);
-//         ErrorCheck("Position buffer data");
-//         delete[] positions;
-
-//         GLuint index_buffer;
-//         glGenBuffers(1, &index_buffer);
-//         ErrorCheck("Gen index buffer");
-
-//         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
-//         ErrorCheck("Bind index buffer");
-
-//         auto indices = new unsigned int[mesh.face_size() * 3];
-//         for (auto j = 0; j < mesh.face_size(); ++j) {
-//             indices[(j * 3) + 0] = mesh.face(j).a();
-//             indices[(j * 3) + 1] = mesh.face(j).b();
-//             indices[(j * 3) + 2] = mesh.face(j).c();
-//         }
-//         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-//                      sizeof(unsigned int) * 3 * mesh.face_size(),
-//                      indices,
-//                      GL_STATIC_DRAW);
-//         delete[] indices;
-
-//         auto vao = GenerateVertexArrayObject();
-
-//         auto mesh_result = meshes_.find(mesh.name());
-//         if (mesh_result != meshes_.end()) {
-//             glBindBuffer(GL_ARRAY_BUFFER, 0);
-//             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//             glBindVertexArray(0);
-
-//             glDeleteBuffers(1, &mesh_result->second.position_buffer);
-//             glDeleteBuffers(1, &mesh_result->second.index_buffer);
-//             glDeleteVertexArrays(1, &mesh_result->second.vao);
-//         }
-//         meshes_[mesh.name()].position_buffer = position_buffer;
-//         meshes_[mesh.name()].index_buffer = index_buffer;
-//         meshes_[mesh.name()].vao = vao;
-//         meshes_[mesh.name()].n_faces = mesh.face_size() * 3;
-//     }
-
-//     return true;
-// }
 
 GLuint GLRender::GenerateVertexArrayObject() {
     GLuint vao;
@@ -552,8 +490,10 @@ bool GLRender::CompileShader(const std::string& source,
             std::string error_log;
             error_log.reserve(log_size);
             glGetShaderInfoLog(shader, log_size, &log_size, &error_log[0]);
-            log_.Error(type_str);
+            log_.Error(type_str + " log:");
+            log_.Error("--- START ---");
             log_.Error(error_log);
+            log_.Error("---  END  ---");
         }
     })
 
