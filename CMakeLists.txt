@@ -51,11 +51,13 @@ set(MCOMP_SOURCES
     )
 set(MCOMP_LIBS engine)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c90 -pedantic")
 set(EXAMPLE_SOURCES
     "example/example.cc"
     )
 set(EXAMPLE_LIBS
-    SDL2
+  SDL2
+  GL
     )
 
 if (APPLE)
