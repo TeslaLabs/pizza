@@ -4,7 +4,7 @@ if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
     add_definitions(-DDEBUG_MODE)
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -pedantic")
 list(APPEND DIR_TO_INCLUDE "${CMAKE_SOURCE_DIR}/include")
 list(APPEND DIR_TO_LINK "${CMAKE_SOURCE_DIR}/lib")
 
@@ -52,13 +52,6 @@ set(MCOMP_SOURCES
 set(MCOMP_LIBS engine)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c90 -pedantic")
-set(EXAMPLE_SOURCES
-    "example/example.cc"
-    )
-set(EXAMPLE_LIBS
-  SDL2
-  GL
-    )
 
 if (APPLE)
 elseif(UNIX)
@@ -70,14 +63,6 @@ target_link_libraries(engine ${PIZZA_LIBS})
 
 add_executable(mcomp ${MCOMP_SOURCES})
 target_link_libraries(mcomp ${MCOMP_LIBS})
-
-add_executable(example ${EXAMPLE_SOURCES})
-target_link_libraries(example ${EXAMPLE_LIBS})
-
-# set(EXAMPLE_SOURCES
-#     "example/main.cc"
-#     )
-# add_executable(example ${EXAMPLE_SOURCES})
 
 if (APPLE)
     set_target_properties(engine PROPERTIES LINK_FLAGS

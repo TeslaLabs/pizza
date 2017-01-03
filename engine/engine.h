@@ -6,9 +6,9 @@
 #include "../log/ilog.h"
 
 class Engine {
-    IGame& game_;
     IEvent& event_;
     ILog& log_;
+    IGame& game_;
     bool alive_;
 
 public:
