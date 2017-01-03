@@ -42,7 +42,6 @@ set(PIZZA_SOURCES
     )
 set(PIZZA_LIBS
     protobuf
-    SDL2
     )
 
 set(MCOMP_SOURCES
@@ -55,7 +54,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c90 -pedantic")
 
 if (APPLE)
 elseif(UNIX)
-    list(APPEND PIZZA_LIBS GL GLEW pthread m dl SDL2main)
+    list(APPEND PIZZA_LIBS GL GLEW pthread m dl SDL2 SDL2main)
 endif()
 
 add_library(engine ${PIZZA_SOURCES})
@@ -68,7 +67,5 @@ if (APPLE)
     set_target_properties(engine PROPERTIES LINK_FLAGS
         "-F {$CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
     set_target_properties(mcomp PROPERTIES LINK_FLAGS
-        "-F ${CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
-    set_target_properties(example PROPERTIES LINK_FLAGS
         "-F ${CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
 endif()
