@@ -6,14 +6,14 @@
 #include "../log/ilog.h"
 
 class Engine {
-    IEvent& event_;
-    ILog& log_;
-    IGame& game_;
-    bool alive_;
+  IEvent& event_;
+  ILog& log_;
+  IGame& game_;
+  bool alive_;
 
 public:
-    Engine(IEvent& event, ILog& log, IGame& game);
-    void Run();
+  Engine(IEvent& event, ILog& log, IGame& game);
+  void Run();
 };
 
 #endif

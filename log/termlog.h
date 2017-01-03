@@ -6,8 +6,8 @@
 
 class TermLog : public ILog {
 public:
-    virtual void Message(const std::string& message) const override;
-    virtual void Error(const std::string& message) const override;
+  virtual void Message(const std::string& message) const override;
+  virtual void Error(const std::string& message) const override;
 };
 
 #endif

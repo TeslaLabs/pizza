@@ -18,6 +18,26 @@ GLRender::GLRender(ILog& log)
 	: log_ { log },
 	  assets_loaded_ { false }
 {
+#ifdef __linux__
+  GLenum err = glewInit();
+  if (err != GLEW_OK) {
+    log_.Error("Could not initialize GLEW");
+  }
+
+#define lm(m) log_.Message(m)
+#define EXTCHECK(ext) DEBUG(if (ext) lm(#ext ": YES"); else lm(#ext ": NO"))
+
+  EXTCHECK(GLEW_ARB_vertex_buffer_object);
+  EXTCHECK(GLEW_ARB_vertex_array_object);
+  EXTCHECK(GLEW_ARB_shader_objects);
+  EXTCHECK(GLEW_ARB_vertex_shader);
+  EXTCHECK(GLEW_ARB_fragment_shader);
+
+#undef lm
+#undef EXTCHECK
+
+#endif
+
 	glClearColor(0.5, 0.0, 0.0, 1.0);
 	glEnable(GL_DEPTH_TEST); ErrorCheck("enable depth testing");
 	glEnable(GL_CULL_FACE); ErrorCheck("enable cull face");
@@ -403,7 +423,7 @@ bool GLRender::ImportShaders(const Data& data) {
   }
 
   for (auto& shader : shaders) {
-    DEBUG(log_.Message("Processing " + shader.first));
+    DEBUG(log_.Message("Processing shader, \"" + shader.first + "\""));
     auto shader_result = shaders_.find(shader.first);
     if (shader_result != shaders_.end()) {
       log_.Error(shader.first + " already exists!");

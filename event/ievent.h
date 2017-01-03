@@ -6,11 +6,11 @@
 
 class IEvent {
 public:
-    virtual void Process() = 0;
-    virtual void Set(const std::string& event,
-                     std::function<void(void)> command) = 0;
-    virtual void Remove(const std::string& event) = 0;
-    virtual void Call(const std::string& event) = 0;
+  virtual void Process() = 0;
+  virtual void Set(const std::string& event,
+                   std::function<void(void)> command) = 0;
+  virtual void Remove(const std::string& event) = 0;
+  virtual void Call(const std::string& event) = 0;
 };
 
 #endif

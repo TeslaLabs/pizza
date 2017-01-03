@@ -9,7 +9,7 @@
 
 static bool INITIALIZED = false;
 
-SDLWindow::SDLWindow(ILog& log)
+SdlWindow::SdlWindow(ILog& log)
     : log_ { log },
       title_ { "Untitled" },
       window_handle_ { nullptr },
@@ -52,52 +52,52 @@ SDLWindow::SDLWindow(ILog& log)
     }
 }
 
-SDLWindow::~SDLWindow() {
+SdlWindow::~SdlWindow() {
     SDL_GL_DeleteContext(glcontext_);
     SDL_DestroyWindow(window_handle_);
     SDL_Quit();
 }
 
-std::string SDLWindow::title() const {
+std::string SdlWindow::title() const {
     return title_;
 }
 
-void SDLWindow::set_title(const std::string& title) {
+void SdlWindow::set_title(const std::string& title) {
     title_ = title;
     SDL_SetWindowTitle(window_handle_, title_.c_str());
 }
 
-unsigned int SDLWindow::width() const {
+unsigned int SdlWindow::width() const {
     return width_;
 }
 
-void SDLWindow::set_width(int width) {
+void SdlWindow::set_width(int width) {
     width_ = width;
     SDL_SetWindowSize(window_handle_, width_, height_);
 }
 
-unsigned int SDLWindow::height() const {
+unsigned int SdlWindow::height() const {
     return height_;
 }
 
-void SDLWindow::set_height(int height) {
+void SdlWindow::set_height(int height) {
     height_ = height;
     SDL_SetWindowSize(window_handle_, width_, height_);
 }
 
-void SDLWindow::Show() {
+void SdlWindow::Show() {
     if (visible_) return;
     SDL_ShowWindow(window_handle_);
     SDL_RaiseWindow(window_handle_);
     visible_ = true;
 }
 
-void SDLWindow::Hide() {
+void SdlWindow::Hide() {
     if (!visible_) return;
     SDL_HideWindow(window_handle_);
     visible_ = false;
 }
 
-void SDLWindow::Update() {
+void SdlWindow::Update() {
     SDL_GL_SwapWindow(window_handle_);
 }

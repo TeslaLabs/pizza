@@ -16,55 +16,57 @@
 //
 //
 
-SDLEvent::SDLEvent(ILog& log)
-    : log_ { log }
+SdlEvent::SdlEvent(ILog& log)
+  : log_ { log }
 {}
 
-void SDLEvent::Process() {
-    SDL_Event e;
+void SdlEvent::Process() {
+  SDL_Event e;
 
-    while (SDL_PollEvent(&e)) {
-        switch (e.type) {
-            case SDL_KEYDOWN: {
-                KeyDown(std::string { SDL_GetKeyName(e.key.keysym.sym) });
-            } break;
+  while (SDL_PollEvent(&e)) {
+    switch (e.type) {
+      case SDL_KEYDOWN: {
+        KeyDown(std::string { SDL_GetKeyName(e.key.keysym.sym) });
+      } break;
 
-            case SDL_KEYUP: {
-                KeyUp(std::string { SDL_GetKeyName(e.key.keysym.sym) });
-            } break;
+      case SDL_KEYUP: {
+        KeyDown(std::string { SDL_GetKeyName(e.key.keysym.sym) });
+      } break;
 
-            case SDL_WINDOWEVENT: {
-                switch (e.window.event) {
-                    case SDL_WINDOWEVENT_CLOSE: {
-                        Call("quit");
-                    } break;
-                }
-            }
+      case SDL_WINDOWEVENT: {
+        switch (e.window.event) {
+          case SDL_WINDOWEVENT_CLOSE: {
+            Call("quit");
+          } break;
         }
+      } break;
+
+      default: break;
     }
+  }
 
-    CheckActiveKeys();
+  CheckActiveKeys();
 }
 
-void SDLEvent::Set(const std::string& event, std::function<void(void)> command) {
-    events_[event] = command;
+void SdlEvent::Set(const std::string& event,
+                   std::function<void(void)> command) {
+  events_[event] = command;
 }
 
-void SDLEvent::Remove(const std::string& event) {
-    auto event_result = events_.find(event);
-    if (event_result == events_.end()) {
-            std::stringstream message;
-            message << "Could not find event, \"" << event;
-            message << ",\" for removal";
-            log_.Error(message.str());
-        return;
-    }
-    events_.erase(event_result);
+void SdlEvent::Remove(const std::string& event) {
+  auto event_result = events_.find(event);
+  if (event_result == events_.end()) {
+    std::stringstream message;
+    message << "Could not find event, \"" << event << ",\" for removal";
+    log_.Error(message.str());
+    return;
+  }
+  events_.erase(event_result);
 }
 
-void SDLEvent::Call(const std::string& event) {
-    auto func = events_.find(event);
-    if (func != events_.end()) func->second();
+void SdlEvent::Call(const std::string& event) {
+  auto func = events_.find(event);
+  if (func != events_.end()) func->second();
 }
 
 //
@@ -79,22 +81,22 @@ void SDLEvent::Call(const std::string& event) {
 //
 //
 
-void SDLEvent::KeyDown(const std::string& key) {
-    if (!keymap_[key]) {
-        keymap_[key] = true;
-        Call(key + "_down");
-    }
+void SdlEvent::KeyDown(const std::string& key) {
+  if (!keymap_[key]) {
+    keymap_[key] = true;
+    Call(key + "_down");
+  }
 }
 
-void SDLEvent::KeyUp(const std::string& key) {
-    if (keymap_[key]) {
-        keymap_[key] = false;
-        Call(key + "_up");
-    }
+void SdlEvent::KeyUp(const std::string& key) {
+  if (keymap_[key]) {
+    keymap_[key] = false;
+    Call(key + "_up");
+  }
 }
 
-void SDLEvent::CheckActiveKeys() {
-    for (auto& key : keymap_) {
-        if (key.second) Call(key.first);
-    }
+void SdlEvent::CheckActiveKeys() {
+  for (auto& key : keymap_) {
+    if (key.second) Call(key.first);
+  }
 }

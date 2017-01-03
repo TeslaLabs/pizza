@@ -8,17 +8,17 @@
 Engine::Engine(IEvent& event,
                ILog& log,
                IGame& game)
-    : event_ { event },
-      log_ { log },
-      game_ { game },
-      alive_ { true }
+  : event_ { event },
+    log_ { log },
+    game_ { game },
+    alive_ { true }
 {
-    event_.Set("quit", [this] { this->alive_ = false; });
+  event_.Set("quit", [this] { this->alive_ = false; });
 }
 
 void Engine::Run() {
-    while (alive_) {
-        event_.Process();
-        game_.Update();
-    }
+  while (alive_) {
+    event_.Process();
+    game_.Update();
+  }
 }

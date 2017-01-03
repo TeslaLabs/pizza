@@ -6,7 +6,7 @@
 #include "iwindow.h"
 #include "../log/ilog.h"
 
-class SDLWindow : public IWindow {
+class SdlWindow : public IWindow {
     ILog& log_;
     std::string title_;
     SDL_Window* window_handle_;
@@ -16,9 +16,9 @@ class SDLWindow : public IWindow {
     bool visible_;
 
 public:
-    SDLWindow(ILog& log);
-    SDLWindow(const SDLWindow& w) = delete;
-    ~SDLWindow();
+    SdlWindow(ILog& log);
+    SdlWindow(const SdlWindow& w) = delete;
+    ~SdlWindow();
     std::string title() const;
     void set_title(const std::string& title);
     unsigned int width() const override;

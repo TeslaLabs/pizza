@@ -10,18 +10,18 @@
 #include "../window/iwindow.h"
 
 class Mcomp : public IGame {
-    IEvent& event_;
-    ILog& log_;
-    IRender& render_;
-    IWindow& window_;
-    std::vector<Model> models_;
+  IEvent& event_;
+  ILog& log_;
+  IRender& render_;
+  IWindow& window_;
+  std::vector<Model> models_;
 
 public:
-    Mcomp(IEvent& event,
-          ILog& log,
-          IRender& render,
-          IWindow& window);
-    virtual void Update() override;
+  Mcomp(IEvent& event,
+        ILog& log,
+        IRender& render,
+        IWindow& window);
+  virtual void Update() override;
 };
 
 #endif
