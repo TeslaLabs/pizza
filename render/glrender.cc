@@ -10,9 +10,17 @@
 #include "../math/vec3.h"
 #include "../proto/data.pb.h"
 
-////////////////////////////////////////
-// Public
-////////////////////////////////////////
+//
+//                          ,,        ,,    ,,
+//   `7MM"""Mq.            *MM      `7MM    db
+//     MM   `MM.            MM        MM
+//     MM   ,M9 `7MM  `7MM  MM,dMMb.  MM  `7MM  ,p6"bo
+//     MMmmdM9    MM    MM  MM    `Mb MM    MM 6M'  OO
+//     MM         MM    MM  MM     M8 MM    MM 8M
+//     MM         MM    MM  MM.   ,M9 MM    MM YM.    ,
+//   .JMML.       `Mbod"YML.P^YbmdP'.JMML..JMML.YMbmd'
+//
+//
 
 GLRender::GLRender(ILog& log)
 	: log_ { log },
