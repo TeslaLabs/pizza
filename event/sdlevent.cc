@@ -66,7 +66,9 @@ void SdlEvent::Remove(const std::string& event) {
 
 void SdlEvent::Call(const std::string& event) {
   auto func = events_.find(event);
-  if (func != events_.end()) func->second();
+  if (func != events_.end()) {
+    func->second();
+  }
 }
 
 //

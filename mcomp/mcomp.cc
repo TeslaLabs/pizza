@@ -14,10 +14,19 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
 {
   event_.Set("Backspace_down", [this] { this->event_.Call("quit"); });
   event_.Set("P_down", [this] { this->render_.PrintData(); });
+  event_.Set("A_down", [this] {
+    this->models_.clear();
+    this->models_.push_back(Model { "Thing", "default" });
+  });
+  event_.Set("B_down", [this] {
+    this->models_.clear();
+    this->models_.push_back(Model { "Sphere", "default" });
+  });
+  event_.Set("X_down", [this] { this->log_.Message("Hey"); });
 
   render_.LoadData("r");
   render_.SetCameraPosition({ 0, 0, 500 });
-  models_.push_back(Model { "Sphere", "default" });
+  models_.push_back(Model { "Thing", "default" });
 
   window_.Show();
 }
