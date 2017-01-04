@@ -26,7 +26,7 @@ class GLRender : public IRender {
   struct Shader {
     GLuint vert_id;
     GLuint frag_id;
-    GLuint shader_id;
+    GLuint program_id;
     Shader();
     Shader(const Shader& s) = delete;
     void ClearUniforms();
@@ -78,15 +78,14 @@ private:
   void ErrorCheck(const std::string& message);
   void AddPrimitive();
   bool ImportMeshes(const Data& data);
-  GLuint GenerateVertexArrayObject();
   bool ImportShaders(const Data& data);
   bool CompileShader(const std::string& source,
                      ShaderType type,
                      GLuint* out);
-  bool CreateShader(GLuint vert_id,
-                    GLuint frag_id,
-                    GLuint* out_id);
-  bool LinkShader(GLuint shader_id);
+  bool CreateShaderProgram(GLuint vert_id,
+                           GLuint frag_id,
+                           GLuint* out_id);
+  bool LinkShaderProgram(GLuint shader_id);
   void ProcessUniforms(Shader& shader);
 };
 

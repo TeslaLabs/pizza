@@ -62,7 +62,7 @@ GLRender::~GLRender() {
 void GLRender::Update() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   ErrorCheck("glclear");
-  glUseProgram(shaders_["basic"].shader_id); ErrorCheck("use program");
+  glUseProgram(shaders_["basic"].program_id); ErrorCheck("use program");
   glBindVertexArray(meshes_["Cube"].vao_id); ErrorCheck("bind vertex array");
 
   glPointSize(40.0); ErrorCheck("point size");
@@ -110,7 +110,7 @@ void GLRender::UnloadData() {
     s.second.ClearUniforms();
     glDeleteShader(s.second.vert_id);
     glDeleteShader(s.second.frag_id);
-    glDeleteProgram(s.second.shader_id);
+    glDeleteProgram(s.second.program_id);
   }
 
   shaders_.clear();
@@ -125,7 +125,7 @@ void GLRender::PrintData() {
     std::stringstream message;
     message << s.second.vert_id << std::endl;
     message << s.second.frag_id << std::endl;
-    message << s.second.shader_id;
+    message << s.second.program_id;
     log_.Message(message.str());
   }
 }
@@ -168,7 +168,7 @@ void GLRender::DrawModel(const IModel& model) {
     log_.Error(message.str());
     return;
   }
-  glUseProgram(shader_result->second.shader_id);
+  glUseProgram(shader_result->second.program_id);
 
   auto& mesh_info = mesh_result->second;
   glBindBuffer(GL_ARRAY_BUFFER, mesh_info.position_buffer);
@@ -236,7 +236,7 @@ GLRender::Mesh::Mesh()
 GLRender::Shader::Shader()
   : vert_id { 0 },
     frag_id { 0 },
-    shader_id { 0 }
+    program_id { 0 }
 {
   uniforms_.clear();
 }
@@ -299,45 +299,7 @@ void GLRender::ErrorCheck(const std::string& message) {
   })
 }
 
-void GLRender::AddPrimitive() {
-  GLuint position_buffer = 0, index_buffer = 0;
-  glGenBuffers(1, &position_buffer);
-  glGenBuffers(1, &index_buffer);
-
-  glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
-
-  const float positions[] = {
-     0.75,  0.75, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
-    -0.75,  0.75, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
-    -0.75, -0.75, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0,
-     0.75, -0.75, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0
-  };
-
-  const unsigned int indices[] = {
-    0, 1, 2,
-    2, 3, 0
-  };
-
-  glBufferData(GL_ARRAY_BUFFER,
-               sizeof(float) * 4 * 8,
-               positions,
-               GL_STATIC_DRAW);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-               sizeof(unsigned int) * 6,
-               indices,
-               GL_STATIC_DRAW);
-
-  auto vao_id = GenerateVertexArrayObject();
-
-  meshes_["primitive_square"].position_buffer = position_buffer;
-  meshes_["primitive_square"].index_buffer = index_buffer;
-  meshes_["primitive_square"].vao_id = vao_id;
-  meshes_["primitive_square"].n_faces = 6;
-}
-
 bool GLRender::ImportMeshes(const Data& data) {
-  AddPrimitive();
   for (auto i = 0; i < data.mesh_size(); ++i) {
     auto mesh = data.mesh(i);
 
@@ -347,19 +309,18 @@ bool GLRender::ImportMeshes(const Data& data) {
       continue;
     }
 
-    GLuint position_buffer = 0, index_buffer = 0;
+    GLuint vao_id { 0 };
+    glGenVertexArrays(1, &vao_id); ErrorCheck("gen vertex arrays");
+    glBindVertexArray(vao_id); ErrorCheck("bind vertex array");
+
+    GLuint position_buffer { 0 }, index_buffer { 0 };
     glGenBuffers(1, &position_buffer); ErrorCheck("gen position buffer");
-    glGenBuffers(1, &index_buffer); ErrorCheck("gen index buffer");
 
     glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
-    ErrorCheck("Bind array buffer");
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
-    ErrorCheck("Bind element buffer");
+    ErrorCheck("bind array buffer");
 
     auto n_positions = 8 * mesh.vertex_size();
     auto positions = new float[n_positions];
-    auto n_faces = 3 * mesh.face_size();
-    auto faces = new unsigned int[n_faces];
 
     for (auto j = 0; j < mesh.vertex_size(); ++j) {
       positions[(j * 8) + 0] = mesh.vertex(j).x();
@@ -372,24 +333,60 @@ bool GLRender::ImportMeshes(const Data& data) {
       positions[(j * 8) + 7] = mesh.vertex(j).v();
     }
 
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) * n_positions,
+                 positions,
+                 GL_STATIC_DRAW);
+    ErrorCheck("array buffer data");
+
+    glVertexAttribPointer(ATTRIB_LOC_POSITION,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(float) * 8,
+                          NULL);
+    ErrorCheck("position attrib pointer");
+    glVertexAttribPointer(ATTRIB_LOC_NORMAL,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(float) * 8,
+                          (GLvoid*) (sizeof(float) * 3));
+    ErrorCheck("normal attrib pointer");
+    glVertexAttribPointer(ATTRIB_LOC_UV,
+                          2,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(float) * 8,
+                          (GLvoid*) (sizeof(float) * 6));
+    ErrorCheck("uv attrib pointer");
+
+    glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
+    ErrorCheck("enable position attrib array");
+    glEnableVertexAttribArray(ATTRIB_LOC_NORMAL);
+    ErrorCheck("enable normal attrib array");
+    glEnableVertexAttribArray(ATTRIB_LOC_UV);
+    ErrorCheck("enable uv attrib array");
+
+    glGenBuffers(1, &index_buffer); ErrorCheck("gen index buffer");
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
+    ErrorCheck("bind element buffer");
+
+    auto n_faces = 3 * mesh.face_size();
+    auto faces = new unsigned int[n_faces];
+
     for (auto j = 0; j < mesh.face_size(); ++j) {
       faces[(j * 3) + 0] = mesh.face(j).a();
       faces[(j * 3) + 1] = mesh.face(j).b();
       faces[(j * 3) + 2] = mesh.face(j).c();
     }
 
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(float) * n_positions,
-                 positions,
-                 GL_STATIC_DRAW);
-    ErrorCheck("array buffer data");
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  sizeof(unsigned int) * n_faces,
                  faces,
                  GL_STATIC_DRAW);
     ErrorCheck("element buffer data");
-
-    auto vao_id = GenerateVertexArrayObject();
 
     meshes_[mesh.name()].position_buffer = position_buffer;
     meshes_[mesh.name()].index_buffer = index_buffer;
@@ -405,44 +402,6 @@ bool GLRender::ImportMeshes(const Data& data) {
   }
 
   return true;
-}
-
-GLuint GLRender::GenerateVertexArrayObject() {
-  GLuint vao;
-
-  glGenVertexArrays(1, &vao); ErrorCheck("gen vertex array");
-  glBindVertexArray(vao); ErrorCheck("bind vertex array");
-
-  glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
-  ErrorCheck("enable vertex attrib array position");
-  glEnableVertexAttribArray(ATTRIB_LOC_NORMAL);
-  ErrorCheck("enable vertex attrib array normal");
-  glEnableVertexAttribArray(ATTRIB_LOC_UV);
-  ErrorCheck("enable vertex attrib array uv");
-
-  glVertexAttribPointer(ATTRIB_LOC_POSITION,
-                        3,
-                        GL_FLOAT,
-                        GL_FALSE,
-                        sizeof(float) * 8,
-                        NULL);
-  ErrorCheck("vertex attrib pointer position");
-  glVertexAttribPointer(ATTRIB_LOC_NORMAL,
-                        3,
-                        GL_FLOAT,
-                        GL_FALSE,
-                        sizeof(float) * 8,
-                        (GLvoid*) (sizeof(float) * 3));
-  ErrorCheck("vertex attrib pointer normal");
-  glVertexAttribPointer(ATTRIB_LOC_UV,
-                        2,
-                        GL_FLOAT,
-                        GL_FALSE,
-                        sizeof(float) * 8,
-                        (GLvoid*) (sizeof(float) * 6));
-  ErrorCheck("vertex attrib pointer uv");
-
-  return vao;
 }
 
 bool GLRender::ImportShaders(const Data& data) {
@@ -494,8 +453,8 @@ bool GLRender::ImportShaders(const Data& data) {
       continue;
     }
 
-    GLuint shader_id;
-    if (!CreateShader(vert_id, frag_id, &shader_id)) {
+    GLuint program_id;
+    if (!CreateShaderProgram(vert_id, frag_id, &program_id)) {
       log_.Error("Could not create shader");
       glDeleteShader(vert_id);
       glDeleteShader(frag_id);
@@ -504,7 +463,7 @@ bool GLRender::ImportShaders(const Data& data) {
 
     shaders_[shader.first].vert_id = vert_id;
     shaders_[shader.first].frag_id = frag_id;
-    shaders_[shader.first].shader_id = shader_id;
+    shaders_[shader.first].program_id = program_id;
 
     ProcessUniforms(shaders_[shader.first]);
   }
@@ -563,9 +522,9 @@ bool GLRender::CompileShader(const std::string& source,
   return true;
 }
 
-bool GLRender::CreateShader(GLuint vert_id,
-                            GLuint frag_id,
-                            GLuint* out_id) {
+bool GLRender::CreateShaderProgram(GLuint vert_id,
+                                   GLuint frag_id,
+                                   GLuint* out_id) {
   GLuint shader = glCreateProgram();
   ErrorCheck("create shader");
   if (!shader) {
@@ -583,7 +542,7 @@ bool GLRender::CreateShader(GLuint vert_id,
   glBindAttribLocation(shader, ATTRIB_LOC_UV, "in_uv");
   ErrorCheck("bind in_uv attrib location");
 
-  if (!LinkShader(shader)) {
+  if (!LinkShaderProgram(shader)) {
     log_.Error("Could not link shader");
     glDetachShader(shader, vert_id);
     glDetachShader(shader, frag_id);
@@ -596,17 +555,17 @@ bool GLRender::CreateShader(GLuint vert_id,
   return true;
 }
 
-bool GLRender::LinkShader(GLuint shader_id) {
-  glLinkProgram(shader_id);
+bool GLRender::LinkShaderProgram(GLuint program_id) {
+  glLinkProgram(program_id);
   ErrorCheck("link shader");
 
   DEBUG({
     GLint log_size;
-    glGetProgramiv(shader_id, GL_INFO_LOG_LENGTH, &log_size);
+    glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &log_size);
     if (log_size > 2) {
       std::string error_message;
       error_message.reserve(log_size);
-      glGetProgramInfoLog(shader_id,
+      glGetProgramInfoLog(program_id,
                           log_size,
                           &log_size,
                           &error_message[0]);
@@ -616,7 +575,7 @@ bool GLRender::LinkShader(GLuint shader_id) {
   })
 
   GLint success { GL_FALSE };
-  glGetProgramiv(shader_id, GL_LINK_STATUS, &success);
+  glGetProgramiv(program_id, GL_LINK_STATUS, &success);
   if (success != GL_TRUE) {
     log_.Error("Could not link shader");
     return false;
@@ -627,13 +586,13 @@ bool GLRender::LinkShader(GLuint shader_id) {
 // The goal is to parse the shaders individually and pull out the uniforms
 // names from them, but for now they will be hardcoded
 void GLRender::ProcessUniforms(Shader& shader) {
-  auto projection_location = glGetUniformLocation(shader.shader_id,
+  auto projection_location = glGetUniformLocation(shader.program_id,
                                                   "projection");
   ErrorCheck("get projection location");
   if (projection_location != -1) {
     shader.SetUniformLocation("projection", projection_location);
 
-    auto modelview_location = glGetUniformLocation(shader.shader_id,
+    auto modelview_location = glGetUniformLocation(shader.program_id,
                                                    "modelview");
     if (modelview_location != -1) {
       shader.SetUniformLocation("modelview", modelview_location);
