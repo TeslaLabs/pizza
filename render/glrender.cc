@@ -18,7 +18,7 @@ GLRender::GLRender(ILog& log)
 	: log_ { log },
 	  assets_loaded_ { false }
 {
-#ifdef __linux__
+#ifndef __APPLE__
   GLenum err = glewInit();
   if (err != GLEW_OK) {
     log_.Error("Could not initialize GLEW");
@@ -35,6 +35,8 @@ GLRender::GLRender(ILog& log)
 
 #undef lm
 #undef EXTCHECK
+
+  glUseProgram(0);
 
 #endif
 
@@ -141,7 +143,7 @@ void GLRender::CameraLookat(const Vec3& location) {
 }
 
 void GLRender::DrawModel(const IModel& model) {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); return;
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   auto mesh_result = meshes_.find(model.name());
   if (mesh_result == meshes_.end()) {
     std::stringstream message;
@@ -176,9 +178,9 @@ void GLRender::DrawModel(const IModel& model) {
                          });
   Matrix view = Matrix::Identity();
   // TODO: Rotations
-  view = view * Matrix::Translate(camera_.position.i(),
-                                  camera_.position.j(),
-                                  camera_.position.k());
+  view = view * Matrix::Translate(-camera_.position.i(),
+                                  -camera_.position.j(),
+                                  -camera_.position.k());
   auto model_translate = Matrix::Translate(model.position().i(),
                                            model.position().j(),
                                            model.position().k());
@@ -195,12 +197,12 @@ void GLRender::DrawModel(const IModel& model) {
                                              modelview.data());
                           this->ErrorCheck("modelview matrix");
                          });
-  glPointSize(100.0f);
-  glDrawArrays(GL_POINTS, 0, 1);
-  // glDrawElements(GL_TRIANGLES,
-  //                mesh_info.n_faces,
-  //                GL_UNSIGNED_INT,
-  //                NULL);
+  glPointSize(100.0);
+  // glDrawArrays(GL_POINTS, 0, 1);
+  glDrawElements(GL_TRIANGLES,
+                 mesh_info.n_faces,
+                 GL_UNSIGNED_INT,
+                 NULL);
   ErrorCheck("draw elements");
 }
 
@@ -251,7 +253,7 @@ bool GLRender::Shader::SetUniformValue(const std::string& uniform,
 
 GLRender::Camera::Camera()
   : projection {
-      Matrix::Projection(ToRadians(90), 4.0 / 3.0, 1.0, 100000.0)
+      Matrix::Projection(ToRadians(90), 4.0 / 3.0, 0.1, 100000.0)
     },
     position { Vec3 { 0, 0, 0 } },
     direction { Vec3 { 0, 0, -1 } }
@@ -290,7 +292,40 @@ void GLRender::ErrorCheck(const std::string& message) {
 }
 
 void GLRender::AddPrimitive() {
-  // GLuint position_buffer, index_buffer;
+  GLuint position_buffer = 0, index_buffer = 0;
+  glGenBuffers(1, &position_buffer);
+  glGenBuffers(1, &index_buffer);
+
+  glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
+
+  const float positions[] = {
+     0.75,  0.75, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+    -0.75,  0.75, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+    -0.75, -0.75, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0,
+     0.75, -0.75, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0
+  };
+
+  const unsigned int indices[] = {
+    0, 1, 2,
+    2, 3, 0
+  };
+
+  glBufferData(GL_ARRAY_BUFFER,
+               sizeof(float) * 4 * 8,
+               positions,
+               GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+               sizeof(unsigned int) * 6,
+               indices,
+               GL_STATIC_DRAW);
+
+  auto vao_id = GenerateVertexArrayObject();
+
+  meshes_["primitive_square"].position_buffer = position_buffer;
+  meshes_["primitive_square"].index_buffer = index_buffer;
+  meshes_["primitive_square"].vao_id = vao_id;
+  meshes_["primitive_square"].n_faces = 6;
 }
 
 bool GLRender::ImportMeshes(const Data& data) {
@@ -351,6 +386,7 @@ bool GLRender::ImportMeshes(const Data& data) {
     meshes_[mesh.name()].position_buffer = position_buffer;
     meshes_[mesh.name()].index_buffer = index_buffer;
     meshes_[mesh.name()].vao_id = vao_id;
+    meshes_[mesh.name()].n_faces = n_faces;
 
     delete[] positions;
     delete[] faces;

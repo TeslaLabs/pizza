@@ -16,11 +16,16 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   event_.Set("P_down", [this] { this->render_.PrintData(); });
 
   render_.LoadData("r");
+  render_.SetCameraPosition({ 0, 0, 500 });
+  models_.push_back(Model { "Sphere", "default" });
 
   window_.Show();
 }
 
 void Mcomp::Update() {
-  render_.Update();
+  for (auto& m : models_) {
+    render_.DrawModel(m);
+  }
+  // render_.Update();
   window_.Update();
 }
