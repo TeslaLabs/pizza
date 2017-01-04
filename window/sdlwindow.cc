@@ -32,8 +32,6 @@ SdlWindow::SdlWindow(ILog& log)
         if (SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1)) {
             log_.Error("Error setting OpenGL minor version");
         }
-        // SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-        //                     SDL_GL_CONTEXT_PROFILE_CORE);
         window_handle_ = SDL_CreateWindow(title_.c_str(),
                                           SDL_WINDOWPOS_UNDEFINED,
                                           SDL_WINDOWPOS_UNDEFINED,

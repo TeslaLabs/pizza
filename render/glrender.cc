@@ -292,6 +292,8 @@ void GLRender::ErrorCheck(const std::string& message) {
 }
 
 void GLRender::AddPrimitive() {
+  auto vao_id = GenerateVertexArrayObject();
+
   GLuint position_buffer = 0, index_buffer = 0;
   glGenBuffers(1, &position_buffer);
   glGenBuffers(1, &index_buffer);
@@ -320,8 +322,6 @@ void GLRender::AddPrimitive() {
                indices,
                GL_STATIC_DRAW);
 
-  auto vao_id = GenerateVertexArrayObject();
-
   meshes_["primitive_square"].position_buffer = position_buffer;
   meshes_["primitive_square"].index_buffer = index_buffer;
   meshes_["primitive_square"].vao_id = vao_id;
@@ -338,6 +338,8 @@ bool GLRender::ImportMeshes(const Data& data) {
       log_.Error(mesh.name() + " already exists!");
       continue;
     }
+
+    auto vao_id = GenerateVertexArrayObject();
 
     GLuint position_buffer = 0, index_buffer = 0;
     glGenBuffers(1, &position_buffer); ErrorCheck("gen position buffer");
@@ -380,8 +382,6 @@ bool GLRender::ImportMeshes(const Data& data) {
                  faces,
                  GL_STATIC_DRAW);
     ErrorCheck("element buffer data");
-
-    auto vao_id = GenerateVertexArrayObject();
 
     meshes_[mesh.name()].position_buffer = position_buffer;
     meshes_[mesh.name()].index_buffer = index_buffer;
