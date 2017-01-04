@@ -22,7 +22,6 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     this->models_.clear();
     this->models_.push_back(Model { "Sphere", "default" });
   });
-  event_.Set("X_down", [this] { this->log_.Message("Hey"); });
 
   render_.LoadData("r");
   render_.SetCameraPosition({ 0, 0, 500 });

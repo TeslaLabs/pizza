@@ -40,6 +40,7 @@ GLRender::GLRender(ILog& log)
   EXTCHECK(GLEW_ARB_shader_objects);
   EXTCHECK(GLEW_ARB_vertex_shader);
   EXTCHECK(GLEW_ARB_fragment_shader);
+  EXTCHECK(GLEW_ARB_framebuffer_object);
 
 #undef lm
 #undef EXTCHECK

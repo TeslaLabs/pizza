@@ -30,7 +30,7 @@ void SdlEvent::Process() {
       } break;
 
       case SDL_KEYUP: {
-        KeyDown(std::string { SDL_GetKeyName(e.key.keysym.sym) });
+        KeyUp(std::string { SDL_GetKeyName(e.key.keysym.sym) });
       } break;
 
       case SDL_WINDOWEVENT: {
