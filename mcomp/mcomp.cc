@@ -13,7 +13,6 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     window_ { window }
 {
   event_.Set("Backspace_down", [this] { this->event_.Call("quit"); });
-  event_.Set("P_down", [this] { this->render_.PrintData(); });
   event_.Set("A_down", [this] {
     this->models_.clear();
     this->models_.push_back(Model { "Thing", "default" });

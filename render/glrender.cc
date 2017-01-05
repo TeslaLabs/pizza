@@ -119,18 +119,6 @@ void GLRender::UnloadData() {
   assets_loaded_ = false;
 }
 
-void GLRender::PrintData() {
-  log_.Error("Printing data");
-  for (auto& s : shaders_) {
-    log_.Message(s.first);
-    std::stringstream message;
-    message << s.second.vert_id << std::endl;
-    message << s.second.frag_id << std::endl;
-    message << s.second.program_id;
-    log_.Message(message.str());
-  }
-}
-
 void GLRender::SetBackgroundColor(float r, float g, float b, float a) {
   glClearColor(r, g, b, a);
 }
@@ -262,7 +250,7 @@ bool GLRender::Shader::SetUniformValue(const std::string& uniform,
 
 GLRender::Camera::Camera()
   : projection {
-      Matrix::Projection(ToRadians(90), 4.0 / 3.0, 0.1, 100000.0)
+      Matrix::Projection(ToRadians(70), 4.0 / 3.0, 1.0, 100000.0)
     },
     position { Vec3 { 0, 0, 0 } },
     direction { Vec3 { 0, 0, -1 } }

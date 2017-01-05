@@ -66,7 +66,6 @@ public:
   virtual void Update() override;
   virtual void LoadData(const std::string& filepath) override;
   virtual void UnloadData() override;
-  virtual void PrintData() override;
   virtual void SetBackgroundColor(float r, float g, float b, float a) override;
   virtual void SetCameraProjection(const Matrix& projection) override;
   virtual void SetCameraPosition(const Vec3& position) override;
