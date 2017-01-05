@@ -11,6 +11,7 @@
 #include "../math/matrix.h"
 #include "../math/vec3.h"
 #include "../proto/data.pb.h"
+#include "../window/iwindow.h"
 
 class GLRender : public IRender {
   enum ShaderType {
@@ -55,14 +56,17 @@ class GLRender : public IRender {
   };
 
   ILog& log_;
+  IWindow& window_;
   Camera camera_;
   std::unordered_map<std::string, Shader> shaders_;
   std::unordered_map<std::string, Mesh> meshes_;
+  std::vector<IModel*> models_;
   bool assets_loaded_;
 
 public:
-  GLRender(ILog&);
+  GLRender(ILog& log, IWindow& window);
   virtual ~GLRender() override;
+  virtual bool Initialize() override;
   virtual void Update() override;
   virtual void LoadData(const std::string& filepath) override;
   virtual void UnloadData() override;
@@ -71,7 +75,7 @@ public:
   virtual void SetCameraPosition(const Vec3& position) override;
   virtual void SetCameraDirection(const Vec3& location) override;
   virtual void CameraLookat(const Vec3& location) override;
-  virtual void DrawModel(const IModel& model) override;
+  virtual void DrawModel(IModel* model) override;
 
 private:
   void ErrorCheck(const std::string& message);
@@ -86,6 +90,7 @@ private:
                            GLuint* out_id);
   bool LinkShaderProgram(GLuint shader_id);
   void ProcessUniforms(Shader& shader);
+  void RenderModels();
 };
 
 #endif

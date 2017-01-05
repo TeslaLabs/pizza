@@ -30,9 +30,8 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
 }
 
 void Mcomp::Update() {
-  for (auto& m : models_) {
-    render_.DrawModel(m);
+  for (auto m : models_) {
+    render_.DrawModel(&m);
   }
-  // render_.Update();
-  window_.Update();
+  render_.Update();
 }

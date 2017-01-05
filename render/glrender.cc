@@ -22,52 +22,62 @@
 //
 //
 
-GLRender::GLRender(ILog& log)
+GLRender::GLRender(ILog& log, IWindow& window)
 	: log_ { log },
+    window_ { window },
 	  assets_loaded_ { false }
 {
-#ifndef __APPLE__
-  GLenum err = glewInit();
-  if (err != GLEW_OK) {
-    log_.Error("Could not initialize GLEW");
-  }
-
-#define lm(m) log_.Message(m)
-#define EXTCHECK(ext) DEBUG(if (ext) lm(#ext ": YES"); else lm(#ext ": NO"))
-
-  EXTCHECK(GLEW_ARB_vertex_buffer_object);
-  EXTCHECK(GLEW_ARB_vertex_array_object);
-  EXTCHECK(GLEW_ARB_shader_objects);
-  EXTCHECK(GLEW_ARB_vertex_shader);
-  EXTCHECK(GLEW_ARB_fragment_shader);
-  EXTCHECK(GLEW_ARB_framebuffer_object);
-
-#undef lm
-#undef EXTCHECK
-
-  glUseProgram(0);
-
-#endif
-
-	glClearColor(0.5, 0.0, 0.0, 1.0);
-	glEnable(GL_DEPTH_TEST); ErrorCheck("enable depth testing");
-	glEnable(GL_CULL_FACE); ErrorCheck("enable cull face");
-	glFrontFace(GL_CCW); ErrorCheck("set front face");
-	glCullFace(GL_BACK); ErrorCheck("set to cull back faces");
 }
 
 GLRender::~GLRender() {
   UnloadData();
 }
 
+bool GLRender::Initialize() {
+#ifndef __APPLE__
+  GLenum err = glewInit();
+  if (err != GLEW_OK) {
+    log_.Error("Could not initialize GLEW");
+  }
+
+  bool is_valid { true };
+
+#define lm(m) log_.Message(m)
+#define EXTCHECK(ext) if (!ext) { lm(#ext ": NO"); is_valid = false; } else lm(#ext ": YES")
+
+  EXTCHECK(GLEW_ARB_vertex_buffer_object)
+  EXTCHECK(GLEW_ARB_vertex_array_object)
+  EXTCHECK(GLEW_ARB_shader_objects)
+  EXTCHECK(GLEW_ARB_vertex_shader)
+  EXTCHECK(GLEW_ARB_fragment_shader)
+  EXTCHECK(GLEW_ARB_framebuffer_object)
+
+#undef lm
+#undef EXTCHECK
+
+  if (!is_valid) return false;
+
+#endif
+
+  const unsigned char* ext_str { glGetString(GL_EXTENSIONS) };
+  std::strtok(ext_str);
+
+  glClearColor(0.5, 0.0, 0.0, 1.0);
+  glEnable(GL_DEPTH_TEST); ErrorCheck("enable depth testing");
+  glEnable(GL_CULL_FACE); ErrorCheck("enable cull face");
+  glFrontFace(GL_CCW); ErrorCheck("set front face");
+  glCullFace(GL_BACK); ErrorCheck("set to cull back faces");
+
+  return true;
+}
+
 void GLRender::Update() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   ErrorCheck("glclear");
-  glUseProgram(shaders_["basic"].program_id); ErrorCheck("use program");
-  glBindVertexArray(meshes_["Cube"].vao_id); ErrorCheck("bind vertex array");
 
-  glPointSize(40.0); ErrorCheck("point size");
-  glDrawArrays(GL_POINTS, 0, 1); ErrorCheck("draw arrays");
+  RenderModels();
+
+  window_.Update();
 }
 
 void GLRender::LoadData(const std::string& filepath) {
@@ -139,68 +149,8 @@ void GLRender::CameraLookat(const Vec3& location) {
   camera_.direction = Vec3::Normalize(camera_.position - location);
 }
 
-void GLRender::DrawModel(const IModel& model) {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  auto mesh_result = meshes_.find(model.name());
-  if (mesh_result == meshes_.end()) {
-    std::stringstream message;
-    message << "Could not find mesh, \"" << model.name() << "\"";
-    log_.Error(message.str());
-    return;
-  }
-
-  auto shader_result = shaders_.find(model.shader_name());
-  if (shader_result == shaders_.end()) {
-    std::stringstream message;
-    message << "Could not find shader, \"" << model.shader_name();
-    message << "\" to render mesh";
-    log_.Error(message.str());
-    return;
-  }
-  glUseProgram(shader_result->second.program_id);
-
-  auto& mesh_info = mesh_result->second;
-  glBindBuffer(GL_ARRAY_BUFFER, mesh_info.position_buffer);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_info.index_buffer);
-  glBindVertexArray(mesh_info.vao_id);
-
-  auto& shader = shader_result->second;
-  shader.SetUniformValue("projection",
-                         [this](GLint location) {
-                          glUniformMatrix4fv(location,
-                                             1,
-                                             GL_FALSE,
-                                             this->camera_.projection.data());
-                          this->ErrorCheck("projection matrix");
-                         });
-  Matrix view = Matrix::Identity();
-  // TODO: Rotations
-  view = view * Matrix::Translate(-camera_.position.i(),
-                                  -camera_.position.j(),
-                                  -camera_.position.k());
-  auto model_translate = Matrix::Translate(model.position().i(),
-                                           model.position().j(),
-                                           model.position().k());
-  auto model_rotate = Matrix::RotateX(model.rotation().i()) *
-                      Matrix::RotateZ(model.rotation().k()) *
-                      Matrix::RotateY(model.rotation().j());
-  auto model_matrix = model_translate * model_rotate;
-  auto modelview = model_matrix * view;
-  shader.SetUniformValue("modelview",
-                         [&modelview, this](GLint location) {
-                          glUniformMatrix4fv(location,
-                                             1,
-                                             GL_FALSE,
-                                             modelview.data());
-                          this->ErrorCheck("modelview matrix");
-                         });
-  glPointSize(100.0);
-  // glDrawArrays(GL_POINTS, 0, 1);
-  glDrawElements(GL_TRIANGLES,
-                 mesh_info.n_faces,
-                 GL_UNSIGNED_INT,
-                 NULL);
-  ErrorCheck("draw elements");
+void GLRender::DrawModel(IModel* model) {
+  models_.push_back(model);
 }
 
 //
@@ -587,4 +537,67 @@ void GLRender::ProcessUniforms(Shader& shader) {
       shader.SetUniformLocation("modelview", modelview_location);
     }
   }
+}
+
+void GLRender::RenderModels() {
+  for (auto model : models_) {
+    auto mesh_result = meshes_.find(model->name());
+    if (mesh_result == meshes_.end()) {
+      std::stringstream message;
+      message << "Could not find mesh, \"" << model->name() << "\"";
+      log_.Error(message.str());
+      return;
+    }
+
+    auto shader_result = shaders_.find(model->shader_name());
+    if (shader_result == shaders_.end()) {
+      std::stringstream message;
+      message << "Could not find shader, \"" << model->shader_name();
+      message << "\" to render mesh";
+      log_.Error(message.str());
+      return;
+    }
+
+    glUseProgram(shader_result->second.program_id);
+
+    auto& mesh_info = mesh_result->second;
+    glBindBuffer(GL_ARRAY_BUFFER, mesh_info.position_buffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_info.index_buffer);
+    glBindVertexArray(mesh_info.vao_id);
+
+    auto& shader = shader_result->second;
+    shader.SetUniformValue("projection",
+                           [this](GLint location) {
+                            glUniformMatrix4fv(location,
+                                               1,
+                                               GL_FALSE,
+                                               this->camera_.projection.data());
+                            this->ErrorCheck("projection matrix");
+                           });
+    auto view = Matrix::Translate(-camera_.position.i(),
+                                  -camera_.position.j(),
+                                  -camera_.position.k());
+    auto model_translate = Matrix::Translate(model->position().i(),
+                                             model->position().j(),
+                                             model->position().k());
+    auto model_rotate = (Matrix::RotateX(model->rotation().i()) *
+                         Matrix::RotateY(model->rotation().j()) *
+                         Matrix::RotateZ(model->rotation().k()));
+    auto model_matrix = model_translate * model_rotate;
+    auto modelview = model_matrix * view;
+    shader.SetUniformValue("modelview",
+                           [&modelview, this](GLint location) {
+                            glUniformMatrix4fv(location,
+                                               1,
+                                               GL_FALSE,
+                                               modelview.data());
+                            this->ErrorCheck("modelview matrix");
+                           });
+    glDrawElements(GL_TRIANGLES,
+                   mesh_info.n_faces,
+                   GL_UNSIGNED_INT,
+                   NULL);
+    ErrorCheck("draw elements");
+  }
+  models_.clear();
 }

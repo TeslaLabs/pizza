@@ -28,6 +28,7 @@ public:
   virtual void Show() override;
   virtual void Hide() override;
   virtual void Update() override;
+  SdlWindow& operator=(const SdlWindow& other) = delete;
 };
 
 #endif

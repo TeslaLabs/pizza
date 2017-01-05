@@ -13,7 +13,11 @@ int main(int argc, char** argv) {
 
   SdlEvent event { log };
 
-  GLRender render { log };
+  GLRender render { log, window };
+  if (!render.Initialize()) {
+    log.Error("Could not initialize renderer");
+    return 1;
+  }
 
   Mcomp mcomp { event, log, render, window };
 
