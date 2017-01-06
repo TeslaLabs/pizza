@@ -1,9 +1,12 @@
 #include "glrender.h"
 #include <cstdio>
+#include <cstring>
 #include <fstream>
 #include <functional>
 #include <sstream>
 #include <string>
+#include <vector>
+#include <unordered_set>
 #include <debug.h>
 #include <gl/gl_headers.h>
 #include "../math/math.h"
@@ -41,26 +44,29 @@ bool GLRender::Initialize() {
   }
 
   bool is_valid { true };
+#endif
+
+  std::unordered_set<std::string> extensions;
+  const unsigned char* ext_str { glGetString(GL_EXTENSIONS) };
+  auto ext = std::strtok((char*) ext_str, " ");
+  if (ext) extensions.insert(ext);
+  while ((ext = std::strtok(NULL, " "))) extensions.insert(ext);
 
 #define lm(m) log_.Message(m)
-#define EXTCHECK(ext) if (!ext) { lm(#ext ": NO"); is_valid = false; } else lm(#ext ": YES")
+#define EXTCHECK(ext) { \
+    std::string xt_str { ext }; \
+    auto xt = extensions.find(xt_str); \
+    if (xt != extensions.end()) lm(xt_str + ": YES"); \
+    else lm(xt_str + ": NO"); \
+  }
 
-  EXTCHECK(GLEW_ARB_vertex_buffer_object)
-  EXTCHECK(GLEW_ARB_vertex_array_object)
-  EXTCHECK(GLEW_ARB_shader_objects)
-  EXTCHECK(GLEW_ARB_vertex_shader)
-  EXTCHECK(GLEW_ARB_fragment_shader)
-  EXTCHECK(GLEW_ARB_framebuffer_object)
+  EXTCHECK("GL_ARB_shader_objects")
+  EXTCHECK("GL_ARB_vertex_shader")
+  EXTCHECK("GL_ARB_fragment_shader")
+  for (auto xt : extensions) log_.Message(xt);
 
 #undef lm
 #undef EXTCHECK
-
-  if (!is_valid) return false;
-
-#endif
-
-  const unsigned char* ext_str { glGetString(GL_EXTENSIONS) };
-  std::strtok(ext_str);
 
   glClearColor(0.5, 0.0, 0.0, 1.0);
   glEnable(GL_DEPTH_TEST); ErrorCheck("enable depth testing");
@@ -561,8 +567,6 @@ void GLRender::RenderModels() {
     glUseProgram(shader_result->second.program_id);
 
     auto& mesh_info = mesh_result->second;
-    glBindBuffer(GL_ARRAY_BUFFER, mesh_info.position_buffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_info.index_buffer);
     glBindVertexArray(mesh_info.vao_id);
 
     auto& shader = shader_result->second;
