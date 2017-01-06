@@ -9,7 +9,6 @@ int main(int argc, char** argv) {
   TermLog log;
 
   SdlWindow window { log };
-  window.set_title("mcomp");
 
   SdlEvent event { log };
 

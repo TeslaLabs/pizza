@@ -11,5 +11,6 @@ uniform mat4 modelview;
 
 void main(void) {
   gl_Position = projection * modelview * vec4(in_position, 1);
+  // frag_color = vec4(in_normal, 1);
   frag_color = vec4(in_normal, 1);
 }

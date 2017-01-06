@@ -31,7 +31,7 @@ double Timer::dt() {
   curtime = mach_absolute_time();
   elapsed_absolute = curtime - prev_time_;
   elapsed_nano = (elapsed_absolute / time_info.denom) * time_info.numer;
-  double dt = (double) elapsed_nano / 1e9;
+  double dt = static_cast<double>(elapsed_nano) / 1e9;
   prev_time_ = curtime;
   return dt;
 }
@@ -49,3 +49,35 @@ double Timer::dt() {
 //   .JMMmmmmMMM .JMML..JMML  JMML.`Mbod"YML..AM.   .MA.
 //
 //
+
+#ifdef __linux__
+
+#include <time.h>
+
+static struct timespec previous;
+
+Timer::Timer()
+  : prev_time_ { 0 }
+{
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &previous);
+}
+
+double Timer::dt() {
+  struct timespec curtime;
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &curtime);
+
+  auto csec = curtime.tv_sec;
+  auto cnano = curtime.tv_nsec;
+  if (cnano < previous.tv_nsec) {
+    cnano += 1000000000;
+    csec -= 1;
+  }
+
+  auto elapsed_nano = cnano - previous.tv_nsec;
+  double dt = ((csec - previous.tv_sec) +
+               static_cast<double>(elapsed_nano) / 1e9);
+  previous = curtime;
+  return dt;
+}
+
+#endif

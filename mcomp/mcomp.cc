@@ -12,6 +12,10 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     render_ { render },
     window_ { window }
 {
+  window_.set_title("mcomp");
+  window_.set_width(960);
+  window_.set_height(540);
+
   event_.Set("Backspace_down", [this] { this->event_.Call("quit"); });
   event_.Set("A_down", [this] {
     this->models_.clear();
@@ -23,6 +27,10 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   });
 
   render_.LoadData("r");
+  render_.SetCameraProjection(Matrix::Projection(ToRadians(70),
+                                                 4.0 / 3.0,
+                                                 1.0,
+                                                 10000.0));
   render_.SetCameraPosition({ 0, 0, 500 });
   models_.push_back(Model { "Thing", "default" });
 
@@ -33,7 +41,7 @@ void Mcomp::Update(double dt) {
   std::string fps;
   fps.reserve(32);
   std::sprintf(&fps[0], "%4.1f", 1.0 / dt);
-  // log_.Message(fps);
+  log_.Message(fps);
 
   for (auto m : models_) {
     render_.DrawModel(&m);

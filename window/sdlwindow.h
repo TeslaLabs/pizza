@@ -19,12 +19,12 @@ public:
   SdlWindow(ILog& log);
   SdlWindow(const SdlWindow& w) = delete;
   ~SdlWindow();
-  std::string title() const;
-  void set_title(const std::string& title);
+  std::string title() const override;
+  void set_title(const std::string& title) override;
   unsigned int width() const override;
-  void set_width(int width);
+  void set_width(int width) override;
   unsigned int height() const override;
-  void set_height(int height);
+  void set_height(int height) override;
   virtual void Show() override;
   virtual void Hide() override;
   virtual void Update() override;
