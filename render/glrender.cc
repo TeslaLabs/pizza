@@ -206,7 +206,7 @@ bool GLRender::Shader::SetUniformValue(const std::string& uniform,
 
 GLRender::Camera::Camera()
   : projection {
-      Matrix::Projection(ToRadians(70), 4.0 / 3.0, 1.0, 100000.0)
+      Matrix::Projection(ToRadians(90), 4.0 / 3.0, 1.0, 1000000.0)
     },
     position { Vec3 { 0, 0, 0 } },
     direction { Vec3 { 0, 0, -1 } }
@@ -584,11 +584,12 @@ void GLRender::RenderModels() {
     auto model_translate = Matrix::Translate(model->position().i(),
                                              model->position().j(),
                                              model->position().k());
-    auto model_rotate = (Matrix::RotateX(model->rotation().i()) *
-                         Matrix::RotateY(model->rotation().j()) *
-                         Matrix::RotateZ(model->rotation().k()));
-    auto model_matrix = model_translate * model_rotate;
-    auto modelview = model_matrix * view;
+    // auto model_rotate = (Matrix::RotateX(model->rotation().i()) *
+    //                      Matrix::RotateY(model->rotation().j()) *
+    //                      Matrix::RotateZ(model->rotation().k()));
+    // auto model_matrix = model_translate * model_rotate;
+    auto model_matrix = model_translate;
+    auto modelview = view * model_matrix;
     shader.SetUniformValue("modelview",
                            [&modelview, this](GLint location) {
                             glUniformMatrix4fv(location,

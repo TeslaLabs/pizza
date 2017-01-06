@@ -152,11 +152,12 @@ Matrix Matrix::Identity() {
   };
 }
 
-Matrix Matrix::Projection(float fovy, float aspect, float near, float far) {
+Matrix Matrix::Projection(float fovx, float aspect, float near, float far) {
   Matrix out { 0 };
-  float f { static_cast<float>(1.0 / tan(ToRadians(fovy / 2.0))) };
-  out.Set(0, 0, f / aspect);
-  out.Set(1, 1, f);
+  aspect = 1.0 / aspect;
+  float f { static_cast<float>(1.0 / std::tan(ToRadians(fovx / 2.0))) };
+  out.Set(0, 0, f);
+  out.Set(1, 1, f / aspect);
   out.Set(2, 2, (far + near) / (near - far));
   out.Set(2, 3, (2 * far * near) / (near - far));
   out.Set(3, 2, -1);
