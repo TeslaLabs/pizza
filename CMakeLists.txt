@@ -38,6 +38,8 @@ set(PIZZA_SOURCES
     "render/irender.cc"
     "render/model.cc"
 
+    "timer/timer.cc"
+
     "window/sdlwindow.cc"
     )
 set(PIZZA_LIBS

@@ -21,7 +21,9 @@ int main(int argc, char** argv) {
 
   Mcomp mcomp { event, log, render, window };
 
-  Engine engine { event, log, mcomp };
+  Timer timer;
+
+  Engine engine { event, log, mcomp, timer };
   engine.Run();
 
   return 0;

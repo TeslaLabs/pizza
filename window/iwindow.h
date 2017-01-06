@@ -1,6 +1,8 @@
 #ifndef WINDOW_WINDOW_H
 #define WINDOW_WINDOW_H
 
+#include <string>
+
 class IWindow {
 public:
   virtual unsigned int width() const = 0;

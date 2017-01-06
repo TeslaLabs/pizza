@@ -1,6 +1,6 @@
 #include "mcomp.h"
 #include <cstdio>
-#include <sstream>
+#include <string>
 #include "../event/ievent.h"
 #include "../math/math.h"
 #include "../render/irender.h"
@@ -29,9 +29,15 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   window_.Show();
 }
 
-void Mcomp::Update() {
+void Mcomp::Update(double dt) {
+  std::string fps;
+  fps.reserve(32);
+  std::sprintf(&fps[0], "%4.1f", 1.0 / dt);
+  // log_.Message(fps);
+
   for (auto m : models_) {
     render_.DrawModel(&m);
   }
+
   render_.Update();
 }

@@ -3,7 +3,7 @@
 
 class IGame {
 public:
-  virtual void Update() = 0;
+  virtual void Update(double dt) = 0;
 };
 
 #endif
