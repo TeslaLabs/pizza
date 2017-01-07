@@ -28,6 +28,7 @@ SdlWindow::SdlWindow(ILog& log)
     INITIALIZED = true;
 
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     if (SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2)) {
       log_.Error("Error setting OpenGL major version");
     }
