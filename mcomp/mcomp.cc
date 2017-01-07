@@ -1,5 +1,6 @@
 #include "mcomp.h"
 #include <cstdio>
+#include <sstream>
 #include <string>
 #include "../event/ievent.h"
 #include "../math/math.h"

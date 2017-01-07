@@ -59,23 +59,23 @@ static struct timespec previous;
 Timer::Timer()
   : prev_time_ { 0 }
 {
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &previous);
+  clock_gettime(CLOCK_MONOTONIC, &previous);
 }
 
 double Timer::dt() {
   struct timespec curtime;
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &curtime);
+  clock_gettime(CLOCK_MONOTONIC, &curtime);
 
-  auto csec = curtime.tv_sec;
-  auto cnano = curtime.tv_nsec;
-  if (cnano < previous.tv_nsec) {
-    cnano += 1000000000;
-    csec -= 1;
+  auto dsec = curtime.tv_sec - previous.tv_sec;
+  auto dnano = curtime.tv_nsec - previous.tv_nsec;
+
+  if (dnano < 0) {
+    dnano += 1000000000;
+    --dsec;
   }
 
-  auto elapsed_nano = cnano - previous.tv_nsec;
-  double dt = ((csec - previous.tv_sec) +
-               static_cast<double>(elapsed_nano) / 1e9);
+  dnano += (dsec * 1000000000);
+  double dt = static_cast<double>(dnano) / 1e9;
   previous = curtime;
   return dt;
 }
