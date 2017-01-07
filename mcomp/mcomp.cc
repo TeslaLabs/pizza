@@ -41,21 +41,21 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   });
   event_.Set("U", [this] {
     auto pos = this->models_[0].position();
-    pos.set_k(pos.k() + 100 * this->dt_);
+    pos.set_k(pos.k() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
   event_.Set("O", [this] {
     auto pos = this->models_[0].position();
-    pos.set_k(pos.k() - 100 * this->dt_);
+    pos.set_k(pos.k() - 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
 
   render_.LoadData("r");
-  render_.SetCameraProjection(Matrix::Projection(ToRadians(90),
+  render_.SetCameraProjection(Matrix::Projection(90,
                                                  16.0 / 9.0,
                                                  1.0,
                                                  1000000.0));
-  render_.SetCameraPosition({ 0, 0, 500 });
+  render_.SetCameraPosition({ 0, 0, 10 });
   Model model { "Thing", "default" };
   models_.push_back(model);
 

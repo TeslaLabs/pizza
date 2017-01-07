@@ -80,7 +80,6 @@ public:
 
 private:
   void ErrorCheck(const std::string& message);
-  void AddPrimitive();
   bool ImportMeshes(const Data& data);
   bool ImportShaders(const Data& data);
   bool CompileShader(const std::string& source,

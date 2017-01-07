@@ -71,9 +71,9 @@ bool GLRender::Initialize() {
 
   glClearColor(0.5, 0.0, 0.0, 1.0);
   glEnable(GL_DEPTH_TEST); ErrorCheck("enable depth testing");
-  glEnable(GL_CULL_FACE); ErrorCheck("enable cull face");
-  glFrontFace(GL_CCW); ErrorCheck("set front face");
-  glCullFace(GL_BACK); ErrorCheck("set to cull back faces");
+  // glEnable(GL_CULL_FACE); ErrorCheck("enable cull face");
+  // glFrontFace(GL_CCW); ErrorCheck("set front face");
+  // glCullFace(GL_BACK); ErrorCheck("set to cull back faces");
 
   return true;
 }
@@ -213,7 +213,7 @@ bool GLRender::Shader::SetUniformValue(const std::string& uniform,
 
 GLRender::Camera::Camera()
   : projection {
-      Matrix::Projection(ToRadians(90), 4.0 / 3.0, 1.0, 1000000.0)
+      Matrix::Projection(90, 4.0 / 3.0, 1.0, 1000000.0)
     },
     position { Vec3 { 0, 0, 0 } },
     direction { Vec3 { 0, 0, -1 } }
