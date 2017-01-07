@@ -14,41 +14,47 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     dt_ { 0 }
 {
   window_.set_title("mcomp");
+  window_.set_width(960);
+  window_.set_height(540);
 
   event_.Set("Backspace_down", [this] { this->event_.Call("quit"); });
 
   event_.Set("L", [this] {
     auto pos = this->models_[0].position();
-    pos.set_i(pos.i() + 100 * this->dt_);
+    pos.set_i(pos.i() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
   event_.Set("J", [this] {
     auto pos = this->models_[0].position();
-    pos.set_i(pos.i() - 100 * this->dt_);
+    pos.set_i(pos.i() - 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
   event_.Set("I", [this] {
     auto pos = this->models_[0].position();
-    pos.set_j(pos.j() + 100 * this->dt_);
+    pos.set_j(pos.j() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
   event_.Set("K", [this] {
     auto pos = this->models_[0].position();
-    pos.set_j(pos.j() - 100 * this->dt_);
+    pos.set_j(pos.j() - 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
   event_.Set("U", [this] {
     auto pos = this->models_[0].position();
-    pos.set_k(pos.k() + 1000 * this->dt_);
+    pos.set_k(pos.k() + 100 * this->dt_);
     this->models_[0].set_position(pos);
   });
   event_.Set("O", [this] {
     auto pos = this->models_[0].position();
-    pos.set_k(pos.k() - 1000 * this->dt_);
+    pos.set_k(pos.k() - 100 * this->dt_);
     this->models_[0].set_position(pos);
   });
 
   render_.LoadData("r");
+  render_.SetCameraProjection(Matrix::Projection(ToRadians(90),
+                                                 16.0 / 9.0,
+                                                 1.0,
+                                                 1000000.0));
   render_.SetCameraPosition({ 0, 0, 500 });
   Model model { "Thing", "default" };
   models_.push_back(model);

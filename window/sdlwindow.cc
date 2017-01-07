@@ -1,6 +1,7 @@
 #include "sdlwindow.h"
 #include <cstdio>
 #include <cstdlib>
+#include <functional>
 #include <sstream>
 #include <string>
 #include <gl/gl_headers.h>
@@ -12,6 +13,7 @@ static bool INITIALIZED = false;
 SdlWindow::SdlWindow(ILog& log)
   : log_ { log },
     title_ { "Untitled" },
+    resize_func_ { [](int width, int height) {} },
     window_handle_ { nullptr },
     width_ { 640 },
     height_ { 480 },
@@ -73,6 +75,7 @@ unsigned int SdlWindow::width() const {
 void SdlWindow::set_width(int width) {
   width_ = width;
   SDL_SetWindowSize(window_handle_, width_, height_);
+  resize_func_(width_, height_);
 }
 
 unsigned int SdlWindow::height() const {
@@ -82,6 +85,11 @@ unsigned int SdlWindow::height() const {
 void SdlWindow::set_height(int height) {
   height_ = height;
   SDL_SetWindowSize(window_handle_, width_, height_);
+  resize_func_(width_, height_);
+}
+
+void SdlWindow::set_resize_func(std::function<void(int,int)> resize_func) {
+  resize_func_ = resize_func;
 }
 
 void SdlWindow::Show() {

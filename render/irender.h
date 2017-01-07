@@ -1,15 +1,16 @@
 #ifndef RENDER_IRENDER_H
 #define RENDER_IRENDER_H
 
+#include <functional>
 #include <string>
 #include "imodel.h"
 #include "../math/vec3.h"
-#include "../window/iwindow.h"
 
 class IRender {
 public:
   virtual ~IRender() = 0;
   virtual bool Initialize() = 0;
+  virtual std::function<void(int,int)> GetResizeFunction() = 0;
   virtual void Update() = 0;
   virtual void LoadData(const std::string& filepath) = 0;
   virtual void UnloadData() = 0;

@@ -1,6 +1,7 @@
 #ifndef PIZZA_WINDOW_SDLWINDOW_H
 #define PIZZA_WINDOW_SDLWINDOW_H
 
+#include <functional>
 #include <string>
 #include <SDL2/SDL.h>
 #include "iwindow.h"
@@ -9,6 +10,7 @@
 class SdlWindow : public IWindow {
   ILog& log_;
   std::string title_;
+  std::function<void(int,int)> resize_func_;
   SDL_Window* window_handle_;
   SDL_GLContext glcontext_;
   unsigned int width_;
@@ -25,6 +27,7 @@ public:
   void set_width(int width) override;
   unsigned int height() const override;
   void set_height(int height) override;
+  void set_resize_func(std::function<void(int,int)> resize_func) override;
   virtual void Show() override;
   virtual void Hide() override;
   virtual void Update() override;

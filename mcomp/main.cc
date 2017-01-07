@@ -18,6 +18,8 @@ int main(int argc, char** argv) {
     return 1;
   }
 
+  window.set_resize_func(render.GetResizeFunction());
+
   Mcomp mcomp { event, log, render, window };
 
   Timer timer;

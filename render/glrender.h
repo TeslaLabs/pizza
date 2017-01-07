@@ -67,6 +67,7 @@ public:
   GLRender(ILog& log, IWindow& window);
   virtual ~GLRender() override;
   virtual bool Initialize() override;
+  virtual std::function<void(int,int)> GetResizeFunction() override;
   virtual void Update() override;
   virtual void LoadData(const std::string& filepath) override;
   virtual void UnloadData() override;

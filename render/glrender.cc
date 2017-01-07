@@ -12,6 +12,7 @@
 #include "../math/math.h"
 #include "../math/vec3.h"
 #include "../proto/data.pb.h"
+#include "../window/iwindow.h"
 
 //
 //                          ,,        ,,    ,,
@@ -63,7 +64,7 @@ bool GLRender::Initialize() {
   EXTCHECK("GL_ARB_shader_objects")
   EXTCHECK("GL_ARB_vertex_shader")
   EXTCHECK("GL_ARB_fragment_shader")
-  for (auto xt : extensions) log_.Message(xt);
+  // for (auto xt : extensions) log_.Message(xt);
 
 #undef lm
 #undef EXTCHECK
@@ -75,6 +76,12 @@ bool GLRender::Initialize() {
   glCullFace(GL_BACK); ErrorCheck("set to cull back faces");
 
   return true;
+}
+
+std::function<void(int,int)> GLRender::GetResizeFunction() {
+  return [](int width, int height) {
+    glViewport(0, 0, width, height);
+  };
 }
 
 void GLRender::Update() {
