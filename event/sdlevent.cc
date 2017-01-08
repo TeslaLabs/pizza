@@ -65,6 +65,8 @@ void SdlEvent::Process() {
       }
 
       case SDL_MOUSEMOTION: {
+        auto coords = std::make_tuple(e.motion.x, e.motion.y);
+        Call("mmove", &coords);
       } break;
 
       case SDL_WINDOWEVENT: {

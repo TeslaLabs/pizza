@@ -1,6 +1,7 @@
 #include "mcomp.h"
 #include <cstdio>
 #include <string>
+#include <tuple>
 #include "../event/ievent.h"
 #include "../math/math.h"
 #include "../render/irender.h"
@@ -20,14 +21,20 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   });
 
   event_.Set("m1_down", [this](void* data) {
-    if (data == nullptr) return;
-    auto coords = static_cast<std::tuple<int,int>*>(data);
-    auto x = std::get<0>(*coords);
-    auto y = std::get<1>(*coords);
-    std::string message;
-    message.reserve(128);
-    std::sprintf(&message[0], "m1_down => x: %d  y: %d", x, y);
-    log_.Message(message);
+    event_.Set("mmove", [this](void* data) {
+      if (data == nullptr) return;
+      auto coords = *static_cast<std::tuple<int,int>*>(data);
+      auto x = std::get<0>(coords);
+      auto y = std::get<1>(coords);
+      // std::string message;
+      // message.reserve(128);
+      char message[128];
+      std::sprintf(message, "x; %d  y: %d", x, y);
+      log_.Message(message);
+    });
+  });
+  event.Set("m1_up", [this](void* data) {
+    this->event_.Remove("mmove");
   });
 
   event_.Set("L", [this](void* data) {
