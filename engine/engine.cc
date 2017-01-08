@@ -16,7 +16,7 @@ Engine::Engine(IEvent& event,
     timer_ { timer },
     alive_ { true }
 {
-  event_.Set("quit", [this] { this->alive_ = false; });
+  event_.Set("quit", [this](void* data) { this->alive_ = false; });
 }
 
 void Engine::Run() {

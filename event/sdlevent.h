@@ -6,19 +6,20 @@
 #include <unordered_map>
 #include "ievent.h"
 #include "../log/ilog.h"
+#include "../window/iwindow.h"
 
 class SdlEvent : public IEvent {
   ILog& log_;
-  std::unordered_map<std::string, std::function<void(void)>> events_;
+  std::unordered_map<std::string, std::function<void(void*)>> events_;
   std::unordered_map<std::string, bool> keymap_;
 
 public:
   SdlEvent(ILog& log);
   virtual void Process() override;
   virtual void Set(const std::string& event,
-                   std::function<void(void)> command) override;
+                   std::function<void(void*)> command) override;
   virtual void Remove(const std::string& event) override;
-  virtual void Call(const std::string& event) override;
+  virtual void Call(const std::string& event, void* arg) override;
 
 private:
   void KeyUp(const std::string& key);

@@ -15,7 +15,6 @@ class SdlWindow : public IWindow {
   SDL_GLContext glcontext_;
   unsigned int width_;
   unsigned int height_;
-  bool visible_;
 
 public:
   SdlWindow(ILog& log);
@@ -30,6 +29,8 @@ public:
   void set_resize_func(std::function<void(int,int)> resize_func) override;
   virtual void Show() override;
   virtual void Hide() override;
+  virtual void ShowCursor() override;
+  virtual void HideCursor() override;
   virtual void Update() override;
   SdlWindow& operator=(const SdlWindow& other) = delete;
 };

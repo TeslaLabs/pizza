@@ -16,8 +16,7 @@ SdlWindow::SdlWindow(ILog& log)
     resize_func_ { [](int width, int height) {} },
     window_handle_ { nullptr },
     width_ { 640 },
-    height_ { 480 },
-    visible_ { false }
+    height_ { 480 }
 {
   if (!INITIALIZED) {
     if (SDL_Init(SDL_INIT_VIDEO)) {
@@ -94,16 +93,20 @@ void SdlWindow::set_resize_func(std::function<void(int,int)> resize_func) {
 }
 
 void SdlWindow::Show() {
-  if (visible_) return;
   SDL_ShowWindow(window_handle_);
   SDL_RaiseWindow(window_handle_);
-  visible_ = true;
 }
 
 void SdlWindow::Hide() {
-  if (!visible_) return;
   SDL_HideWindow(window_handle_);
-  visible_ = false;
+}
+
+void SdlWindow::ShowCursor() {
+  SDL_ShowCursor(SDL_ENABLE);
+}
+
+void SdlWindow::HideCursor() {
+  SDL_ShowCursor(SDL_DISABLE);
 }
 
 void SdlWindow::Update() {

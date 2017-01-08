@@ -22,6 +22,7 @@ public:
         ILog& log,
         IRender& render,
         IWindow& window);
+  ~Mcomp();
   virtual void Update(double dt) override;
 };
 

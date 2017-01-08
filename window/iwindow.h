@@ -16,6 +16,8 @@ public:
   virtual void set_resize_func(std::function<void(int,int)> resize_func) = 0;
   virtual void Show() = 0;
   virtual void Hide() = 0;
+  virtual void ShowCursor() = 0;
+  virtual void HideCursor() = 0;
   virtual void Update() = 0;
 };
 

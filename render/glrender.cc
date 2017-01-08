@@ -51,7 +51,7 @@ bool GLRender::Initialize() {
   const unsigned char* ext_str { glGetString(GL_EXTENSIONS) };
   auto ext = std::strtok((char*) ext_str, " ");
   if (ext) extensions.insert(ext);
-  while ((ext = std::strtok(NULL, " "))) extensions.insert(ext);
+  while ((ext = std::strtok(nullptr, " "))) extensions.insert(ext);
 
 #define lm(m) log_.Message(m)
 #define EXTCHECK(ext) { \
@@ -71,9 +71,9 @@ bool GLRender::Initialize() {
 
   glClearColor(0.5, 0.0, 0.0, 1.0);
   glEnable(GL_DEPTH_TEST); ErrorCheck("enable depth testing");
-  // glEnable(GL_CULL_FACE); ErrorCheck("enable cull face");
-  // glFrontFace(GL_CCW); ErrorCheck("set front face");
-  // glCullFace(GL_BACK); ErrorCheck("set to cull back faces");
+  glEnable(GL_CULL_FACE); ErrorCheck("enable cull face");
+  glFrontFace(GL_CCW); ErrorCheck("set front face");
+  glCullFace(GL_BACK); ErrorCheck("set to cull back faces");
 
   return true;
 }
@@ -251,7 +251,71 @@ void GLRender::ErrorCheck(const std::string& message) {
   })
 }
 
+void GLRender::AddPrimitives() {
+  const float positions[] {
+     1.0,  1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+    -1.0,  1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+    -1.0, -1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0,
+     1.0, -1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0
+  };
+  const unsigned int indices[] {
+    0, 1, 2,
+    2, 3, 0
+  };
+
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  GLuint bufs[2];
+  glGenBuffers(2, bufs);
+
+  glBindBuffer(GL_ARRAY_BUFFER, bufs[0]);
+  glBufferData(GL_ARRAY_BUFFER,
+               sizeof(float) * 8 * 4,
+               positions,
+               GL_STATIC_DRAW);
+
+  glVertexAttribPointer(ATTRIB_LOC_POSITION,
+                        3,
+                        GL_FLOAT,
+                        GL_FALSE,
+                        sizeof(float) * 8,
+                        nullptr);
+  glVertexAttribPointer(ATTRIB_LOC_NORMAL,
+                        3,
+                        GL_FLOAT,
+                        GL_FALSE,
+                        sizeof(float) * 8,
+                        (GLvoid*) (sizeof(float) * 3));
+  glVertexAttribPointer(ATTRIB_LOC_UV,
+                        2,
+                        GL_FLOAT,
+                        GL_FALSE,
+                        sizeof(float) * 8,
+                        (GLvoid*) (sizeof(float) * 6));
+  glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
+  glEnableVertexAttribArray(ATTRIB_LOC_NORMAL);
+  glEnableVertexAttribArray(ATTRIB_LOC_UV);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufs[1]);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+               sizeof(unsigned int) * 3 * 2,
+               indices,
+               GL_STATIC_DRAW);
+
+  meshes_["plane"].position_buffer = bufs[0];
+  meshes_["plane"].index_buffer = bufs[1];
+  meshes_["plane"].vao_id = vao;
+  meshes_["plane"].n_faces = 6;
+
+  glBindVertexArray(0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
 bool GLRender::ImportMeshes(const Data& data) {
+  AddPrimitives();
   for (auto i = 0; i < data.mesh_size(); ++i) {
     auto mesh = data.mesh(i);
 
@@ -296,7 +360,7 @@ bool GLRender::ImportMeshes(const Data& data) {
                           GL_FLOAT,
                           GL_FALSE,
                           sizeof(float) * 8,
-                          NULL);
+                          nullptr);
     ErrorCheck("position attrib pointer");
     glVertexAttribPointer(ATTRIB_LOC_NORMAL,
                           3,
@@ -608,7 +672,7 @@ void GLRender::RenderModels() {
     glDrawElements(GL_TRIANGLES,
                    mesh_info.n_faces,
                    GL_UNSIGNED_INT,
-                   NULL);
+                   nullptr);
     ErrorCheck("draw elements");
   }
   models_.clear();

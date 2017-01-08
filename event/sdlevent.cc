@@ -33,10 +33,47 @@ void SdlEvent::Process() {
         KeyUp(std::string { SDL_GetKeyName(e.key.keysym.sym) });
       } break;
 
+      case SDL_MOUSEBUTTONDOWN: {
+        switch (e.button.button) {
+          case SDL_BUTTON_LEFT: {
+            KeyDown("m1");
+          } break;
+          case SDL_BUTTON_RIGHT: {
+            KeyDown("m2");
+          } break;
+          case SDL_BUTTON_MIDDLE: {
+            KeyDown("m3");
+          } break;
+        }
+      } break;
+
+      case SDL_MOUSEBUTTONUP: {
+        switch (e.button.button) {
+          case SDL_BUTTON_LEFT: {
+            KeyUp("m1");
+          } break;
+          case SDL_BUTTON_RIGHT: {
+            KeyUp("m2");
+          } break;
+          case SDL_BUTTON_MIDDLE: {
+            KeyUp("m3");
+          } break;
+        }
+      }
+
+      case SDL_MOUSEMOTION: {
+      } break;
+
       case SDL_WINDOWEVENT: {
         switch (e.window.event) {
           case SDL_WINDOWEVENT_CLOSE: {
-            Call("quit");
+            Call("quit", nullptr);
+          } break;
+          case SDL_WINDOWEVENT_FOCUS_GAINED: {
+            Call("window_unfocus", nullptr);
+          } break;
+          case SDL_WINDOWEVENT_FOCUS_LOST: {
+            Call("window_focus", nullptr);
           } break;
         }
       } break;
@@ -49,7 +86,7 @@ void SdlEvent::Process() {
 }
 
 void SdlEvent::Set(const std::string& event,
-                   std::function<void(void)> command) {
+                   std::function<void(void*)> command) {
   events_[event] = command;
 }
 
@@ -64,10 +101,10 @@ void SdlEvent::Remove(const std::string& event) {
   events_.erase(event_result);
 }
 
-void SdlEvent::Call(const std::string& event) {
+void SdlEvent::Call(const std::string& event, void* data) {
   auto func = events_.find(event);
   if (func != events_.end()) {
-    func->second();
+    func->second(data);
   }
 }
 
@@ -86,19 +123,19 @@ void SdlEvent::Call(const std::string& event) {
 void SdlEvent::KeyDown(const std::string& key) {
   if (!keymap_[key]) {
     keymap_[key] = true;
-    Call(key + "_down");
+    Call(key + "_down", nullptr);
   }
 }
 
 void SdlEvent::KeyUp(const std::string& key) {
   if (keymap_[key]) {
     keymap_[key] = false;
-    Call(key + "_up");
+    Call(key + "_up", nullptr);
   }
 }
 
 void SdlEvent::CheckActiveKeys() {
   for (auto& key : keymap_) {
-    if (key.second) Call(key.first);
+    if (key.second) Call(key.first, nullptr);
   }
 }
