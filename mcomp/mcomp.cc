@@ -29,7 +29,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
       // std::string message;
       // message.reserve(128);
       char message[128];
-      std::sprintf(message, "x; %d  y: %d", x, y);
+      std::sprintf(message, "x: %d  y: %d", x, y);
       log_.Message(message);
     });
   });
