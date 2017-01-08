@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <SDL2/SDL.h>
 
 //
@@ -26,37 +27,39 @@ void SdlEvent::Process() {
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
       case SDL_KEYDOWN: {
-        KeyDown(std::string { SDL_GetKeyName(e.key.keysym.sym) });
+        KeyDown(std::string { SDL_GetKeyName(e.key.keysym.sym) }, nullptr);
       } break;
 
       case SDL_KEYUP: {
-        KeyUp(std::string { SDL_GetKeyName(e.key.keysym.sym) });
+        KeyUp(std::string { SDL_GetKeyName(e.key.keysym.sym) }, nullptr);
       } break;
 
       case SDL_MOUSEBUTTONDOWN: {
+        auto coords = std::make_tuple(e.button.x, e.button.y);
         switch (e.button.button) {
           case SDL_BUTTON_LEFT: {
-            KeyDown("m1");
+            KeyDown("m1", &coords);
           } break;
           case SDL_BUTTON_RIGHT: {
-            KeyDown("m2");
+            KeyDown("m2", &coords);
           } break;
           case SDL_BUTTON_MIDDLE: {
-            KeyDown("m3");
+            KeyDown("m3", &coords);
           } break;
         }
       } break;
 
       case SDL_MOUSEBUTTONUP: {
+        auto coords = std::make_tuple(e.button.x, e.button.y);
         switch (e.button.button) {
           case SDL_BUTTON_LEFT: {
-            KeyUp("m1");
+            KeyUp("m1", &coords);
           } break;
           case SDL_BUTTON_RIGHT: {
-            KeyUp("m2");
+            KeyUp("m2", &coords);
           } break;
           case SDL_BUTTON_MIDDLE: {
-            KeyUp("m3");
+            KeyUp("m3", &coords);
           } break;
         }
       }
@@ -120,17 +123,17 @@ void SdlEvent::Call(const std::string& event, void* data) {
 //
 //
 
-void SdlEvent::KeyDown(const std::string& key) {
+void SdlEvent::KeyDown(const std::string& key, void* data) {
   if (!keymap_[key]) {
     keymap_[key] = true;
-    Call(key + "_down", nullptr);
+    Call(key + "_down", data);
   }
 }
 
-void SdlEvent::KeyUp(const std::string& key) {
+void SdlEvent::KeyUp(const std::string& key, void* data) {
   if (keymap_[key]) {
     keymap_[key] = false;
-    Call(key + "_up", nullptr);
+    Call(key + "_up", data);
   }
 }
 

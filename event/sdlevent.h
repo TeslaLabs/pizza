@@ -19,11 +19,11 @@ public:
   virtual void Set(const std::string& event,
                    std::function<void(void*)> command) override;
   virtual void Remove(const std::string& event) override;
-  virtual void Call(const std::string& event, void* arg) override;
+  virtual void Call(const std::string& event, void* data) override;
 
 private:
-  void KeyUp(const std::string& key);
-  void KeyDown(const std::string& key);
+  void KeyUp(const std::string& key, void* data);
+  void KeyDown(const std::string& key, void* data);
   void CheckActiveKeys();
 };
 

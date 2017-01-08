@@ -19,12 +19,16 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     this->event_.Call("quit", nullptr);
   });
 
-  // event_.Set("m1_down", [this](void* data) {
-  //   auto coords = static_cast<std::tuple<int,int>>(data);
-  //   std::tie(x, y) = static_cast<std::tuple<int,int>>(data);
-  //   std::sprintf(&message[0], "m1_down => x: %d  y: %d", x, y);
-  //   log_.Message(message);
-  // });
+  event_.Set("m1_down", [this](void* data) {
+    if (data == nullptr) return;
+    auto coords = static_cast<std::tuple<int,int>*>(data);
+    auto x = std::get<0>(*coords);
+    auto y = std::get<1>(*coords);
+    std::string message;
+    message.reserve(128);
+    std::sprintf(&message[0], "m1_down => x: %d  y: %d", x, y);
+    log_.Message(message);
+  });
 
   event_.Set("L", [this](void* data) {
     auto pos = this->models_[0].position();
