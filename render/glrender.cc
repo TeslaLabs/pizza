@@ -1,4 +1,5 @@
 #include "glrender.h"
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <fstream>
@@ -87,7 +88,7 @@ void GLRender::Update() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   ErrorCheck("glclear");
 
-  RenderModels();
+  RenderModels(CalculateViewMatrix());
 
   window_.Update();
 }
@@ -615,7 +616,15 @@ void GLRender::ProcessUniforms(Shader& shader) {
   }
 }
 
-void GLRender::RenderModels() {
+Matrix GLRender::CalculateViewMatrix() {
+  auto view = Matrix::Identity();
+  view = view * Matrix::Translate(-camera_.position.i(),
+                                  -camera_.position.j(),
+                                  -camera_.position.k());
+  return view;
+}
+
+void GLRender::RenderModels(const Matrix& view) {
   for (auto model : models_) {
     auto mesh_result = meshes_.find(model->name());
     if (mesh_result == meshes_.end()) {
@@ -648,9 +657,6 @@ void GLRender::RenderModels() {
                                                this->camera_.projection.data());
                             this->ErrorCheck("projection matrix");
                            });
-    auto view = Matrix::Translate(-camera_.position.i(),
-                                  -camera_.position.j(),
-                                  -camera_.position.k());
     auto model_translate = Matrix::Translate(model->position().i(),
                                              model->position().j(),
                                              model->position().k());

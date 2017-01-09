@@ -91,7 +91,8 @@ private:
                            GLuint* out_id);
   bool LinkShaderProgram(GLuint shader_id);
   void ProcessUniforms(Shader& shader);
-  void RenderModels();
+  Matrix CalculateViewMatrix();
+  void RenderModels(const Matrix& view);
 };
 
 #endif

@@ -55,38 +55,38 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     this->event_.Remove("mmove");
   });
 
-  event_.Set("L", [this](void* data) {
+  event_.Set("D", [this](void* data) {
     auto pos = this->models_[0].position();
     pos.set_i(pos.i() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("J", [this](void* data) {
+  event_.Set("A", [this](void* data) {
     auto pos = this->models_[0].position();
     pos.set_i(pos.i() - 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("I", [this](void* data) {
+  event_.Set("W", [this](void* data) {
     auto pos = this->models_[0].position();
     pos.set_j(pos.j() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("K", [this](void* data) {
+  event_.Set("S", [this](void* data) {
     auto pos = this->models_[0].position();
     pos.set_j(pos.j() - 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("U", [this](void* data) {
+  event_.Set("Q", [this](void* data) {
     auto pos = this->models_[0].position();
     pos.set_k(pos.k() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("O", [this](void* data) {
+  event_.Set("E", [this](void* data) {
     auto pos = this->models_[0].position();
     pos.set_k(pos.k() - 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
 
-  render_.LoadData("r");
+  render_.LoadData("/Users/jefftime/programming/pizza/bin/r");
   render_.SetCameraPosition({ 0, 0, 5 });
   Model model { "Thing", "default" };
   models_.push_back(model);
