@@ -30,10 +30,6 @@ void Engine::Run() {
     if (dt < 1.0 / max_fps_) continue;
     timer_.Start();
 
-    char msg[32];
-    std::sprintf(msg, "%5.1f", 1.0 / dt);
-    log_.Message(msg);
-
     event_.Process();
     game_.Update(dt);
   }
