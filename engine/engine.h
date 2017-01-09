@@ -12,9 +12,11 @@ class Engine {
   IGame& game_;
   ITimer& timer_;
   bool alive_;
+  int max_fps_;
 
 public:
   Engine(IEvent& event, ILog& log, IGame& game, ITimer& timer);
+  void set_max_fps(int max_fps);
   void Run();
 };
 

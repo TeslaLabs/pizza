@@ -14,15 +14,25 @@ Engine::Engine(IEvent& event,
     log_ { log },
     game_ { game },
     timer_ { timer },
-    alive_ { true }
+    alive_ { true },
+    max_fps_ { 120 }
 {
   event_.Set("quit", [this](void* data) { this->alive_ = false; });
+}
+
+void Engine::set_max_fps(int max_fps) {
+  max_fps_ = max_fps;
 }
 
 void Engine::Run() {
   while (alive_) {
     auto dt = timer_.dt();
+    if (dt < 1.0 / max_fps_) continue;
     timer_.Start();
+
+    char msg[32];
+    std::sprintf(msg, "%5.1f", 1.0 / dt);
+    log_.Message(msg);
 
     event_.Process();
     game_.Update(dt);
