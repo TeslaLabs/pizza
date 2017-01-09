@@ -4,17 +4,17 @@
 #include "igame.h"
 #include "../event/ievent.h"
 #include "../log/ilog.h"
-#include "../timer/timer.h"
+#include "../timer/itimer.h"
 
 class Engine {
   IEvent& event_;
   ILog& log_;
   IGame& game_;
-  Timer& timer_;
+  ITimer& timer_;
   bool alive_;
 
 public:
-  Engine(IEvent& event, ILog& log, IGame& game, Timer& timer);
+  Engine(IEvent& event, ILog& log, IGame& game, ITimer& timer);
   void Run();
 };
 

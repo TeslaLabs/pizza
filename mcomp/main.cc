@@ -5,6 +5,11 @@
 #include "../render/glrender.h"
 #include "../window/sdlwindow.h"
 
+#ifdef __APPLE__
+#elif __linux__
+  #include "../timer/linuxtimer.h"
+#endif
+
 int main(int argc, char** argv) {
   TermLog log;
 
@@ -22,7 +27,10 @@ int main(int argc, char** argv) {
 
   Mcomp mcomp { event, log, render, window };
 
-  Timer timer;
+#ifdef __APPLE__
+#elif __linux__
+  LinuxTimer timer;
+#endif
 
   Engine engine { event, log, mcomp, timer };
   engine.Run();

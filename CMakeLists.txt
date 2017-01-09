@@ -38,8 +38,6 @@ set(PIZZA_SOURCES
     "render/irender.cc"
     "render/model.cc"
 
-    "timer/timer.cc"
-
     "window/sdlwindow.cc"
     )
 set(PIZZA_LIBS
@@ -56,7 +54,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c90 -pedantic")
 
 if (APPLE)
 elseif(UNIX)
-    list(APPEND PIZZA_LIBS GL GLEW pthread m dl SDL2 SDL2main)
+  list(APPEND PIZZA_SOURCES
+       "timer/linuxtimer.cc"
+       )
+  list(APPEND PIZZA_LIBS GL GLEW pthread m dl SDL2 SDL2main)
 endif()
 
 add_library(engine ${PIZZA_SOURCES})
