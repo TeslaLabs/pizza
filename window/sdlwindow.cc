@@ -72,17 +72,12 @@ unsigned int SdlWindow::width() const {
   return width_;
 }
 
-void SdlWindow::set_width(int width) {
-  width_ = width;
-  SDL_SetWindowSize(window_handle_, width_, height_);
-  resize_func_(width_, height_);
-}
-
 unsigned int SdlWindow::height() const {
   return height_;
 }
 
-void SdlWindow::set_height(int height) {
+void SdlWindow::Resize(int width, int height) {
+  width_ = width;
   height_ = height;
   SDL_SetWindowSize(window_handle_, width_, height_);
   resize_func_(width_, height_);

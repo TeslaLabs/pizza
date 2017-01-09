@@ -15,6 +15,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     dt_ { 0 }
 {
   window_.set_title("mcomp");
+  window_.Resize(960, 540);
 
   event_.Set("Backspace_down", [this](void* data) {
     this->event_.Call("quit", nullptr);
@@ -69,6 +70,10 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   });
 
   render_.LoadData("r");
+  render_.SetCameraProjection(Matrix::Projection(90,
+                                                 16.0 / 9.0,
+                                                 1.0,
+                                                 1000000.0));
   render_.SetCameraPosition({ 0, 0, 10 });
   Model model { "Thing", "default" };
   models_.push_back(model);

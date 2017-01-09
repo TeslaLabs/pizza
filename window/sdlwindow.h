@@ -23,9 +23,8 @@ public:
   std::string title() const override;
   void set_title(const std::string& title) override;
   unsigned int width() const override;
-  void set_width(int width) override;
   unsigned int height() const override;
-  void set_height(int height) override;
+  void Resize(int width, int height) override;
   void set_resize_func(std::function<void(int,int)> resize_func) override;
   virtual void Show() override;
   virtual void Hide() override;
