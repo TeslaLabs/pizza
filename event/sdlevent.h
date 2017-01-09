@@ -6,7 +6,6 @@
 #include <unordered_map>
 #include "ievent.h"
 #include "../log/ilog.h"
-#include "../window/iwindow.h"
 
 class SdlEvent : public IEvent {
   ILog& log_;
