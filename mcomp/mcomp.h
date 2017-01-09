@@ -16,6 +16,8 @@ class Mcomp : public IGame {
   IWindow& window_;
   std::vector<Model> models_;
   double dt_;
+  int prev_mouse_x_;
+  int prev_mouse_y_;
 
 public:
   Mcomp(IEvent& event,

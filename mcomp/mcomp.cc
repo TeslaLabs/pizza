@@ -12,7 +12,9 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     log_ { log },
     render_ { render },
     window_ { window },
-    dt_ { 0 }
+    dt_ { 0 },
+    prev_mouse_x_ { -1 },
+    prev_mouse_y_ { -1 }
 {
   window_.set_title("mcomp");
 
@@ -21,17 +23,35 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   });
 
   event_.Set("m1_down", [this](void* data) {
+    auto coords = *static_cast<std::tuple<int,int>*>(data);
+    prev_mouse_x_ = std::get<0>(coords);
+    prev_mouse_y_ = std::get<1>(coords);
+
     event_.Set("mmove", [this](void* data) {
       if (data == nullptr) return;
+
       auto coords = *static_cast<std::tuple<int,int>*>(data);
       auto x = std::get<0>(coords);
       auto y = std::get<1>(coords);
-      char message[128];
-      std::sprintf(message, "x: %d  y: %d", x, y);
-      log_.Message(message);
+
+      auto dx = x - prev_mouse_x_;
+      auto dy = y - prev_mouse_y_;
+
+      auto x_angle = (dy * this->dt_) + models_[0].rotation().i();
+      auto y_angle = (dx * this->dt_) + models_[0].rotation().j();
+      auto z_angle = models_[0].rotation().k();
+
+      models_[0].set_rotation({
+        static_cast<float>(x_angle),
+        static_cast<float>(y_angle),
+        z_angle
+      });
+
+      prev_mouse_x_ = x;
+      prev_mouse_y_ = y;
     });
   });
-  event.Set("m1_up", [this](void* data) {
+  event_.Set("m1_up", [this](void* data) {
     this->event_.Remove("mmove");
   });
 
@@ -67,7 +87,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   });
 
   render_.LoadData("r");
-  render_.SetCameraPosition({ 0, 0, 10 });
+  render_.SetCameraPosition({ 0, 0, 5 });
   Model model { "Thing", "default" };
   models_.push_back(model);
 

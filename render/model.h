@@ -17,6 +17,7 @@ public:
         const std::string& shader_name);
   virtual const std::string& name() const override;
   virtual const std::string& shader_name() const override;
+  void set_shader(const std::string& shader_name);
   virtual const Vec3& position() const override;
   virtual void set_position(const Vec3& position) override;
   virtual const Vec3& rotation() const override;

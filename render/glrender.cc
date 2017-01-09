@@ -64,7 +64,6 @@ bool GLRender::Initialize() {
   EXTCHECK("GL_ARB_shader_objects")
   EXTCHECK("GL_ARB_vertex_shader")
   EXTCHECK("GL_ARB_fragment_shader")
-  // for (auto xt : extensions) log_.Message(xt);
 
 #undef lm
 #undef EXTCHECK
@@ -655,11 +654,10 @@ void GLRender::RenderModels() {
     auto model_translate = Matrix::Translate(model->position().i(),
                                              model->position().j(),
                                              model->position().k());
-    // auto model_rotate = (Matrix::RotateX(model->rotation().i()) *
-    //                      Matrix::RotateY(model->rotation().j()) *
-    //                      Matrix::RotateZ(model->rotation().k()));
-    // auto model_matrix = model_translate * model_rotate;
-    auto model_matrix = model_translate;
+    auto model_rotate = (Matrix::RotateX(model->rotation().i()) *
+                         Matrix::RotateY(model->rotation().j()) *
+                         Matrix::RotateZ(model->rotation().k()));
+    auto model_matrix = model_translate * model_rotate;
     auto modelview = view * model_matrix;
     shader.SetUniformValue("modelview",
                            [&modelview, this](GLint location) {

@@ -15,6 +15,10 @@ const std::string& Model::shader_name() const {
   return shader_name_;
 }
 
+void Model::set_shader(const std::string& shader_name) {
+  shader_name_ = shader_name;
+}
+
 const Vec3& Model::position() const {
   return position_;
 }
