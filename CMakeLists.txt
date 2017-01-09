@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
 if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
-    add_definitions(-DDEBUG_MODE)
+  add_definitions(-DDEBUG_MODE)
 endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -pedantic")
@@ -9,13 +9,13 @@ list(APPEND DIR_TO_INCLUDE "${CMAKE_SOURCE_DIR}/include")
 list(APPEND DIR_TO_LINK "${CMAKE_SOURCE_DIR}/lib")
 
 if(APPLE)
-    add_definitions("-D_THREAD_SAFE") # protobuf
-    list(APPEND DIR_TO_INCLUDE "/usr/local/Cellar/protobuf/3.1.0/include")
+  add_definitions("-D_THREAD_SAFE") # protobuf
+  list(APPEND DIR_TO_INCLUDE "/usr/local/Cellar/protobuf/3.1.0/include")
 elseif(UNIX)
-    add_definitions("-D_REENTRANT") # sdl
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--enable-new-dtags -pthread")
-    list(APPEND DIR_TO_LINK "/usr/local/lib")
-    list(APPEND DIR_TO_INCLUDE "/usr/local/include")
+  add_definitions("-D_REENTRANT") # sdl
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--enable-new-dtags -pthread")
+  list(APPEND DIR_TO_LINK "/usr/local/lib")
+  list(APPEND DIR_TO_INCLUDE "/usr/local/include")
 endif()
 
 include_directories(${DIR_TO_INCLUDE})
@@ -67,8 +67,8 @@ add_executable(mcomp ${MCOMP_SOURCES})
 target_link_libraries(mcomp ${MCOMP_LIBS})
 
 if (APPLE)
-    set_target_properties(engine PROPERTIES LINK_FLAGS
-        "-F {$CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
-    set_target_properties(mcomp PROPERTIES LINK_FLAGS
-        "-F ${CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
+  set_target_properties(engine PROPERTIES LINK_FLAGS
+    "-F {$CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
+  set_target_properties(mcomp PROPERTIES LINK_FLAGS
+    "-F ${CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
 endif()
