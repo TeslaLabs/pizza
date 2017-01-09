@@ -86,7 +86,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     this->models_[0].set_position(pos);
   });
 
-  render_.LoadData("/Users/jefftime/programming/pizza/bin/r");
+  render_.LoadData("r");
   render_.SetCameraPosition({ 0, 0, 5 });
   Model model { "Thing", "default" };
   models_.push_back(model);
