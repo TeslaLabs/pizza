@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <sstream>
 #include <string>
+#include <thread>
 #include <tuple>
 #include <SDL2/SDL.h>
 
@@ -18,8 +19,19 @@
 //
 
 SdlEvent::SdlEvent(ILog& log)
-  : log_ { log }
+  : log_ { log },
+    mouse_loop_ {
+      std::thread {
+        [this] {
+          this->log_.Message("mouse loop");
+        }
+      }
+    }
 {}
+
+SdlEvent::~SdlEvent() {
+  mouse_loop_.join();
+}
 
 void SdlEvent::Process() {
   SDL_Event e;
