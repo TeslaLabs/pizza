@@ -62,8 +62,8 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
       auto dx = x - prev_mouse_x_;
       auto dy = y - prev_mouse_y_;
 
-      auto x_angle = (dy * this->dt_) + models_[0].rotation().i();
-      auto y_angle = (dx * this->dt_) + models_[0].rotation().j();
+      auto x_angle = (dy * .01) + models_[0].rotation().i();
+      auto y_angle = (dx * .01) + models_[0].rotation().j();
       auto z_angle = models_[0].rotation().k();
 
       models_[0].set_rotation({

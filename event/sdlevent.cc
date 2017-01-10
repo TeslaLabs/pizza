@@ -2,9 +2,9 @@
 #include <cstdio>
 #include <sstream>
 #include <string>
-#include <thread>
-#include <tuple>
+#include <unordered_map>
 #include <SDL2/SDL.h>
+#include "../log/ilog.h"
 
 //
 //                            ,,        ,,    ,,
@@ -19,19 +19,8 @@
 //
 
 SdlEvent::SdlEvent(ILog& log)
-  : log_ { log },
-    mouse_loop_ {
-      std::thread {
-        [this] {
-          this->log_.Message("mouse loop");
-        }
-      }
-    }
+  : log_ { log }
 {}
-
-SdlEvent::~SdlEvent() {
-  mouse_loop_.join();
-}
 
 void SdlEvent::Process() {
   SDL_Event e;
