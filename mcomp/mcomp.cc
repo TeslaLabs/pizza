@@ -13,7 +13,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     render_ { render },
     window_ { window },
     dt_ { 0 },
-    camera_sensitivity_ { 1 },
+    camera_sensitivity_ { .1 },
     mouse_sensitivity_ { 1 },
     prev_mouse_x_ { -1 },
     prev_mouse_y_ { -1 }
@@ -41,8 +41,8 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
       auto rotation = this->render_.camera_rotation();
       float di { rotation.i() - dy * this->camera_sensitivity_ };
       float dj { rotation.j() - dx * this->camera_sensitivity_ };
-      // rotation.set_i(di > 90.0 ? di < -90.0 ? -90.0 : 90.0 : di);
-      rotation.set_i(di);
+      dj += dj < 0.0 ? 360.0 : dj > 360.0 ? -360.0 : 0.0;
+      rotation.set_i(di > 90.0 ? 90.0 : di < -90.0 ? -90.0 : di);
       rotation.set_j(dj);
       this->render_.set_camera_rotation(rotation);
 
@@ -125,6 +125,10 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
 
   render_.LoadData("r");
   render_.set_camera_position({ 0, 0, 5 });
+  render_.set_camera_projection(Matrix::Projection(70,
+                                                   4.0 / 3.0,
+                                                   1.0,
+                                                   1000000.0));
   Model model { "Thing", "default" };
   models_.push_back(model);
 
