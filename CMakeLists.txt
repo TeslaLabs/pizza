@@ -35,6 +35,9 @@ set(PIZZA_SOURCES
     "proto/data.pb.cc"
 
     "render/glrender.cc"
+    "render/glrender_camera.cc"
+    "render/glrender_mesh.cc"
+    "render/glrender_shader.cc"
     "render/irender.cc"
     "render/model.cc"
 
