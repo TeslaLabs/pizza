@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include "igame.h"
+#include "../event/eventdata.h"
 #include "../event/ievent.h"
 #include "../log/ilog.h"
 #include "../timer/itimer.h"
@@ -17,7 +18,7 @@ Engine::Engine(IEvent& event,
     alive_ { true },
     max_fps_ { 120 }
 {
-  event_.Set("quit", [this](void* data) { this->alive_ = false; });
+  event_.Set("quit", [this](const EventData& data) { this->alive_ = false; });
 }
 
 void Engine::set_max_fps(int max_fps) {

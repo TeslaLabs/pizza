@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <string>
 #include <tuple>
+#include "../event/eventdata.h"
 #include "../event/ievent.h"
 #include "../math/math.h"
 #include "../render/irender.h"
@@ -20,20 +21,17 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
 {
   window_.set_title("mcomp");
 
-  event_.Set("Backspace_down", [this](void* data) {
-    this->event_.Call("quit", nullptr);
+  event_.Set("Backspace_down", [this](const EventData& ed) {
+    this->event_.Call("quit", EventData());
   });
 
-  event_.Set("m3_down", [this](void* data) {
+  event_.Set("m3_down", [this](const EventData& ed) {
     this->window_.SetCursorPosition(this->window_.width() / 2,
                                     this->window_.height() / 2);
     window_.HideCursor();
-    event_.Set("mmove", [this](void* data) {
-      if (data == nullptr) return;
-
-      auto coords = *static_cast<std::tuple<int,int>*>(data);
-      auto x = std::get<0>(coords);
-      auto y = std::get<1>(coords);
+    event_.Set("mmove", [this](const EventData& ed) {
+      auto x = std::get<0>(ed.mouse_coords());
+      auto y = std::get<1>(ed.mouse_coords());
 
       int dx { x - static_cast<int>(this->window_.width() / 2) };
       int dy { y - static_cast<int>(this->window_.height() / 2) };
@@ -52,24 +50,18 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     });
   });
 
-  event_.Set("m3_up", [this](void* data) {
+  event_.Set("m3_up", [this](const EventData& ed) {
     window_.ShowCursor();
     event_.Remove("mmove");
   });
 
-  event_.Set("m1_down", [this](void* data) {
-    if (data == nullptr) return;
+  event_.Set("m1_down", [this](const EventData& ed) {
+    prev_mouse_x_ = std::get<0>(ed.mouse_coords());
+    prev_mouse_y_ = std::get<1>(ed.mouse_coords());
 
-    auto coords = *static_cast<std::tuple<int,int>*>(data);
-    prev_mouse_x_ = std::get<0>(coords);
-    prev_mouse_y_ = std::get<1>(coords);
-
-    event_.Set("mmove", [this](void* data) {
-      if (data == nullptr) return;
-
-      auto coords = *static_cast<std::tuple<int,int>*>(data);
-      auto x = std::get<0>(coords);
-      auto y = std::get<1>(coords);
+    event_.Set("mmove", [this](const EventData& ed) {
+      auto x = std::get<0>(ed.mouse_coords());
+      auto y = std::get<1>(ed.mouse_coords());
 
       auto dx = x - prev_mouse_x_;
       auto dy = y - prev_mouse_y_;
@@ -88,36 +80,36 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
       prev_mouse_y_ = y;
     });
   });
-  event_.Set("m1_up", [this](void* data) {
+  event_.Set("m1_up", [this](const EventData& ed) {
     this->event_.Remove("mmove");
   });
 
-  event_.Set("D", [this](void* data) {
+  event_.Set("D", [this](const EventData& ed) {
     auto pos = this->models_[0].position();
     pos.set_i(pos.i() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("A", [this](void* data) {
+  event_.Set("A", [this](const EventData& ed) {
     auto pos = this->models_[0].position();
     pos.set_i(pos.i() - 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("W", [this](void* data) {
+  event_.Set("W", [this](const EventData& ed) {
     auto pos = this->models_[0].position();
     pos.set_j(pos.j() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("S", [this](void* data) {
+  event_.Set("S", [this](const EventData& ed) {
     auto pos = this->models_[0].position();
     pos.set_j(pos.j() - 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("Q", [this](void* data) {
+  event_.Set("Q", [this](const EventData& ed) {
     auto pos = this->models_[0].position();
     pos.set_k(pos.k() + 10 * this->dt_);
     this->models_[0].set_position(pos);
   });
-  event_.Set("E", [this](void* data) {
+  event_.Set("E", [this](const EventData& ed) {
     auto pos = this->models_[0].position();
     pos.set_k(pos.k() - 10 * this->dt_);
     this->models_[0].set_position(pos);

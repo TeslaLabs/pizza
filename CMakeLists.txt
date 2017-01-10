@@ -24,6 +24,7 @@ link_directories(${DIR_TO_LINK})
 set(PIZZA_SOURCES
     "engine/engine.cc"
 
+    "event/eventdata.cc"
     "event/sdlevent.cc"
 
     "log/termlog.cc"

@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <SDL2/SDL.h>
+#include "eventdata.h"
 #include "../log/ilog.h"
 
 //
@@ -28,58 +29,64 @@ void SdlEvent::Process() {
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
       case SDL_KEYDOWN: {
-        KeyDown(std::string { SDL_GetKeyName(e.key.keysym.sym) }, nullptr);
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        KeyDown(std::string { SDL_GetKeyName(e.key.keysym.sym) },
+                EventData(x, y));
       } break;
 
       case SDL_KEYUP: {
-        KeyUp(std::string { SDL_GetKeyName(e.key.keysym.sym) }, nullptr);
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        KeyUp(std::string { SDL_GetKeyName(e.key.keysym.sym) },
+              EventData(x, y));
       } break;
 
       case SDL_MOUSEBUTTONDOWN: {
-        auto coords = std::make_tuple(e.button.x, e.button.y);
+        EventData data { e.button.x, e.button.y };
         switch (e.button.button) {
           case SDL_BUTTON_LEFT: {
-            KeyDown("m1", &coords);
+            KeyDown("m1", data);
           } break;
           case SDL_BUTTON_RIGHT: {
-            KeyDown("m2", &coords);
+            KeyDown("m2", data);
           } break;
           case SDL_BUTTON_MIDDLE: {
-            KeyDown("m3", &coords);
+            KeyDown("m3", data);
           } break;
         }
       } break;
 
       case SDL_MOUSEBUTTONUP: {
-        auto coords = std::make_tuple(e.button.x, e.button.y);
+        EventData data { e.button.x, e.button.y };
         switch (e.button.button) {
           case SDL_BUTTON_LEFT: {
-            KeyUp("m1", &coords);
+            KeyUp("m1", data);
           } break;
           case SDL_BUTTON_RIGHT: {
-            KeyUp("m2", &coords);
+            KeyUp("m2", data);
           } break;
           case SDL_BUTTON_MIDDLE: {
-            KeyUp("m3", &coords);
+            KeyUp("m3", data);
           } break;
         }
       }
 
       case SDL_MOUSEMOTION: {
-        auto coords = std::make_tuple(e.motion.x, e.motion.y);
-        Call("mmove", &coords);
+        EventData data { e.motion.x, e.motion.y };
+        Call("mmove", data);
       } break;
 
       case SDL_WINDOWEVENT: {
         switch (e.window.event) {
           case SDL_WINDOWEVENT_CLOSE: {
-            Call("quit", nullptr);
+            Call("quit", EventData());
           } break;
           case SDL_WINDOWEVENT_FOCUS_GAINED: {
-            Call("window_unfocus", nullptr);
+            Call("window_unfocus", EventData());
           } break;
           case SDL_WINDOWEVENT_FOCUS_LOST: {
-            Call("window_focus", nullptr);
+            Call("window_focus", EventData());
           } break;
         }
       } break;
@@ -92,7 +99,7 @@ void SdlEvent::Process() {
 }
 
 void SdlEvent::Set(const std::string& event,
-                   std::function<void(void*)> command) {
+                   std::function<void(const EventData&)> command) {
   events_[event] = command;
 }
 
@@ -107,7 +114,7 @@ void SdlEvent::Remove(const std::string& event) {
   events_.erase(event_result);
 }
 
-void SdlEvent::Call(const std::string& event, void* data) {
+void SdlEvent::Call(const std::string& event, const EventData& data) {
   auto func = events_.find(event);
   if (func != events_.end()) {
     func->second(data);
@@ -126,14 +133,14 @@ void SdlEvent::Call(const std::string& event, void* data) {
 //
 //
 
-void SdlEvent::KeyDown(const std::string& key, void* data) {
+void SdlEvent::KeyDown(const std::string& key, const EventData& data) {
   if (!keymap_[key]) {
     keymap_[key] = true;
     Call(key + "_down", data);
   }
 }
 
-void SdlEvent::KeyUp(const std::string& key, void* data) {
+void SdlEvent::KeyUp(const std::string& key, const EventData& data) {
   if (keymap_[key]) {
     keymap_[key] = false;
     Call(key + "_up", data);
@@ -142,6 +149,6 @@ void SdlEvent::KeyUp(const std::string& key, void* data) {
 
 void SdlEvent::CheckActiveKeys() {
   for (auto& key : keymap_) {
-    if (key.second) Call(key.first, nullptr);
+    if (key.second) Call(key.first, EventData());
   }
 }
