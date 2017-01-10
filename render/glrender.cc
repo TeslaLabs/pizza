@@ -146,16 +146,28 @@ void GLRender::SetBackgroundColor(float r, float g, float b, float a) {
   glClearColor(r, g, b, a);
 }
 
-void GLRender::SetCameraProjection(const Matrix& projection) {
+const Matrix& GLRender::camera_projection() const {
+  return camera_.projection;
+}
+
+void GLRender::set_camera_projection(const Matrix& projection) {
   camera_.projection = projection;
 }
 
-void GLRender::SetCameraPosition(const Vec3& position) {
+const Vec3& GLRender::camera_position() const {
+  return camera_.position;
+}
+
+void GLRender::set_camera_position(const Vec3& position) {
   camera_.position = position;
 }
 
-void GLRender::SetCameraDirection(const Vec3& direction) {
-  camera_.direction = Vec3::Normalize(direction);
+const Vec3& GLRender::camera_direction() const {
+  return camera_.direction;
+}
+
+void GLRender::set_camera_direction(const Vec3& direction) {
+  camera_.direction = direction;
 }
 
 void GLRender::CameraLookat(const Vec3& location) {

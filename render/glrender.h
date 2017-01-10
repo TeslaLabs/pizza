@@ -72,9 +72,12 @@ public:
   virtual void LoadData(const std::string& filepath) override;
   virtual void UnloadData() override;
   virtual void SetBackgroundColor(float r, float g, float b, float a) override;
-  virtual void SetCameraProjection(const Matrix& projection) override;
-  virtual void SetCameraPosition(const Vec3& position) override;
-  virtual void SetCameraDirection(const Vec3& location) override;
+  virtual const Matrix& camera_projection() const override;
+  virtual void set_camera_projection(const Matrix& projection) override;
+  virtual const Vec3& camera_position() const override;
+  virtual void set_camera_position(const Vec3& position) override;
+  virtual const Vec3& camera_direction() const override;
+  virtual void set_camera_direction(const Vec3& direction) override;
   virtual void CameraLookat(const Vec3& location) override;
   virtual void DrawModel(IModel* model) override;
 

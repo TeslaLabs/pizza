@@ -22,7 +22,32 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     this->event_.Call("quit", nullptr);
   });
 
+  event_.Set("m3_down", [this](void* data) {
+    if (data == nullptr) return;
+
+    auto coords = *static_cast<std::tuple<int,int>*>(data);
+    prev_mouse_x_ = std::get<0>(coords);
+    prev_mouse_y_ = std::get<1>(coords);
+
+    event_.Set("mmove", [this](void* data) {
+      if (data == nullptr);
+
+      auto coords = *static_cast<std::tuple<int,int>*>(data);
+      auto x = std::get<0>(coords);
+      auto y = std::get<1>(coords);
+
+      auto dx = x - prev_mouse_x_;
+      auto dy = x - prev_mouse_y_;
+    });
+  });
+
+  event_.Set("m3_up", [this](void* data) {
+    event_.Remove("mmove");
+  });
+
   event_.Set("m1_down", [this](void* data) {
+    if (data == nullptr) return;
+
     auto coords = *static_cast<std::tuple<int,int>*>(data);
     prev_mouse_x_ = std::get<0>(coords);
     prev_mouse_y_ = std::get<1>(coords);
@@ -87,7 +112,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
   });
 
   render_.LoadData("r");
-  render_.SetCameraPosition({ 0, 0, 5 });
+  render_.set_camera_position({ 0, 0, 5 });
   Model model { "Thing", "default" };
   models_.push_back(model);
 
