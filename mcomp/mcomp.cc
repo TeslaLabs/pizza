@@ -13,8 +13,8 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     render_ { render },
     window_ { window },
     dt_ { 0 },
-    camera_sensitivity_ { .001 },
-    mouse_sensitivity_ { .01 },
+    camera_sensitivity_ { 1 },
+    mouse_sensitivity_ { 1 },
     prev_mouse_x_ { -1 },
     prev_mouse_y_ { -1 }
 {
@@ -24,38 +24,40 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     this->event_.Call("quit", nullptr);
   });
 
-  event_.Set("m1_down", [this](void* data) {
-    if (data == nullptr) return;
-
-    auto coords = *static_cast<std::tuple<int,int>*>(data);
-    prev_mouse_x_ = std::get<0>(coords);
-    prev_mouse_y_ = std::get<1>(coords);
-
+  event_.Set("m3_down", [this](void* data) {
+    this->window_.SetCursorPosition(this->window_.width() / 2,
+                                    this->window_.height() / 2);
+    window_.HideCursor();
     event_.Set("mmove", [this](void* data) {
-      if (data == nullptr);
+      if (data == nullptr) return;
 
       auto coords = *static_cast<std::tuple<int,int>*>(data);
       auto x = std::get<0>(coords);
       auto y = std::get<1>(coords);
 
-      auto dx = x - prev_mouse_x_;
-      auto dy = y - prev_mouse_y_;
+      int dx { x - static_cast<int>(this->window_.width() / 2) };
+      int dy { y - static_cast<int>(this->window_.height() / 2) };
 
       auto rotation = this->render_.camera_rotation();
-      rotation.set_i(rotation.i() - dy * camera_sensitivity_);
-      rotation.set_j(rotation.j() - dx * camera_sensitivity_);
+      float di { rotation.i() - dy * this->camera_sensitivity_ };
+      float dj { rotation.j() - dx * this->camera_sensitivity_ };
+      // rotation.set_i(di > 90.0 ? di < -90.0 ? -90.0 : 90.0 : di);
+      rotation.set_i(di);
+      rotation.set_j(dj);
       this->render_.set_camera_rotation(rotation);
 
-      prev_mouse_x_ = x;
-      prev_mouse_y_ = y;
+      this->window_.SetCursorPosition(this->window_.width() / 2,
+                                      this->window_.height() / 2);
+
     });
   });
 
-  event_.Set("m1_up", [this](void* data) {
+  event_.Set("m3_up", [this](void* data) {
+    window_.ShowCursor();
     event_.Remove("mmove");
   });
 
-  event_.Set("Tab_down", [this](void* data) {
+  event_.Set("m1_down", [this](void* data) {
     if (data == nullptr) return;
 
     auto coords = *static_cast<std::tuple<int,int>*>(data);
@@ -86,7 +88,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
       prev_mouse_y_ = y;
     });
   });
-  event_.Set("Tab_up", [this](void* data) {
+  event_.Set("m1_up", [this](void* data) {
     this->event_.Remove("mmove");
   });
 

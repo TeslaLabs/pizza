@@ -174,8 +174,8 @@ Matrix Matrix::Translate(float x, float y, float z) {
 
 Matrix Matrix::RotateX(float x) {
   auto x_rot = Identity();
-  auto x_sin = static_cast<float>(std::sin(x));
-  auto x_cos = static_cast<float>(std::cos(x));
+  auto x_sin = static_cast<float>(std::sin(ToRadians(x)));
+  auto x_cos = static_cast<float>(std::cos(ToRadians(x)));
   x_rot.Set(1, 1, x_cos);
   x_rot.Set(1, 2, -x_sin);
   x_rot.Set(2, 1, x_sin);
@@ -185,8 +185,8 @@ Matrix Matrix::RotateX(float x) {
 
 Matrix Matrix::RotateY(float y) {
   auto y_rot = Identity();
-  auto y_sin = static_cast<float>(std::sin(y));
-  auto y_cos = static_cast<float>(std::cos(y));
+  auto y_sin = static_cast<float>(std::sin(ToRadians(y)));
+  auto y_cos = static_cast<float>(std::cos(ToRadians(y)));
   y_rot.Set(0, 0, y_cos);
   y_rot.Set(0, 2, y_sin);
   y_rot.Set(2, 0, -y_sin);
@@ -196,8 +196,8 @@ Matrix Matrix::RotateY(float y) {
 
 Matrix Matrix::RotateZ(float z) {
   auto z_rot = Identity();
-  auto z_sin = static_cast<float>(std::sin(z));
-  auto z_cos = static_cast<float>(std::cos(z));
+  auto z_sin = static_cast<float>(std::sin(ToRadians(z)));
+  auto z_cos = static_cast<float>(std::cos(ToRadians(z)));
   z_rot.Set(0, 0, z_cos);
   z_rot.Set(0, 1, -z_sin);
   z_rot.Set(1, 0, z_sin);

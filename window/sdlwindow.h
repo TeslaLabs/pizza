@@ -26,10 +26,11 @@ public:
   unsigned int height() const override;
   void Resize(int width, int height) override;
   void set_resize_func(std::function<void(int,int)> resize_func) override;
-  virtual void Show() override;
-  virtual void Hide() override;
   virtual void ShowCursor() override;
   virtual void HideCursor() override;
+  virtual void SetCursorPosition(int x, int y) override;
+  virtual void Show() override;
+  virtual void Hide() override;
   virtual void Update() override;
   SdlWindow& operator=(const SdlWindow& other) = delete;
 };

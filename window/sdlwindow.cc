@@ -87,6 +87,18 @@ void SdlWindow::set_resize_func(std::function<void(int,int)> resize_func) {
   resize_func_ = resize_func;
 }
 
+void SdlWindow::ShowCursor() {
+  SDL_ShowCursor(SDL_ENABLE);
+}
+
+void SdlWindow::HideCursor() {
+  SDL_ShowCursor(SDL_DISABLE);
+}
+
+void SdlWindow::SetCursorPosition(int x, int y) {
+  SDL_WarpMouseInWindow(window_handle_, x, y);
+}
+
 void SdlWindow::Show() {
   SDL_ShowWindow(window_handle_);
   SDL_RaiseWindow(window_handle_);
@@ -94,14 +106,6 @@ void SdlWindow::Show() {
 
 void SdlWindow::Hide() {
   SDL_HideWindow(window_handle_);
-}
-
-void SdlWindow::ShowCursor() {
-  SDL_ShowCursor(SDL_ENABLE);
-}
-
-void SdlWindow::HideCursor() {
-  SDL_ShowCursor(SDL_DISABLE);
 }
 
 void SdlWindow::Update() {
