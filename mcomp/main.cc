@@ -3,13 +3,8 @@
 #include "../event/sdlevent.h"
 #include "../log/termlog.h"
 #include "../render/glrender.h"
+#include "../timer/timer.h"
 #include "../window/sdlwindow.h"
-
-#ifdef __APPLE__
-  #include "../timer/appletimer.h"
-#elif __linux__
-  #include "../timer/linuxtimer.h"
-#endif
 
 int main(int argc, char** argv) {
   TermLog log;
@@ -28,11 +23,7 @@ int main(int argc, char** argv) {
 
   Mcomp mcomp { event, log, render, window };
 
-#ifdef __APPLE__
-  AppleTimer timer;
-#elif __linux__
-  LinuxTimer timer;
-#endif
+  Timer timer;
 
   Engine engine { event, log, mcomp, timer };
   engine.Run();
