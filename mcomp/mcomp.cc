@@ -13,6 +13,8 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     render_ { render },
     window_ { window },
     dt_ { 0 },
+    camera_sensitivity_ { .001 },
+    mouse_sensitivity_ { .01 },
     prev_mouse_x_ { -1 },
     prev_mouse_y_ { -1 }
 {
@@ -22,7 +24,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     this->event_.Call("quit", nullptr);
   });
 
-  event_.Set("m3_down", [this](void* data) {
+  event_.Set("m1_down", [this](void* data) {
     if (data == nullptr) return;
 
     auto coords = *static_cast<std::tuple<int,int>*>(data);
@@ -37,15 +39,23 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
       auto y = std::get<1>(coords);
 
       auto dx = x - prev_mouse_x_;
-      auto dy = x - prev_mouse_y_;
+      auto dy = y - prev_mouse_y_;
+
+      auto rotation = this->render_.camera_rotation();
+      rotation.set_i(rotation.i() - dy * camera_sensitivity_);
+      rotation.set_j(rotation.j() - dx * camera_sensitivity_);
+      this->render_.set_camera_rotation(rotation);
+
+      prev_mouse_x_ = x;
+      prev_mouse_y_ = y;
     });
   });
 
-  event_.Set("m3_up", [this](void* data) {
+  event_.Set("m1_up", [this](void* data) {
     event_.Remove("mmove");
   });
 
-  event_.Set("m1_down", [this](void* data) {
+  event_.Set("Tab_down", [this](void* data) {
     if (data == nullptr) return;
 
     auto coords = *static_cast<std::tuple<int,int>*>(data);
@@ -62,8 +72,8 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
       auto dx = x - prev_mouse_x_;
       auto dy = y - prev_mouse_y_;
 
-      auto x_angle = (dy * .01) + models_[0].rotation().i();
-      auto y_angle = (dx * .01) + models_[0].rotation().j();
+      auto x_angle = (dy * mouse_sensitivity_) + models_[0].rotation().i();
+      auto y_angle = (dx * mouse_sensitivity_) + models_[0].rotation().j();
       auto z_angle = models_[0].rotation().k();
 
       models_[0].set_rotation({
@@ -76,7 +86,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
       prev_mouse_y_ = y;
     });
   });
-  event_.Set("m1_up", [this](void* data) {
+  event_.Set("Tab_up", [this](void* data) {
     this->event_.Remove("mmove");
   });
 

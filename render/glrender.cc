@@ -162,16 +162,20 @@ void GLRender::set_camera_position(const Vec3& position) {
   camera_.position = position;
 }
 
-const Vec3& GLRender::camera_direction() const {
-  return camera_.direction;
+const Vec3& GLRender::camera_rotation() const {
+  return camera_.rotation;
 }
 
-void GLRender::set_camera_direction(const Vec3& direction) {
-  camera_.direction = direction;
+void GLRender::set_camera_rotation(const Vec3& rotation) {
+  camera_.rotation = rotation;
+}
+
+void GLRender::CameraLook(const Vec3& direction) {
+  // TODO
 }
 
 void GLRender::CameraLookat(const Vec3& location) {
-  camera_.direction = Vec3::Normalize(camera_.position - location);
+  // TODO
 }
 
 void GLRender::DrawModel(IModel* model) {
@@ -228,7 +232,7 @@ GLRender::Camera::Camera()
       Matrix::Projection(90, 4.0 / 3.0, 1.0, 1000000.0)
     },
     position { Vec3 { 0, 0, 0 } },
-    direction { Vec3 { 0, 0, -1 } }
+    rotation { Vec3 { 0, 0, 0 } }
 {}
 
 void GLRender::ErrorCheck(const std::string& message) {
@@ -630,6 +634,8 @@ void GLRender::ProcessUniforms(Shader& shader) {
 
 Matrix GLRender::CalculateViewMatrix() {
   auto view = Matrix::Identity();
+  view = (Matrix::RotateX(-camera_.rotation.i()) *
+          Matrix::RotateY(-camera_.rotation.j()));
   view = view * Matrix::Translate(-camera_.position.i(),
                                   -camera_.position.j(),
                                   -camera_.position.k());

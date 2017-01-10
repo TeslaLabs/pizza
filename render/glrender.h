@@ -42,7 +42,7 @@ class GLRender : public IRender {
   struct Camera {
     Matrix projection;
     Vec3 position;
-    Vec3 direction;
+    Vec3 rotation;
     Camera();
   };
 
@@ -76,8 +76,9 @@ public:
   virtual void set_camera_projection(const Matrix& projection) override;
   virtual const Vec3& camera_position() const override;
   virtual void set_camera_position(const Vec3& position) override;
-  virtual const Vec3& camera_direction() const override;
-  virtual void set_camera_direction(const Vec3& direction) override;
+  virtual const Vec3& camera_rotation() const override;
+  virtual void set_camera_rotation(const Vec3& rotation) override;
+  virtual void CameraLook(const Vec3& direction) override;
   virtual void CameraLookat(const Vec3& location) override;
   virtual void DrawModel(IModel* model) override;
 

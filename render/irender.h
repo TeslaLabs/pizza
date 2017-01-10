@@ -20,8 +20,9 @@ public:
   virtual void set_camera_projection(const Matrix& projection) = 0;
   virtual const Vec3& camera_position() const = 0;
   virtual void set_camera_position(const Vec3& position) = 0;
-  virtual const Vec3& camera_direction() const = 0;
-  virtual void set_camera_direction(const Vec3& direction) = 0;
+  virtual const Vec3& camera_rotation() const = 0;
+  virtual void set_camera_rotation(const Vec3& rotation) = 0;
+  virtual void CameraLook(const Vec3& direction) = 0;
   virtual void CameraLookat(const Vec3& location) = 0;
   virtual void DrawModel(IModel* model) = 0;
 };

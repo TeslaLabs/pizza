@@ -16,6 +16,8 @@ class Mcomp : public IGame {
   IWindow& window_;
   std::vector<Model> models_;
   double dt_;
+  float camera_sensitivity_;
+  float mouse_sensitivity_;
   int prev_mouse_x_;
   int prev_mouse_y_;
 

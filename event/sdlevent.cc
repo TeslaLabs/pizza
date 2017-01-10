@@ -100,7 +100,7 @@ void SdlEvent::Remove(const std::string& event) {
   auto event_result = events_.find(event);
   if (event_result == events_.end()) {
     std::stringstream message;
-    message << "Could not find event, \"" << event << ",\" for removal";
+    message << "Could not find event, \"" << event << "\" for removal";
     log_.Error(message.str());
     return;
   }
