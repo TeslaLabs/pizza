@@ -14,7 +14,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     render_ { render },
     window_ { window },
     dt_ { 0 },
-    camera_sensitivity_ { .1 },
+    camera_sensitivity_ { .15 },
     mouse_sensitivity_ { 1 },
     prev_mouse_x_ { -1 },
     prev_mouse_y_ { -1 }
@@ -25,7 +25,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     this->event_.Call("quit", EventData());
   });
 
-  event_.Set("m3_down", [this](const EventData& ed) {
+  event_.Set("Space_down", [this](const EventData& ed) {
     this->window_.SetCursorPosition(this->window_.width() / 2,
                                     this->window_.height() / 2);
     window_.HideCursor();
@@ -46,11 +46,10 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
 
       this->window_.SetCursorPosition(this->window_.width() / 2,
                                       this->window_.height() / 2);
-
     });
   });
 
-  event_.Set("m3_up", [this](const EventData& ed) {
+  event_.Set("Space_up", [this](const EventData& ed) {
     window_.ShowCursor();
     event_.Remove("mmove");
   });

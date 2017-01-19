@@ -5,6 +5,7 @@
 #include "../render/glrender.h"
 #include "../timer/timer.h"
 #include "../window/sdlwindow.h"
+#include <unistd.h>
 
 int main(int argc, char** argv) {
   TermLog log;
@@ -27,6 +28,8 @@ int main(int argc, char** argv) {
 
   Engine engine { event, log, mcomp, timer };
   engine.Run();
+
+  sleep(2);
 
   return 0;
 }

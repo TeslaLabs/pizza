@@ -54,8 +54,6 @@ set(MCOMP_SOURCES
     )
 set(MCOMP_LIBS engine)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c90 -pedantic")
-
 if (APPLE)
   list(APPEND PIZZA_SOURCES
        "timer/appletimer.cc"

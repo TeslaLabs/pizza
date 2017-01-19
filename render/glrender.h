@@ -2,9 +2,9 @@
 #define RENDER_GLRENDER_H
 
 #include <functional>
+#include <gl/gl_headers.h>
 #include <string>
 #include <unordered_map>
-#include <gl/gl_headers.h>
 #include "imodel.h"
 #include "irender.h"
 #include "../log/ilog.h"
