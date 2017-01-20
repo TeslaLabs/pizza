@@ -71,6 +71,8 @@ target_link_libraries(engine ${PIZZA_LIBS})
 add_executable(mcomp ${MCOMP_SOURCES})
 target_link_libraries(mcomp ${MCOMP_LIBS})
 
+add_executable(net "net/main.cc")
+
 if (APPLE)
   set_target_properties(engine PROPERTIES LINK_FLAGS
     "-F {$CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
