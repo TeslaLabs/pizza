@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <ifaddrs.h>
 
 int main(int argc, char** argv) {
   auto sock_id = socket(PF_INET, SOCK_DGRAM, 0);
@@ -31,5 +32,24 @@ int main(int argc, char** argv) {
   }
 
   close(sock_id);
+
+  // ifaddrs* addrs = nullptr;
+  // getifaddrs(&addrs);
+  // auto cur_addr = addrs;
+  // while (cur_addr) {
+  //   switch (cur_addr->ifa_addr->sa_family) {
+  //     case AF_INET: {
+  //       std::printf("%s {\n", cur_addr->ifa_name);
+  //       auto addr = (sockaddr_in*) cur_addr->ifa_addr;
+  //       std::printf("  port: %u\n", ntohs(addr->sin_port));
+  //       std::printf("  addr: %s\n", inet_ntoa(addr->sin_addr));
+  //       std::puts("}");
+  //     } break;
+  //     default: break;
+  //   }
+  //   cur_addr = cur_addr->ifa_next;
+  // }
+  // freeifaddrs(addrs);
+
   return 0;
 }
