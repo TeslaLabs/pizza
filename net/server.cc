@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
   sockaddr_in addr;
   addr.sin_family = AF_INET;
   addr.sin_port = htons(26000);
-  inet_aton("192.168.1.3", &addr.sin_addr);
+  addr.sin_addr.s_addr = htonl(INADDR_ANY);
   std::memset(&addr.sin_zero, 0, sizeof(addr.sin_zero));
   if (bind(sock_id, (sockaddr*) &addr, sizeof(sockaddr_in)) != 0) {
     perror("Could not bind socket");
