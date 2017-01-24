@@ -6,7 +6,7 @@ Args::Args(int argc, char** argv)
     args_ { argv }
 {}
 
-bool Args::Has(const std::string& arg_name) {
+bool Args::Has(const std::string& arg_name) const {
   for (auto i = 0; i < argc_; ++i) {
     if (arg_name == args_[i]) return true;
   }
@@ -15,7 +15,7 @@ bool Args::Has(const std::string& arg_name) {
 
 bool Args::Get(const std::string& arg_name,
                int index,
-               std::string* out_value) {
+               std::string* out_value) const {
   for (auto i = 0; i < argc_; ++i) {
     if (arg_name == args_[i]) {
       if (i + index < argc_) {
