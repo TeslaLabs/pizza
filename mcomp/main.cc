@@ -1,5 +1,7 @@
+#include <cstdio>
 #include <string>
 #include "mcomp.h"
+#include "../args/args.h"
 #include "../engine/engine.h"
 #include "../event/sdlevent.h"
 #include "../log/termlog.h"
@@ -8,7 +10,15 @@
 #include "../window/sdlwindow.h"
 
 int main(int argc, char** argv) {
+  Args args { argc, argv };
+
   TermLog log;
+
+  int i;
+  if (args.Has("-port", &i)) {
+    auto port_num = args[i + 1];
+    if (port_num) std::printf("port_num: %d\n", std::stoi(port_num));
+  }
 
   SdlWindow window { log };
 

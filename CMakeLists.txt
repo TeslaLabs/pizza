@@ -4,9 +4,20 @@ if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
   add_definitions(-DDEBUG_MODE)
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -pedantic")
+string(CONCAT ADDITIONAL_FLAGS
+       "-Wall "
+       "-std=c++11 "
+       "-pedantic "
+       "-fno-exceptions "
+       "-fno-rtti"
+       )
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ADDITIONAL_FLAGS}")
+
 list(APPEND DIR_TO_INCLUDE "${CMAKE_SOURCE_DIR}/include")
 list(APPEND DIR_TO_LINK "${CMAKE_SOURCE_DIR}/lib")
+
+add_definitions("-DGOOGLE_PROTOBUF_NO_RTTI")
 
 if(APPLE)
   add_definitions("-D_THREAD_SAFE") # protobuf
@@ -22,6 +33,8 @@ include_directories(${DIR_TO_INCLUDE})
 link_directories(${DIR_TO_LINK})
 
 set(PIZZA_SOURCES
+    "args/args.cc"
+
     "engine/engine.cc"
 
     "event/eventdata.cc"
@@ -75,8 +88,11 @@ add_executable(server "net/server.cc")
 add_executable(client "net/client.cc")
 
 if (APPLE)
-  set_target_properties(engine PROPERTIES LINK_FLAGS
-    "-F {$CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
-  set_target_properties(mcomp PROPERTIES LINK_FLAGS
-    "-F ${CMAKE_SOURCE_DIR}/lib -framework SDL2 -framework OpenGL")
+  string(CONCAT FRAMEWORKS
+         "-F ${CMAKE_SOURCE_DIR}/lib "
+         "-framework SDL2 "
+         "-framework OpenGL "
+         )
+  set_target_properties(engine PROPERTIES LINK_FLAGS ${FRAMEWORKS})
+  set_target_properties(mcomp PROPERTIES LINK_FLAGS ${FRAMEWORKS})
 endif()
