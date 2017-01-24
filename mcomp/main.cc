@@ -14,12 +14,6 @@ int main(int argc, char** argv) {
 
   TermLog log;
 
-  int i;
-  if (args.Has("-port", &i)) {
-    auto port_num = args[i + 1];
-    if (port_num) std::printf("port_num: %d\n", std::stoi(port_num));
-  }
-
   SdlWindow window { log };
 
   SdlEvent event { log };

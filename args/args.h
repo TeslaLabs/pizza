@@ -9,8 +9,8 @@ class Args {
 
 public:
   Args(int argc, char** argv);
-  bool Has(const std::string& arg_name, int* index);
-  char* operator[](int index);
+  bool Has(const std::string& arg_name);
+  bool Get(const std::string& arg_name, int index, std::string* value);
 };
 
 #endif
