@@ -21,98 +21,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
 {
   window_.set_title("mcomp");
 
-  event_.Set("Backspace_down", [this](const EventData& ed) {
-    this->event_.Call("quit", EventData());
-  });
-
-  event_.Set("Space_down", [this](const EventData& ed) {
-    this->window_.SetCursorPosition(this->window_.width() / 2,
-                                    this->window_.height() / 2);
-    window_.HideCursor();
-    event_.Set("mmove", [this](const EventData& ed) {
-      auto x = std::get<0>(ed.mouse_coords());
-      auto y = std::get<1>(ed.mouse_coords());
-
-      int dx { x - static_cast<int>(this->window_.width() / 2) };
-      int dy { y - static_cast<int>(this->window_.height() / 2) };
-
-      auto rotation = this->render_.camera_rotation();
-      float di { rotation.i() - dy * this->camera_sensitivity_ };
-      float dj { rotation.j() - dx * this->camera_sensitivity_ };
-      dj += dj < 0.0 ? 360.0 : dj > 360.0 ? -360.0 : 0.0;
-      rotation.set_i(di > 90.0 ? 90.0 : di < -90.0 ? -90.0 : di);
-      rotation.set_j(dj);
-      this->render_.set_camera_rotation(rotation);
-
-      this->window_.SetCursorPosition(this->window_.width() / 2,
-                                      this->window_.height() / 2);
-    });
-  });
-
-  event_.Set("Space_up", [this](const EventData& ed) {
-    window_.ShowCursor();
-    event_.Remove("mmove");
-  });
-
-  event_.Set("m1_down", [this](const EventData& ed) {
-    prev_mouse_x_ = std::get<0>(ed.mouse_coords());
-    prev_mouse_y_ = std::get<1>(ed.mouse_coords());
-
-    event_.Set("mmove", [this](const EventData& ed) {
-      auto x = std::get<0>(ed.mouse_coords());
-      auto y = std::get<1>(ed.mouse_coords());
-
-      auto dx = x - prev_mouse_x_;
-      auto dy = y - prev_mouse_y_;
-
-      auto x_angle = (dy * mouse_sensitivity_) + models_[0].rotation().i();
-      auto y_angle = (dx * mouse_sensitivity_) + models_[0].rotation().j();
-      auto z_angle = models_[0].rotation().k();
-
-      models_[0].set_rotation({
-        static_cast<float>(x_angle),
-        static_cast<float>(y_angle),
-        z_angle
-      });
-
-      prev_mouse_x_ = x;
-      prev_mouse_y_ = y;
-    });
-  });
-  event_.Set("m1_up", [this](const EventData& ed) {
-    this->event_.Remove("mmove");
-  });
-
-  event_.Set("D", [this](const EventData& ed) {
-    auto pos = this->models_[0].position();
-    pos.set_i(pos.i() + 10 * this->dt_);
-    this->models_[0].set_position(pos);
-  });
-  event_.Set("A", [this](const EventData& ed) {
-    auto pos = this->models_[0].position();
-    pos.set_i(pos.i() - 10 * this->dt_);
-    this->models_[0].set_position(pos);
-  });
-  event_.Set("W", [this](const EventData& ed) {
-    auto pos = this->models_[0].position();
-    pos.set_j(pos.j() + 10 * this->dt_);
-    this->models_[0].set_position(pos);
-  });
-  event_.Set("S", [this](const EventData& ed) {
-    auto pos = this->models_[0].position();
-    pos.set_j(pos.j() - 10 * this->dt_);
-    this->models_[0].set_position(pos);
-  });
-  event_.Set("Q", [this](const EventData& ed) {
-    auto pos = this->models_[0].position();
-    pos.set_k(pos.k() + 10 * this->dt_);
-    this->models_[0].set_position(pos);
-  });
-  event_.Set("E", [this](const EventData& ed) {
-    auto pos = this->models_[0].position();
-    pos.set_k(pos.k() - 10 * this->dt_);
-    this->models_[0].set_position(pos);
-  });
+  MainMode();
 
   render_.LoadData("r");
   render_.set_camera_position({ 0, 0, 5 });
@@ -138,4 +47,94 @@ void Mcomp::Update(double dt) {
   }
 
   render_.Update();
+}
+
+//
+//                                                         ,,
+//     .g8"""bgd                    mm                   `7MM
+//   .dP'     `M                    MM                     MM
+//   dM'       ` ,pW"Wq.`7MMpMMMb.mmMMmm `7Mb,od8 ,pW"Wq.  MM  ,pP"Ybd
+//   MM         6W'   `Wb MM    MM  MM     MM' "'6W'   `Wb MM  8I   `"
+//   MM.        8M     M8 MM    MM  MM     MM    8M     M8 MM  `YMMMa.
+//   `Mb.     ,'YA.   ,A9 MM    MM  MM     MM    YA.   ,A9 MM  L.   I8
+//     `"bmmmd'  `Ybmd9'.JMML  JMML.`Mbmo.JMML.   `Ybmd9'.JMML.M9mmmP'
+//
+//
+
+void Mcomp::MainMode() {
+  event_.Set("Backspace_down", [this](const EventData& ed) {
+    QuitMode();
+  });
+  event_.Set("m1_down", [this](const EventData& ed) {
+    ToRotateMode(ed);
+  });
+  event_.Set("m1_up", [this](const EventData& ed) {
+    FromRotateMode();
+  });
+  event_.Set("Space_down", [this](const EventData& ed) {
+    ToFlyMode(ed);
+  });
+  event_.Set("Space_up", [this](const EventData& ed) {
+    FromFlyMode();
+  });
+}
+
+void Mcomp::QuitMode() {
+  event_.Call("quit", EventData());
+}
+
+void Mcomp::ToRotateMode(const EventData& ed) {
+  prev_mouse_x_ = std::get<0>(ed.mouse_coords());
+  prev_mouse_y_ = std::get<1>(ed.mouse_coords());
+  event_.Set("mmove", [this](const EventData& ed) {
+    auto x = std::get<0>(ed.mouse_coords());
+    auto y = std::get<1>(ed.mouse_coords());
+
+    auto dx = x - prev_mouse_x_;
+    auto dy = y - prev_mouse_y_;
+
+    auto x_angle = (dy * mouse_sensitivity_) + models_[0].rotation().i();
+    auto y_angle = (dx * mouse_sensitivity_) + models_[0].rotation().j();
+    auto z_angle = models_[0].rotation().k();
+
+    models_[0].set_rotation({
+      static_cast<float>(x_angle),
+      static_cast<float>(y_angle),
+      z_angle
+    });
+
+    prev_mouse_x_ = x;
+    prev_mouse_y_ = y;
+  });
+}
+
+void Mcomp::FromRotateMode() {
+  event_.Remove("mmove");
+}
+
+void Mcomp::ToFlyMode(const EventData& ed) {
+  window_.SetCursorPosition(window_.width() / 2, window_.height() / 2);
+  window_.HideCursor();
+  event_.Set("mmove", [this](const EventData& ed) {
+    auto x = std::get<0>(ed.mouse_coords());
+    auto y = std::get<1>(ed.mouse_coords());
+
+    int dx { x - static_cast<int>(window_.width() / 2) };
+    int dy { y - static_cast<int>(window_.height() / 2) };
+
+    auto rotation = render_.camera_rotation();
+    float di { rotation.i() - dy * camera_sensitivity_ };
+    float dj { rotation.j() - dx * camera_sensitivity_ };
+    dj += dj < 0.0 ? 360.0 : dj > 360.0 ? -360.0 : 0.0;
+    rotation.set_i(di > 90.0 ? 90.0 : di < -90.0 ? -90 : di);
+    rotation.set_j(dj);
+    render_.set_camera_rotation(rotation);
+
+    window_.SetCursorPosition(window_.width() / 2, window_.height() / 2);
+  });
+}
+
+void Mcomp::FromFlyMode() {
+  window_.ShowCursor();
+  event_.Remove("mmove");
 }

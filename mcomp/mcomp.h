@@ -4,6 +4,7 @@
 #include <vector>
 #include "../engine/igame.h"
 #include "../event/ievent.h"
+#include "../event/eventdata.h"
 #include "../log/ilog.h"
 #include "../render/irender.h"
 #include "../render/model.h"
@@ -28,6 +29,15 @@ public:
         IWindow& window);
   ~Mcomp();
   virtual void Update(double dt) override;
+
+private:
+  // Controls
+  void MainMode();
+  void QuitMode();
+  void ToRotateMode(const EventData& ed);
+  void FromRotateMode();
+  void ToFlyMode(const EventData& ed);
+  void FromFlyMode();
 };
 
 #endif

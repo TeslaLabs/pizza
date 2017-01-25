@@ -36,6 +36,7 @@ class GLRender : public IRender {
                             GLint uniform_location);
     bool SetUniformValue(const std::string& uniform,
                          std::function<void(GLint)> SetValue);
+
   private:
     std::unordered_map<std::string, GLint> uniforms_;
   };
