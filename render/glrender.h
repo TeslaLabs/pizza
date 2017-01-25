@@ -18,10 +18,11 @@ class GLRender : public IRender {
     kVertex,
     kFragment
   };
-  enum {
-    ATTRIB_LOC_POSITION = 0,
-    ATTRIB_LOC_NORMAL = 1,
-    ATTRIB_LOC_UV = 2
+
+  enum class AttribLoc : unsigned int {
+    Position = 0,
+    Normal = 1,
+    Uv = 2
   };
 
   struct Shader {

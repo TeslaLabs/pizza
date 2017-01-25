@@ -7,10 +7,7 @@
 #include "../log/ilog.h"
 #include "../timer/itimer.h"
 
-Engine::Engine(IEvent& event,
-               ILog& log,
-               IGame& game,
-               ITimer& timer)
+Engine::Engine(IEvent& event, ILog& log, IGame& game, ITimer& timer)
   : event_ { event },
     log_ { log },
     game_ { game },

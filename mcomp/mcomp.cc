@@ -15,7 +15,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
     window_ { window },
     dt_ { 0 },
     camera_sensitivity_ { .15 },
-    mouse_sensitivity_ { 1 },
+    mouse_sensitivity_ { .5 },
     prev_mouse_x_ { -1 },
     prev_mouse_y_ { -1 }
 {

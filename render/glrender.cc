@@ -251,27 +251,27 @@ void GLRender::AddPrimitives() {
                positions,
                GL_STATIC_DRAW);
 
-  glVertexAttribPointer(ATTRIB_LOC_POSITION,
+  glVertexAttribPointer(static_cast<unsigned int>(AttribLoc::Position),
                         3,
                         GL_FLOAT,
                         GL_FALSE,
                         sizeof(float) * 8,
                         nullptr);
-  glVertexAttribPointer(ATTRIB_LOC_NORMAL,
+  glVertexAttribPointer(static_cast<unsigned int>(AttribLoc::Normal),
                         3,
                         GL_FLOAT,
                         GL_FALSE,
                         sizeof(float) * 8,
                         (GLvoid*) (sizeof(float) * 3));
-  glVertexAttribPointer(ATTRIB_LOC_UV,
+  glVertexAttribPointer(static_cast<unsigned int>(AttribLoc::Uv),
                         2,
                         GL_FLOAT,
                         GL_FALSE,
                         sizeof(float) * 8,
                         (GLvoid*) (sizeof(float) * 6));
-  glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
-  glEnableVertexAttribArray(ATTRIB_LOC_NORMAL);
-  glEnableVertexAttribArray(ATTRIB_LOC_UV);
+  glEnableVertexAttribArray(static_cast<unsigned int>(AttribLoc::Position));
+  glEnableVertexAttribArray(static_cast<unsigned int>(AttribLoc::Normal));
+  glEnableVertexAttribArray(static_cast<unsigned int>(AttribLoc::Uv));
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufs[1]);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER,
@@ -330,21 +330,21 @@ bool GLRender::ImportMeshes(const Data& data) {
                  GL_STATIC_DRAW);
     ErrorCheck("array buffer data");
 
-    glVertexAttribPointer(ATTRIB_LOC_POSITION,
+    glVertexAttribPointer(static_cast<unsigned int>(AttribLoc::Position),
                           3,
                           GL_FLOAT,
                           GL_FALSE,
                           sizeof(float) * 8,
                           nullptr);
     ErrorCheck("position attrib pointer");
-    glVertexAttribPointer(ATTRIB_LOC_NORMAL,
+    glVertexAttribPointer(static_cast<unsigned int>(AttribLoc::Normal),
                           3,
                           GL_FLOAT,
                           GL_FALSE,
                           sizeof(float) * 8,
                           (GLvoid*) (sizeof(float) * 3));
     ErrorCheck("normal attrib pointer");
-    glVertexAttribPointer(ATTRIB_LOC_UV,
+    glVertexAttribPointer(static_cast<unsigned int>(AttribLoc::Uv),
                           2,
                           GL_FLOAT,
                           GL_FALSE,
@@ -352,11 +352,11 @@ bool GLRender::ImportMeshes(const Data& data) {
                           (GLvoid*) (sizeof(float) * 6));
     ErrorCheck("uv attrib pointer");
 
-    glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
+    glEnableVertexAttribArray(static_cast<unsigned int>(AttribLoc::Position));
     ErrorCheck("enable position attrib array");
-    glEnableVertexAttribArray(ATTRIB_LOC_NORMAL);
+    glEnableVertexAttribArray(static_cast<unsigned int>(AttribLoc::Normal));
     ErrorCheck("enable normal attrib array");
-    glEnableVertexAttribArray(ATTRIB_LOC_UV);
+    glEnableVertexAttribArray(static_cast<unsigned int>(AttribLoc::Uv));
     ErrorCheck("enable uv attrib array");
 
     glGenBuffers(1, &index_buffer); ErrorCheck("gen index buffer");
@@ -526,11 +526,11 @@ bool GLRender::CreateShaderProgram(GLuint vert_id,
   glAttachShader(shader, vert_id); ErrorCheck("attach vert shader");
   glAttachShader(shader, frag_id); ErrorCheck("attach frag shader");
 
-  glBindAttribLocation(shader, ATTRIB_LOC_POSITION, "in_position");
+  glBindAttribLocation(shader, static_cast<unsigned int>(AttribLoc::Position), "in_position");
   ErrorCheck("bind in_position attrib location");
-  glBindAttribLocation(shader, ATTRIB_LOC_NORMAL, "in_normal");
+  glBindAttribLocation(shader, static_cast<unsigned int>(AttribLoc::Normal), "in_normal");
   ErrorCheck("bind in_normal attrib location");
-  glBindAttribLocation(shader, ATTRIB_LOC_UV, "in_uv");
+  glBindAttribLocation(shader, static_cast<unsigned int>(AttribLoc::Uv), "in_uv");
   ErrorCheck("bind in_uv attrib location");
 
   if (!LinkShaderProgram(shader)) {
