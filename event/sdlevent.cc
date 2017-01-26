@@ -80,7 +80,7 @@ void SdlEvent::Process() {
       case SDL_WINDOWEVENT: {
         switch (e.window.event) {
           case SDL_WINDOWEVENT_CLOSE: {
-            Call("quit", EventData());
+            Call("quit", EventData {});
           } break;
           case SDL_WINDOWEVENT_FOCUS_GAINED: {
             Call("window_unfocus", EventData());

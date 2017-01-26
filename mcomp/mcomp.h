@@ -32,11 +32,12 @@ public:
 
 private:
   // Controls
-  void MainMode();
-  void QuitMode();
-  void ToRotateMode(const EventData& ed);
+  void MainMode(const EventData& ed);
+  void FromMainMode();
+  void QuitMode(const EventData& ed);
+  void RotateMode(const EventData& ed);
   void FromRotateMode();
-  void ToFlyMode(const EventData& ed);
+  void FlyMode(const EventData& ed);
   void FromFlyMode();
 };
 

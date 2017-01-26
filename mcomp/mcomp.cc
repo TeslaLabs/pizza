@@ -21,7 +21,7 @@ Mcomp::Mcomp(IEvent& event, ILog& log, IRender& render, IWindow& window)
 {
   window_.set_title("mcomp");
 
-  MainMode();
+  MainMode(EventData {});
 
   render_.LoadData("r");
   render_.set_camera_position({ 0, 0, 5 });
@@ -61,29 +61,29 @@ void Mcomp::Update(double dt) {
 //
 //
 
-void Mcomp::MainMode() {
-  event_.Set("Backspace_down", [this](const EventData& ed) {
-    QuitMode();
-  });
-  event_.Set("m1_down", [this](const EventData& ed) {
-    ToRotateMode(ed);
-  });
-  event_.Set("m1_up", [this](const EventData& ed) {
-    FromRotateMode();
-  });
-  event_.Set("Space_down", [this](const EventData& ed) {
-    ToFlyMode(ed);
-  });
-  event_.Set("Space_up", [this](const EventData& ed) {
-    FromFlyMode();
-  });
+#define SET_KEYMODE(unset_mode, key, mode) \
+event_.Set(key, [this](const EventData& ed) { \
+  From##unset_mode(); \
+  mode(ed); \
+})
+
+void Mcomp::MainMode(const EventData& ed) {
+  SET_KEYMODE(MainMode, "Backspace_down", QuitMode);
+  SET_KEYMODE(MainMode, "m1_down", RotateMode);
+  SET_KEYMODE(MainMode, "Space_down", FlyMode);
 }
 
-void Mcomp::QuitMode() {
+void Mcomp::FromMainMode() {
+  event_.Remove("Backspace_down");
+  event_.Remove("m1_down");
+  event_.Remove("Space_down");
+}
+
+void Mcomp::QuitMode(const EventData& ed) {
   event_.Call("quit", EventData());
 }
 
-void Mcomp::ToRotateMode(const EventData& ed) {
+void Mcomp::RotateMode(const EventData& ed) {
   prev_mouse_x_ = std::get<0>(ed.mouse_coords());
   prev_mouse_y_ = std::get<1>(ed.mouse_coords());
   event_.Set("mmove", [this](const EventData& ed) {
@@ -106,13 +106,15 @@ void Mcomp::ToRotateMode(const EventData& ed) {
     prev_mouse_x_ = x;
     prev_mouse_y_ = y;
   });
+
+  SET_KEYMODE(RotateMode, "m1_up", MainMode);
 }
 
 void Mcomp::FromRotateMode() {
   event_.Remove("mmove");
 }
 
-void Mcomp::ToFlyMode(const EventData& ed) {
+void Mcomp::FlyMode(const EventData& ed) {
   window_.SetCursorPosition(window_.width() / 2, window_.height() / 2);
   window_.HideCursor();
   event_.Set("mmove", [this](const EventData& ed) {
@@ -132,9 +134,12 @@ void Mcomp::ToFlyMode(const EventData& ed) {
 
     window_.SetCursorPosition(window_.width() / 2, window_.height() / 2);
   });
+
+  SET_KEYMODE(FlyMode, "Space_up", MainMode);
 }
 
 void Mcomp::FromFlyMode() {
   window_.ShowCursor();
   event_.Remove("mmove");
 }
+
